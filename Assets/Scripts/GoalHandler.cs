@@ -13,6 +13,7 @@ public class GoalHandler : MonoBehaviour
     public GameObject puck;
     private int score1 = 0;
     private int score2 = 0;
+    [SerializeField] private TimerScr timer;
 
     void Awake()
     {
@@ -26,14 +27,16 @@ public class GoalHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("GoalTrigger1"))
         {
             score1++;
-            scoreText1.text = score1.ToString();
+            scoreText1.text = score1.ToString();  
             ResetPosition();
+            timer.TimerStart();
         }
         else if (collision.gameObject.CompareTag("GoalTrigger2"))
         {
             score2++;
-            scoreText2.text = score2.ToString();
+            scoreText2.text = score2.ToString(); 
             ResetPosition();
+            timer.TimerStart();
         }
     }
 
@@ -53,5 +56,15 @@ public class GoalHandler : MonoBehaviour
                 rb.angularVelocity = 0f;
             }
         }
+    }
+
+    public void RestartGame()
+    {
+        score1 = 0;
+        score2 = 0;
+        scoreText1.text = "0";
+        scoreText2.text = "0";
+        ResetPosition();
+        timer.TimerStart();
     }
 }

@@ -7,6 +7,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private Rigidbody2D rb;
 
     public float minX, maxX, minY, maxY;
+    [SerializeField] private TimerScr timer;
 
     void Start()
 {
@@ -27,7 +28,13 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
         targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
         targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
 
-        rb.MovePosition(targetPos);
+        if(timer.TimerOn)
+        {
+            return;
+        } else
+        {
+            rb.MovePosition(targetPos);
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)

@@ -6,6 +6,8 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private Vector3 offset;
     private Rigidbody2D rb;
 
+    public float minX, maxX, minY, maxY;
+
     void Start()
 {
     rb = GetComponent<Rigidbody2D>();
@@ -21,6 +23,9 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(eventData.position);
         Vector2 targetPos = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
+
+        targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
+        targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
 
         rb.MovePosition(targetPos);
     }

@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22bc6b67af81608449c6da5218d0e290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayersController
-  minX: -6.65
+  minX: 0.5
   maxX: 6.65
   minY: -4.05
   maxY: 4.05
@@ -2125,7 +2125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayersController
   minX: -6.65
-  maxX: 6.65
+  maxX: -0.5
   minY: -4.05
   maxY: 4.05
   timer: {fileID: 236193934}

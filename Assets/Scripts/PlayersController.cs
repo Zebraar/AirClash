@@ -10,9 +10,12 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public float minX, maxX, minY, maxY;
     [SerializeField] private TimerScr timer;
     private Vector2 targetPos;
+    private bool isDragging = false;
 
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         targetPos = rb.position;
@@ -22,10 +25,13 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         Vector3 mousePos = cam.ScreenToWorldPoint(eventData.position);
         offset = transform.position - new Vector3(mousePos.x, mousePos.y);
+        isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isDragging || timer.TimerOn) return;
+
         Vector3 mousePos = cam.ScreenToWorldPoint(eventData.position);
         targetPos = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
 
@@ -34,17 +40,21 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     private void FixedUpdate() {
-        if (!timer.TimerOn) {
+        if (isDragging && !timer.TimerOn)
+        {
             rb.MovePosition(targetPos);
-        } else {
-            rb.linearVelocity = Vector2.zero;
+        }
+        else if (timer.TimerOn)
+        {
+            rb.linearVelocity = Vector2.zero; // обнуляем только velocity
+            rb.angularVelocity = 0f;
             targetPos = rb.position;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("Объект отпущен");
+        isDragging = false;
     }
 
 }

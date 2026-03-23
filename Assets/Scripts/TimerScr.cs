@@ -8,6 +8,8 @@ public class TimerScr : MonoBehaviour
     public GameObject TimerCanvas;
     public int TimeLeft = 4;
     public bool TimerOn = false;
+    public AudioSource audioSource;
+    public AudioClip goalSound;
 
     [SerializeField] private Button restartBtn;
 
@@ -18,6 +20,7 @@ public class TimerScr : MonoBehaviour
         TimerText.text = "GOAL";
         TimerOn = true;
         restartBtn.interactable = false;
+        audioSource.PlayOneShot(goalSound);
         Invoke("TimerStart", 1f);
     }
 

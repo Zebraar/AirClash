@@ -46,7 +46,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
         }
         else if (timer.TimerOn)
         {
-            rb.linearVelocity = Vector2.zero; // обнуляем только velocity
+            rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
             targetPos = rb.position;
         }

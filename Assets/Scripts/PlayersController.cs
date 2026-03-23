@@ -9,6 +9,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     public float minX, maxX, minY, maxY;
     [SerializeField] private TimerScr timer;
+    private SettingsHandler settingsHandler = new SettingsHandler();
     private Vector2 targetPos;
     private bool isDragging = false;
 
@@ -19,6 +20,8 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         targetPos = rb.position;
+        float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        AudioListener.volume = volume;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

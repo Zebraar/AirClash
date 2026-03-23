@@ -14,6 +14,8 @@ public class GoalHandler : MonoBehaviour
     private int score1 = 0;
     private int score2 = 0;
     [SerializeField] private TimerScr timer;
+    public AudioSource audioSource;
+    public AudioClip puckSound;
 
     void Awake()
     {
@@ -38,6 +40,11 @@ public class GoalHandler : MonoBehaviour
             ResetPosition();
             timer.Goal();
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        audioSource.PlayOneShot(puckSound);
     }
 
     public void ResetPosition()

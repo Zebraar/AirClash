@@ -473,6 +473,7 @@ MonoBehaviour:
   TimerOn: 0
   audioSource: {fileID: 2094474884}
   goalSound: {fileID: 8300000, guid: 4e1b57aa2bad8fc4e933d842cc64b672, type: 3}
+  timerSound: {fileID: 8300000, guid: d062d4280d8a0a3468b4c3e3d3b9c4c3, type: 3}
   restartBtn: {fileID: 1543717350}
 --- !u!1 &243884039
 GameObject:
@@ -2956,6 +2957,7 @@ MonoBehaviour:
   timer: {fileID: 236193934}
   audioSource: {fileID: 2094474884}
   puckSound: {fileID: 8300000, guid: 8346d24a7b5724c4ba889b8a1d541bf7, type: 3}
+  StartGameSound: {fileID: 8300000, guid: c295a870e60704548a182d990ed27ee7, type: 3}
 --- !u!1 &1682619728
 GameObject:
   m_ObjectHideFlags: 0

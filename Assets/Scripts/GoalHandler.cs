@@ -16,12 +16,19 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private TimerScr timer;
     public AudioSource audioSource;
     public AudioClip puckSound;
+    public AudioClip StartGameSound;
 
     void Awake()
     {
         player1startPos = player1.transform.position;
         player2startPos = player2.transform.position;
         puckStartPos = puck.transform.position;
+    }
+
+    void Start()
+    {
+        timer.TimerStart();
+        audioSource.PlayOneShot(StartGameSound);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -72,6 +79,7 @@ public class GoalHandler : MonoBehaviour
         scoreText1.text = "0";
         scoreText2.text = "0";
         ResetPosition();
+        audioSource.PlayOneShot(StartGameSound);
         timer.TimerStart();
     }
 }

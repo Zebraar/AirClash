@@ -10,6 +10,7 @@ public class TimerScr : MonoBehaviour
     public bool TimerOn = false;
     public AudioSource audioSource;
     public AudioClip goalSound;
+    public AudioClip timerSound;
 
     [SerializeField] private Button restartBtn;
 
@@ -38,6 +39,7 @@ public class TimerScr : MonoBehaviour
     {
         TimeLeft--;
         TimerText.text = TimeLeft.ToString();
+        audioSource.PlayOneShot(timerSound);
 
         if (TimeLeft <= 0)
         {

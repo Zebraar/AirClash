@@ -29,14 +29,14 @@ public class GoalHandler : MonoBehaviour
             score1++;
             scoreText1.text = score1.ToString();  
             ResetPosition();
-            timer.TimerStart();
+            timer.Goal();
         }
         else if (collision.gameObject.CompareTag("GoalTrigger2"))
         {
             score2++;
             scoreText2.text = score2.ToString(); 
             ResetPosition();
-            timer.TimerStart();
+            timer.Goal();
         }
     }
 

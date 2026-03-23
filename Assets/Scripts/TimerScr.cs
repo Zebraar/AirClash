@@ -11,6 +11,16 @@ public class TimerScr : MonoBehaviour
 
     [SerializeField] private Button restartBtn;
 
+
+    public void Goal()
+    {
+        TimerCanvas.gameObject.SetActive(true);
+        TimerText.text = "GOAL";
+        TimerOn = true;
+        restartBtn.interactable = false;
+        Invoke("TimerStart", 1f);
+    }
+
     public void TimerStart()
     {
         TimerCanvas.gameObject.SetActive(true);
@@ -19,7 +29,6 @@ public class TimerScr : MonoBehaviour
         TimerOn = true;
         restartBtn.interactable = false;
         InvokeRepeating("Timer", 0f, 1f);
-        
     }
 
     private void Timer()

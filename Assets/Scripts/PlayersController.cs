@@ -8,9 +8,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private Camera cam;
 
     public float minX, maxX, minY, maxY;
-    [SerializeField] private TimerScr timer;
-    private SettingsHandler settingsHandler = new SettingsHandler();
-    private Vector2 targetPos;
+    [SerializeField] private TimerScr timer;    private Vector2 targetPos;
     private bool isDragging = false;
 
     void Start()

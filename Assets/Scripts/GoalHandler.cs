@@ -17,18 +17,29 @@ public class GoalHandler : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip puckSound;
     public AudioClip StartGameSound;
+    private Rigidbody2D puckRb;
+    public float maxSpeed = 20f;
 
     void Awake()
     {
         player1startPos = player1.transform.position;
         player2startPos = player2.transform.position;
         puckStartPos = puck.transform.position;
+        puckRb = puck.GetComponent<Rigidbody2D>();
     }
 
     void Start()
     {
         timer.TimerStart();
         audioSource.PlayOneShot(StartGameSound);
+    }
+
+    void FixedUpdate()
+    {
+        if (puckRb.linearVelocity.magnitude > maxSpeed)
+        {
+            puckRb.linearVelocity = Vector3.ClampMagnitude(puckRb.linearVelocity, maxSpeed);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

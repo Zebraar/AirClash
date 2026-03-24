@@ -5,6 +5,8 @@ public class PauseHandler : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject settingsPanel;
     private bool isPaused = false;
+    [SerializeField] private GoalHandler goalHandler;
+
     public void TogglePause()
     {
         isPaused = !isPaused;
@@ -36,6 +38,12 @@ public class PauseHandler : MonoBehaviour
     {
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+    }
+
+    public void RestartGame()
+    {
+        TogglePause();
+        goalHandler.RestartGame();
     }
 
     public void QuitGame()

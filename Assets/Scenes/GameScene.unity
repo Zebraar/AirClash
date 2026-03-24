@@ -225,7 +225,7 @@ Transform:
   m_GameObject: {fileID: 40883074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -7.3, y: -2.92, z: 0}
+  m_LocalPosition: {x: -7.28918, y: -2.92, z: 0}
   m_LocalScale: {x: 3.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1312,7 +1312,7 @@ Transform:
   m_GameObject: {fileID: 457761461}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -7.3, y: 2.92, z: 0}
+  m_LocalPosition: {x: -7.28918, y: 2.92, z: 0}
   m_LocalScale: {x: 3.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1589,7 +1589,7 @@ GameObject:
   - component: {fileID: 537770799}
   - component: {fileID: 537770798}
   m_Layer: 0
-  m_Name: Wall 4 (1)
+  m_Name: Wall 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2306,7 +2306,7 @@ GameObject:
   - component: {fileID: 691771014}
   - component: {fileID: 691771013}
   m_Layer: 0
-  m_Name: Wall 4 (3)
+  m_Name: Wall 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3202,6 +3202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseHandler
   pauseMenu: {fileID: 897252422}
   settingsPanel: {fileID: 1745262371}
+  goalHandler: {fileID: 1644972823}
 --- !u!1 &929458179
 GameObject:
   m_ObjectHideFlags: 0
@@ -3634,8 +3635,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644972823}
-        m_TargetAssemblyTypeName: GoalHandler, Assembly-CSharp
+      - m_Target: {fileID: 897252427}
+        m_TargetAssemblyTypeName: PauseHandler, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
@@ -4236,7 +4237,7 @@ GameObject:
   - component: {fileID: 1429456849}
   - component: {fileID: 1429456848}
   m_Layer: 0
-  m_Name: Wall 5 (1)
+  m_Name: Wall 13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4374,7 +4375,7 @@ GameObject:
   - component: {fileID: 1442291874}
   - component: {fileID: 1442291873}
   m_Layer: 0
-  m_Name: Wall 4 (4)
+  m_Name: Wall 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4615,8 +4616,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -274, y: -32}
-  m_SizeDelta: {x: 160, y: 37.549988}
+  m_AnchoredPosition: {x: -88, y: -32}
+  m_SizeDelta: {x: 160, y: 37.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1543717350
 MonoBehaviour:
@@ -5521,7 +5522,7 @@ GameObject:
   - component: {fileID: 1772745698}
   - component: {fileID: 1772745697}
   m_Layer: 0
-  m_Name: Wall 4 (6)
+  m_Name: Wall 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5899,7 +5900,7 @@ GameObject:
   - component: {fileID: 1878063892}
   - component: {fileID: 1878063891}
   m_Layer: 0
-  m_Name: Wall 4 (5)
+  m_Name: Wall 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6037,7 +6038,7 @@ GameObject:
   - component: {fileID: 1944486458}
   - component: {fileID: 1944486457}
   m_Layer: 0
-  m_Name: Wall 4 (2)
+  m_Name: Wall 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6414,6 +6415,7 @@ GameObject:
   - component: {fileID: 1999176202}
   - component: {fileID: 1999176204}
   - component: {fileID: 1999176203}
+  - component: {fileID: 1999176205}
   m_Layer: 5
   m_Name: PausePanel
   m_TagString: Untagged
@@ -6480,6 +6482,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1999176201}
   m_CullTransparentMesh: 1
+--- !u!114 &1999176205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999176201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
+  m_EffectColor: {r: 0, g: 0.5708005, b: 0.7735849, a: 1}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 0
 --- !u!1 &2039700049
 GameObject:
   m_ObjectHideFlags: 0
@@ -6492,7 +6509,7 @@ GameObject:
   - component: {fileID: 2039700052}
   - component: {fileID: 2039700051}
   m_Layer: 0
-  m_Name: Wall 3 (1)
+  m_Name: Wall 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

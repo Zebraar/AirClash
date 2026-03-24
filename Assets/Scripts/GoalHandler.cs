@@ -40,6 +40,10 @@ public class GoalHandler : MonoBehaviour
         {
             puckRb.linearVelocity = Vector3.ClampMagnitude(puckRb.linearVelocity, maxSpeed);
         }
+        if(puckRb.linearVelocityY < 0.1f && puckRb.linearVelocityY > -0.1f && !timer.TimerOn && puckRb.linearVelocityX != 0)
+        {
+            puckRb.linearVelocity = new Vector2(puckRb.linearVelocity.x, 0.1f * Mathf.Sign(puckRb.linearVelocity.y));
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

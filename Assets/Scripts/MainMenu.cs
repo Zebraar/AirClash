@@ -7,6 +7,15 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject onlinePanel;
     [SerializeField] private GameObject botPanel;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip menuMusic;
+
+    void Start()
+    {
+        audioSource.clip = menuMusic;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
 
     public void OpenSettings()
     {

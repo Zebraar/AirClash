@@ -3469,13 +3469,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BotsAI
   bot: {fileID: 932977366}
   puck: {fileID: 1644972822}
-  moveSpeed: 10
+  moveSpeed: 5
   minX: -6.65
   maxX: -0.5
   minY: -4.05
   maxY: 4.05
   timer: {fileID: 236193934}
   botStartPos: {x: -5.186, y: 0}
+  goalHandler: {fileID: 1644972823}
 --- !u!1 &1055339675
 GameObject:
   m_ObjectHideFlags: 0
@@ -4939,6 +4940,7 @@ MonoBehaviour:
   puckSound: {fileID: 8300000, guid: 8346d24a7b5724c4ba889b8a1d541bf7, type: 3}
   StartGameSound: {fileID: 8300000, guid: c295a870e60704548a182d990ed27ee7, type: 3}
   maxSpeed: 30
+  botsAI: {fileID: 932977371}
 --- !u!1 &1682619728
 GameObject:
   m_ObjectHideFlags: 0

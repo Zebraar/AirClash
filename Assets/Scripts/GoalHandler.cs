@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class GoalHandler : MonoBehaviour
 {
-    [SerializeField] private Text scoreText1;
-    [SerializeField] private Text scoreText2;
+    public Text scoreText1;
+    public Text scoreText2;
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
     private Vector2 player1startPos;
@@ -19,6 +19,7 @@ public class GoalHandler : MonoBehaviour
     public AudioClip StartGameSound;
     private Rigidbody2D puckRb;
     public float maxSpeed = 20f;
+    [SerializeField] private BotsAI botsAI;
 
     void Awake()
     {
@@ -56,6 +57,7 @@ public class GoalHandler : MonoBehaviour
         {
             score1++;
             scoreText1.text = score1.ToString();  
+            botsAI.EasyMode();
             ResetPosition();
             timer.Goal();
         }
@@ -63,6 +65,7 @@ public class GoalHandler : MonoBehaviour
         {
             score2++;
             scoreText2.text = score2.ToString(); 
+            botsAI.Fury();
             ResetPosition();
             timer.Goal();
         }

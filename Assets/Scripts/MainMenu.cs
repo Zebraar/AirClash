@@ -23,27 +23,27 @@ public class MainMenu : MonoBehaviour
         switch (difficulty)
         {
             case "VeryEasy":
-                PlayerPrefs.SetInt("Difficulty", 2);
+                PlayerPrefs.SetFloat("Difficulty", 2);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
-                PlayerPrefs.SetInt("Difficulty", 3);
+                PlayerPrefs.SetFloat("Difficulty", 3);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
-                PlayerPrefs.SetInt("Difficulty", 6);
+                PlayerPrefs.SetFloat("Difficulty", 6);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
-                PlayerPrefs.SetInt("Difficulty", 15);
+                PlayerPrefs.SetFloat("Difficulty", 15);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
-                PlayerPrefs.SetInt("Difficulty", 20);
+                PlayerPrefs.SetFloat("Difficulty", 20);
                 SceneManager.LoadScene("BotsGame");
                 break;
             default:
-                PlayerPrefs.SetInt("Difficulty", 2);
+                PlayerPrefs.SetFloat("Difficulty", 2);
                 break;
         }
     }

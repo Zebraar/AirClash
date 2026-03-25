@@ -14,12 +14,14 @@ public class BotsAI : MonoBehaviour
     [SerializeField] private Vector2 botStartPos;
     [SerializeField] private GoalHandler goalHandler;
     private int score1, score2 = 0;
+    private float baseSpeed;
 
     void Start()
     {
         botRb = bot.GetComponent<Rigidbody2D>();
         botRb.linearVelocity = Vector2.zero;
-        moveSpeed = PlayerPrefs.GetInt("Difficulty");
+        moveSpeed = PlayerPrefs.GetFloat("Difficulty");
+        baseSpeed = moveSpeed;
     }
 
     void FixedUpdate()
@@ -33,7 +35,7 @@ public class BotsAI : MonoBehaviour
         {
             targetDestination = new Vector2(puck.position.x * -1, puck.position.y);
             currentSpeed = moveSpeed / 2;
-        } else if(puck.position.x < 0 && puck.position.y > 4 || puck.position.y < -4)
+        } else if(puck.position.x < 0 && (puck.position.y > 4 || puck.position.y < -4))
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 4;
@@ -54,18 +56,18 @@ public class BotsAI : MonoBehaviour
 
     public void Fury()
     {
-        score1 = int.Parse(goalHandler.scoreText1.text);
-        score2 = int.Parse(goalHandler.scoreText2.text);
+        score1 = goalHandler.score1;
+        score2 = goalHandler.score2;
 
         if(score1 - score2 >= 3)
         {
-            moveSpeed *= 1.5f;
+            moveSpeed = baseSpeed *1.5f;
         } else if(score1 - score2 >= 5)
         {
-            moveSpeed *= 2f;
+            moveSpeed = baseSpeed * 2f;
         } else if(score1 - score2 >= 7)
         {
-            moveSpeed *= 3f;
+            moveSpeed = baseSpeed * 3f;
         }
     }
     public void EasyMode()
@@ -75,13 +77,13 @@ public class BotsAI : MonoBehaviour
 
         if(score2 - score1 >= 3)
         {
-            moveSpeed /= 1.5f;
+            moveSpeed = baseSpeed / 1.5f;
         } else if(score2 - score1 >= 5)
         {
-            moveSpeed /= 2f;
+            moveSpeed = baseSpeed / 2f;
         } else if(score2 - score1 >= 7)
         {
-            moveSpeed /= 3f;
+            moveSpeed = baseSpeed / 3f;
         }
     }
 

@@ -11,8 +11,8 @@ public class GoalHandler : MonoBehaviour
     private Vector2 player2startPos;
     private Vector2 puckStartPos;
     public GameObject puck;
-    private int score1 = 0;
-    private int score2 = 0;
+    public int score1 = 0;
+    public int score2 = 0;
     [SerializeField] private TimerScr timer;
     public AudioSource audioSource;
     public AudioClip puckSound;

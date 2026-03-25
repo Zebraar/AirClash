@@ -3475,6 +3475,7 @@ MonoBehaviour:
   minY: -4.05
   maxY: 4.05
   timer: {fileID: 236193934}
+  botStartPos: {x: -5.186, y: 0}
 --- !u!1 &1055339675
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,27 +23,39 @@ public class MainMenu : MonoBehaviour
         switch (difficulty)
         {
             case "VeryEasy":
-                PlayerPrefs.SetFloat("Difficulty", 2);
+                PlayerPrefs.SetFloat("Difficulty", 2f);
+                PlayerPrefs.SetFloat("Range1", -0.5f);
+                PlayerPrefs.SetFloat("Range2", 0.5f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
-                PlayerPrefs.SetFloat("Difficulty", 3);
+                PlayerPrefs.SetFloat("Difficulty", 3f);
+                PlayerPrefs.SetFloat("Range1", -0.4f);
+                PlayerPrefs.SetFloat("Range2", 0.4f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
-                PlayerPrefs.SetFloat("Difficulty", 6);
+                PlayerPrefs.SetFloat("Difficulty", 6f);
+                PlayerPrefs.SetFloat("Range1", -0.2f);
+                PlayerPrefs.SetFloat("Range2", 0.2f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
-                PlayerPrefs.SetFloat("Difficulty", 15);
+                PlayerPrefs.SetFloat("Difficulty", 15f);
+                PlayerPrefs.SetFloat("Range1", -0.1f);
+                PlayerPrefs.SetFloat("Range2", 0.1f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
-                PlayerPrefs.SetFloat("Difficulty", 20);
+                PlayerPrefs.SetFloat("Difficulty", 20f);
+                PlayerPrefs.SetFloat("Range1", 0f);
+                PlayerPrefs.SetFloat("Range2", 0f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             default:
-                PlayerPrefs.SetFloat("Difficulty", 2);
+                PlayerPrefs.SetFloat("Difficulty", 2f);
+                PlayerPrefs.SetFloat("Range1", -2f);
+                PlayerPrefs.SetFloat("Range2", 2f);
                 break;
         }
     }

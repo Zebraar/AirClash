@@ -45,6 +45,9 @@ public class BotsAI : MonoBehaviour
             currentSpeed = moveSpeed;
         }
 
+        float error = UnityEngine.Random.Range(PlayerPrefs.GetFloat("Range1"), PlayerPrefs.GetFloat("Range2"));
+        targetDestination.y += error;
+
         Vector2 newPos = Vector2.MoveTowards(botRb.position, targetDestination, currentSpeed * Time.fixedDeltaTime);
     
         newPos.x = Mathf.Clamp(newPos.x, minX, maxX);
@@ -61,7 +64,7 @@ public class BotsAI : MonoBehaviour
 
         if(score1 - score2 >= 3)
         {
-            moveSpeed = baseSpeed *1.5f;
+            moveSpeed = baseSpeed * 1.5f;
         } else if(score1 - score2 >= 5)
         {
             moveSpeed = baseSpeed * 2f;

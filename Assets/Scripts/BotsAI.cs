@@ -39,15 +39,23 @@ public class BotsAI : MonoBehaviour
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 4;
+        } else if(puck.position.x < -6 && (puck.position.y > 3.5f || puck.position.y < -3.5f))
+        {
+            targetDestination = botStartPos;
+            currentSpeed = moveSpeed / 4;
+        } else if(puck.position.x < -6)
+        {
+            targetDestination = puck.position;
+            currentSpeed = moveSpeed * 2f;
+        } else if(puck.position.x < -4)
+        {
+            targetDestination = puck.position;
+            currentSpeed = moveSpeed * 1.5f;
         } else
         {
             targetDestination = puck.position;
             currentSpeed = moveSpeed;
         }
-
-        float error = UnityEngine.Random.Range(PlayerPrefs.GetFloat("Range1"), PlayerPrefs.GetFloat("Range2"));
-        targetDestination.y += error;
-
         Vector2 newPos = Vector2.MoveTowards(botRb.position, targetDestination, currentSpeed * Time.fixedDeltaTime);
     
         newPos.x = Mathf.Clamp(newPos.x, minX, maxX);
@@ -75,8 +83,8 @@ public class BotsAI : MonoBehaviour
     }
     public void EasyMode()
     {
-        score1 = int.Parse(goalHandler.scoreText1.text);
-        score2 = int.Parse(goalHandler.scoreText2.text);
+        score1 = goalHandler.score1;
+        score2 = goalHandler.score2;
 
         if(score2 - score1 >= 3)
         {

@@ -3475,7 +3475,7 @@ MonoBehaviour:
   minY: -4.05
   maxY: 4.05
   timer: {fileID: 236193934}
-  botStartPos: {x: -5.186, y: 0}
+  botStartPos: {x: -6.5, y: 0}
   goalHandler: {fileID: 1644972823}
 --- !u!1 &1055339675
 GameObject:
@@ -4935,6 +4935,8 @@ MonoBehaviour:
   player1: {fileID: 243884039}
   player2: {fileID: 932977366}
   puck: {fileID: 1644972818}
+  score1: 0
+  score2: 0
   timer: {fileID: 236193934}
   audioSource: {fileID: 2094474884}
   puckSound: {fileID: 8300000, guid: 8346d24a7b5724c4ba889b8a1d541bf7, type: 3}

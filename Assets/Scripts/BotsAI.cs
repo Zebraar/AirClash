@@ -19,7 +19,7 @@ public class BotsAI : MonoBehaviour
     {
         botRb = bot.GetComponent<Rigidbody2D>();
         botRb.linearVelocity = Vector2.zero;
-        
+        moveSpeed = PlayerPrefs.GetInt("Difficulty");
     }
 
     void FixedUpdate()

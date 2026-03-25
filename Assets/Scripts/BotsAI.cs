@@ -23,13 +23,13 @@ public class BotsAI : MonoBehaviour
         if(timer.TimerOn) return;
         if(puck.position.x > 0)
         {
-            Vector2 targetPos = Vector2.MoveTowards(botRb.position, puck.position, moveSpeed * Time.fixedDeltaTime);
+            Vector2 targetPos = Vector2.MoveTowards(botRb.position, puck.position, moveSpeed/2 * Time.fixedDeltaTime);
             targetPos.x = Mathf.Clamp(puck.position.x * -1, minX, maxX);
             targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
             botRb.MovePosition(targetPos);
         } else if(puck.position.x < 0 && puck.position.y > 4 || puck.position.y < -4)
         {
-            Vector2 targetPos = Vector2.MoveTowards(botRb.position, botStartPos, moveSpeed * Time.fixedDeltaTime);
+            Vector2 targetPos = Vector2.MoveTowards(botRb.position, botStartPos, moveSpeed/4 * Time.fixedDeltaTime);
             targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
             targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
             botRb.MovePosition(targetPos);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GoalHandler : MonoBehaviour
@@ -56,18 +57,33 @@ public class GoalHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("GoalTrigger1"))
         {
             score1++;
-            scoreText1.text = score1.ToString();  
-            botsAI.EasyMode();
-            ResetPosition();
-            timer.Goal();
+            scoreText1.text = score1.ToString(); 
+            if(SceneManager.GetActiveScene().name == "BotsGame")
+            {
+                botsAI.EasyMode();
+                ResetPosition();
+                timer.Goal();
+            } else
+            {
+                ResetPosition();
+                timer.Goal();
+            }
+            
         }
         else if (collision.gameObject.CompareTag("GoalTrigger2"))
         {
             score2++;
             scoreText2.text = score2.ToString(); 
-            botsAI.Fury();
-            ResetPosition();
-            timer.Goal();
+            if(SceneManager.GetActiveScene().name == "BotsGame")
+            {
+                botsAI.Fury();
+                ResetPosition();
+                timer.Goal();
+            } else
+            {
+                ResetPosition();
+                timer.Goal();
+            }       
         }
     }
 

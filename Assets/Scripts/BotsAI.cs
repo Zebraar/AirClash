@@ -70,10 +70,10 @@ public class BotsAI : MonoBehaviour
         score1 = goalHandler.score1;
         score2 = goalHandler.score2;
 
-        if(score1 - score2 >= 3)
+        if(score1 - score2 >= 3 && score1 - score2 < 5)
         {
             moveSpeed = baseSpeed * 1.5f;
-        } else if(score1 - score2 >= 5)
+        } else if(score1 - score2 >= 5 && score1 - score2 < 7)
         {
             moveSpeed = baseSpeed * 2f;
         } else if(score1 - score2 >= 7)
@@ -86,10 +86,10 @@ public class BotsAI : MonoBehaviour
         score1 = goalHandler.score1;
         score2 = goalHandler.score2;
 
-        if(score2 - score1 >= 3)
+        if(score2 - score1 >= 3 && score2 - score1 < 5)
         {
             moveSpeed = baseSpeed / 1.5f;
-        } else if(score2 - score1 >= 5)
+        } else if(score2 - score1 >= 5 && score2 - score1 < 7)
         {
             moveSpeed = baseSpeed / 2f;
         } else if(score2 - score1 >= 7)

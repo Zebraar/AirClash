@@ -15,7 +15,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     {
         Debug.Log("Версия до ботов");
         QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 999999999;
+        Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         targetPos = rb.position;

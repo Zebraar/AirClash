@@ -7,6 +7,8 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Slider volumeSlider;
     [SerializeField] private Slider goalsSlider;
     [SerializeField] private Text goalsText;
+    [SerializeField] private Slider fpsSlider;
+    [SerializeField] private Text fpsText;
     public float volumeLevel = 0.5f;
 
     void Start() {
@@ -21,6 +23,12 @@ public class SettingsHandler : MonoBehaviour
     {
         PlayerPrefs.SetInt("Goals", Convert.ToInt32(goalsSlider.value));
         goalsText.text = Convert.ToString(Convert.ToInt32(goalsSlider.value));
+    }
+    public void OnFpsSliderChanged()
+    {
+        PlayerPrefs.SetInt("FPS", Convert.ToInt32(fpsSlider.value));
+        fpsText.text = Convert.ToString(Convert.ToInt32(fpsSlider.value));
+        Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
     }
 
     public void ShowTelegram()

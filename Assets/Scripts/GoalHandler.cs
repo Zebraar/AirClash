@@ -62,7 +62,7 @@ public class GoalHandler : MonoBehaviour
         {
             score1++;
             scoreText1.text = score1.ToString(); 
-            if(score2 == howManyGoals)
+            if(score2 >= howManyGoals)
             {
                 goalTextCanvas.SetActive(true);
                 goalText.text = "Игрок 2 выиграл!";
@@ -85,7 +85,7 @@ public class GoalHandler : MonoBehaviour
         {
             score2++;
             scoreText2.text = score2.ToString(); 
-            if(score2 == howManyGoals)
+            if(score2 >= howManyGoals)
             {
                 goalTextCanvas.SetActive(true);
                 goalText.text = "Игрок 1 выиграл!";

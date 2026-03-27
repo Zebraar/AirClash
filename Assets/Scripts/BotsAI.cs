@@ -15,6 +15,7 @@ public class BotsAI : MonoBehaviour
     [SerializeField] private GoalHandler goalHandler;
     private int score1, score2 = 0;
     private float baseSpeed;
+    System.Random rnd = new System.Random();
 
     void Start()
     {
@@ -31,10 +32,14 @@ public class BotsAI : MonoBehaviour
         Vector2 targetDestination;
         float currentSpeed = moveSpeed;
 
-        if(puck.position.x > 0)
+        if(puck.position.x > 0 && puck.position.x < 3)
         {
             targetDestination = new Vector2(puck.position.x * -1, puck.position.y);
             currentSpeed = moveSpeed / 2;
+        } else if(puck.position.x > 0 && puck.position.x > 3)
+        {
+            targetDestination = botStartPos;
+            currentSpeed = moveSpeed / 3;
         } else if(puck.position.x < 0 && (puck.position.y > 4 || puck.position.y < -4))
         {
             targetDestination = botStartPos;
@@ -70,13 +75,13 @@ public class BotsAI : MonoBehaviour
         score1 = goalHandler.score1;
         score2 = goalHandler.score2;
 
-        if(score1 - score2 >= 3 && score1 - score2 < 5)
+        if(score2 - score1 >= 3 && score2 - score1 < 5)
         {
             moveSpeed = baseSpeed * 1.5f;
-        } else if(score1 - score2 >= 5 && score1 - score2 < 7)
+        } else if(score2 - score1 >= 5 && score2 - score1 < 7)
         {
             moveSpeed = baseSpeed * 2f;
-        } else if(score1 - score2 >= 7)
+        } else if(score2 - score1 >= 7)
         {
             moveSpeed = baseSpeed * 3f;
         }
@@ -86,13 +91,13 @@ public class BotsAI : MonoBehaviour
         score1 = goalHandler.score1;
         score2 = goalHandler.score2;
 
-        if(score2 - score1 >= 3 && score2 - score1 < 5)
+        if(score1 - score2 >= 3 && score1 - score2 < 5)
         {
             moveSpeed = baseSpeed / 1.5f;
-        } else if(score2 - score1 >= 5 && score2 - score1 < 7)
+        } else if(score1 - score2 >= 5 && score1 - score2 < 7)
         {
             moveSpeed = baseSpeed / 2f;
-        } else if(score2 - score1 >= 7)
+        } else if(score1 - score2 >= 7)
         {
             moveSpeed = baseSpeed / 3f;
         }

@@ -45,7 +45,7 @@ public class BotsAI : MonoBehaviour
             }
             targetDestination = new Vector2(puckPos.x * -1, puckPos.y);          
             currentSpeed = moveSpeed / 2;
-        } else if(puck.position.x > 0 && puck.position.x > 3)
+        } else if(puck.position.x > 3)
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 3;

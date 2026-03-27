@@ -15,6 +15,7 @@ public class BotsAI : MonoBehaviour
     [SerializeField] private GoalHandler goalHandler;
     private int score1, score2 = 0;
     private float baseSpeed;
+    [SerializeField] Vector3 PuckKoof;
     System.Random rnd = new System.Random();
 
     void Start()
@@ -54,12 +55,28 @@ public class BotsAI : MonoBehaviour
             currentSpeed = moveSpeed * 2f;
         } else if(puck.position.x < -4)
         {
-            targetDestination = puck.position;
+            targetDestination = puck.position - PuckKoof;
             currentSpeed = moveSpeed * 1.5f;
         } else
         {
-            targetDestination = puck.position;
-            currentSpeed = moveSpeed;
+            if(puck.position.y > 0)
+            {
+                PuckKoof.y += 0.5f;
+                targetDestination = puck.position - PuckKoof;
+                currentSpeed = moveSpeed;
+                PuckKoof.y -= 0.5f;
+            } else if(puck.position.y < 0)
+            {
+                PuckKoof.y -= 0.5f;
+                targetDestination = puck.position - PuckKoof;
+                currentSpeed = moveSpeed;
+                PuckKoof.y += 0.5f;
+            } else
+            {
+                targetDestination = puck.position;
+                currentSpeed = moveSpeed;
+            }
+            
         }
         Vector2 newPos = Vector2.MoveTowards(botRb.position, targetDestination, currentSpeed * Time.fixedDeltaTime);
     

@@ -3477,6 +3477,7 @@ MonoBehaviour:
   timer: {fileID: 236193934}
   botStartPos: {x: -6.5, y: 0}
   goalHandler: {fileID: 1644972823}
+  PuckKoof: {x: 0.7, y: 0, z: 0}
 --- !u!1 &1055339675
 GameObject:
   m_ObjectHideFlags: 0

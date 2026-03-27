@@ -21,6 +21,9 @@ public class GoalHandler : MonoBehaviour
     private Rigidbody2D puckRb;
     public float maxSpeed = 20f;
     [SerializeField] private BotsAI botsAI;
+    private int howManyGoals;
+    [SerializeField] private Text goalText;
+    [SerializeField] private GameObject goalTextCanvas;
 
     void Awake()
     {
@@ -34,6 +37,7 @@ public class GoalHandler : MonoBehaviour
     {
         timer.TimerStart();
         audioSource.PlayOneShot(StartGameSound);
+        howManyGoals = PlayerPrefs.GetInt("Goals");
     }
 
     void FixedUpdate()
@@ -58,32 +62,47 @@ public class GoalHandler : MonoBehaviour
         {
             score1++;
             scoreText1.text = score1.ToString(); 
-            if(SceneManager.GetActiveScene().name == "BotsGame")
+            if(score2 == howManyGoals)
             {
-                botsAI.EasyMode();
-                ResetPosition();
-                timer.Goal();
+                goalTextCanvas.SetActive(true);
+                goalText.text = "Игрок 2 выиграл!";
+                Invoke("RestartGame", 3f);
             } else
-            {
-                ResetPosition();
-                timer.Goal();
+                {
+                    if(SceneManager.GetActiveScene().name == "BotsGame")
+                {
+                    botsAI.EasyMode();
+                    ResetPosition();
+                    timer.Goal();
+                } else
+                {
+                    ResetPosition();
+                    timer.Goal();
+                }
             }
-            
         }
         else if (collision.gameObject.CompareTag("GoalTrigger2"))
         {
             score2++;
             scoreText2.text = score2.ToString(); 
-            if(SceneManager.GetActiveScene().name == "BotsGame")
+            if(score2 == howManyGoals)
             {
-                botsAI.Fury();
-                ResetPosition();
-                timer.Goal();
+                goalTextCanvas.SetActive(true);
+                goalText.text = "Игрок 1 выиграл!";
+                Invoke("RestartGame", 3f);
             } else
             {
-                ResetPosition();
-                timer.Goal();
-            }       
+                if(SceneManager.GetActiveScene().name == "BotsGame")
+                {
+                    botsAI.Fury();
+                    ResetPosition();
+                    timer.Goal();
+                } else
+                {
+                    ResetPosition();
+                    timer.Goal();
+                }   
+            }
         }
     }
 

@@ -4518,6 +4518,8 @@ MonoBehaviour:
   StartGameSound: {fileID: 8300000, guid: c295a870e60704548a182d990ed27ee7, type: 3}
   maxSpeed: 30
   botsAI: {fileID: 0}
+  goalText: {fileID: 929458182}
+  goalTextCanvas: {fileID: 236193929}
 --- !u!1 &1682619728
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,6 +5041,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsHandler
   volumeSlider: {fileID: 1804548864}
+  goalsSlider: {fileID: 0}
+  goalsText: {fileID: 0}
   volumeLevel: 0.5
 --- !u!114 &1745262374
 MonoBehaviour:

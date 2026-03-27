@@ -4166,7 +4166,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -137}
+  m_AnchoredPosition: {x: 0, y: -157.42}
   m_SizeDelta: {x: 739.02, y: 238.83997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1753529355
@@ -4810,6 +4810,8 @@ MonoBehaviour:
   botPanel: {fileID: 1439479958}
   audioSource: {fileID: 1074905603}
   menuMusic: {fileID: 8300000, guid: 28aa2f1f0d3d6ce4fb156e38ed6c23f4, type: 3}
+  mainMenuText: {fileID: 1753529355}
+  rotationSpeed: 10
 --- !u!1 &1912893293
 GameObject:
   m_ObjectHideFlags: 0

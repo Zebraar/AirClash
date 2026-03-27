@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,12 +10,32 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject botPanel;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private Text mainMenuText;
+    public float rotationSpeed = 10f;
+    private RectTransform rectTransform;
 
     void Start()
     {
         audioSource.clip = menuMusic;
         audioSource.loop = true;
         audioSource.Play();
+        rectTransform = mainMenuText.GetComponent<RectTransform>();
+    }
+
+    void Update()
+    {
+        rectTransform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+
+        float currentAngle = rectTransform.localEulerAngles.z;
+        if (currentAngle > 180) currentAngle -= 360;
+
+        if (currentAngle >= 6 || currentAngle <= -6)
+        {
+            rotationSpeed *= -1;
+        
+            float clampedAngle = Mathf.Clamp(currentAngle, -12, 12);
+            rectTransform.localEulerAngles = new Vector3(0, 0, clampedAngle);
+        }
     }
 
 
@@ -31,15 +52,15 @@ public class MainMenu : MonoBehaviour
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
-                PlayerPrefs.SetFloat("Difficulty", 10f);
+                PlayerPrefs.SetFloat("Difficulty", 13.5f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
-                PlayerPrefs.SetFloat("Difficulty", 15f);
+                PlayerPrefs.SetFloat("Difficulty", 25f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
-                PlayerPrefs.SetFloat("Difficulty", 20f);
+                PlayerPrefs.SetFloat("Difficulty", 50f);
                 SceneManager.LoadScene("BotsGame");
                 break;
             default:

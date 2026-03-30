@@ -1253,7 +1253,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 27204c7bd753395479465f853d607473, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.40000004, b: 0.73333335, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2874,6 +2874,7 @@ MonoBehaviour:
   goalsText: {fileID: 2006516938}
   fpsSlider: {fileID: 100831974}
   fpsText: {fileID: 1382751429}
+  particleToggle: {fileID: 0}
   volumeLevel: 0.5
 --- !u!114 &659277480
 MonoBehaviour:
@@ -3636,7 +3637,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: cd9ef8e9f7a528d4eb6147ddcf1f4f05, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9960785, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

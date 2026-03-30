@@ -13,7 +13,6 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
 
     void Start()
     {
-        Debug.Log("Версия до ботов");
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
         rb = GetComponent<Rigidbody2D>();

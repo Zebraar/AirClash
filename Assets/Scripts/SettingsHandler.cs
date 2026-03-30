@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsHandler : MonoBehaviour
@@ -9,10 +10,19 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Text goalsText;
     [SerializeField] private Slider fpsSlider;
     [SerializeField] private Text fpsText;
+    [SerializeField] private Toggle particleToggle;
     public float volumeLevel = 0.5f;
 
     void Start() {
-        volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
+        goalsSlider.value = PlayerPrefs.GetInt("Goals");
+        fpsSlider.value = PlayerPrefs.GetInt("FPS");
+        if(SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            if(PlayerPrefs.GetInt("Particle") == 0) particleToggle.isOn = false;
+            else particleToggle.isOn = true;
+        }
+        
     }
 
     public void OnVolumeSliderChanged() {
@@ -29,6 +39,11 @@ public class SettingsHandler : MonoBehaviour
         PlayerPrefs.SetInt("FPS", Convert.ToInt32(fpsSlider.value));
         fpsText.text = Convert.ToString(Convert.ToInt32(fpsSlider.value));
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
+    }
+
+    public void OnParticleToggleChanged()
+    {
+        PlayerPrefs.SetInt("Particle", particleToggle.isOn ? 1 : 0);
     }
 
     public void ShowTelegram()

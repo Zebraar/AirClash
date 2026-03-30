@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
-using Mono.Cecil.Cil;
-using UnityEditor;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,6 +27,9 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private GameObject goalTextCanvas;
     public GameObject particlePrefab;
     private bool isParticlesOn;
+    public MoneyHandler moneyHandler;
+    [SerializeField] private int howMoneyAdd;
+    [SerializeField] private int howMoneyRemove;
 
     void Awake()
     {
@@ -47,6 +48,8 @@ public class GoalHandler : MonoBehaviour
         timer.TimerStart();
         audioSource.PlayOneShot(StartGameSound);
         howManyGoals = PlayerPrefs.GetInt("Goals");
+        howMoneyAdd = PlayerPrefs.GetInt("HowMoneyAdd") * Mathf.Max(1, howManyGoals / 2);
+        howMoneyRemove = PlayerPrefs.GetInt("HowMoneyRemove");    
     }
 
     void FixedUpdate()
@@ -72,14 +75,21 @@ public class GoalHandler : MonoBehaviour
         {
             score1++;
             scoreText1.text = score1.ToString(); 
-            if(score2 >= howManyGoals)
+            if(score1 >= howManyGoals)
             {
+                if(SceneManager.GetActiveScene().name == "BotsGame")
+                {
+                    moneyHandler.RemoveMoney(howMoneyRemove);
+                    if(moneyHandler.GetMoney() <= 0) moneyHandler.RemoveMoney(moneyHandler.GetMoney());
+                    PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
+                    PlayerPrefs.Save();
+                }
                 goalTextCanvas.SetActive(true);
                 goalText.text = "Игрок 2 выиграл!";
                 Invoke("RestartGame", 3f);
             } else
-                {
-                    if(SceneManager.GetActiveScene().name == "BotsGame")
+            {
+                if(SceneManager.GetActiveScene().name == "BotsGame")
                 {
                     botsAI.EasyMode();
                     ResetPosition();
@@ -97,8 +107,14 @@ public class GoalHandler : MonoBehaviour
             scoreText2.text = score2.ToString(); 
             if(score2 >= howManyGoals)
             {
+                if(SceneManager.GetActiveScene().name == "BotsGame")
+                {
+                    moneyHandler.AddMoney(howMoneyAdd);
+                    PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
+                    PlayerPrefs.Save();
+                }
                 goalTextCanvas.SetActive(true);
-                goalText.text = "Игрок 1 выиграл!";
+                goalText.text = "Игрок 1 выиграл!";    
                 Invoke("RestartGame", 3f);
             } else
             {

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private Text mainMenuText;
+    [SerializeField] private Text moneyText;
+    [SerializeField] private MoneyHandler moneyHandler;
     public float rotationSpeed = 10f;
     private RectTransform rectTransform;
 
@@ -20,6 +23,7 @@ public class MainMenu : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
         rectTransform = mainMenuText.GetComponent<RectTransform>();
+        moneyText.text = "Money " + Convert.ToString(PlayerPrefs.GetInt("Money"));
     }
 
     void Update()
@@ -45,22 +49,32 @@ public class MainMenu : MonoBehaviour
         {
             case "VeryEasy":
                 PlayerPrefs.SetFloat("Difficulty", 3.1415926535f);
+                PlayerPrefs.SetInt("HowMoneyAdd", 3);
+                PlayerPrefs.SetInt("HowMoneyRemove", 1);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
                 PlayerPrefs.SetFloat("Difficulty", 7.5f);
+                PlayerPrefs.SetInt("HowMoneyAdd", 4);
+                PlayerPrefs.SetInt("HowMoneyRemove", 1);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
                 PlayerPrefs.SetFloat("Difficulty", 13.5f);
+                PlayerPrefs.SetInt("HowMoneyAdd", 6);
+                PlayerPrefs.SetInt("HowMoneyRemove", 3);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
                 PlayerPrefs.SetFloat("Difficulty", 25f);
+                PlayerPrefs.SetInt("HowMoneyAdd", 10);
+                PlayerPrefs.SetInt("HowMoneyRemove", 5);
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
                 PlayerPrefs.SetFloat("Difficulty", 50f);
+                PlayerPrefs.SetInt("HowMoneyAdd", 20);
+                PlayerPrefs.SetInt("HowMoneyRemove", 15);
                 SceneManager.LoadScene("BotsGame");
                 break;
             default:

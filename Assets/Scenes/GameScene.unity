@@ -4770,6 +4770,7 @@ MonoBehaviour:
   goalsText: {fileID: 1540761815}
   fpsSlider: {fileID: 728147578}
   fpsText: {fileID: 1382718278}
+  particleToggle: {fileID: 0}
   volumeLevel: 0.5
 --- !u!114 &1482380927
 MonoBehaviour:
@@ -5421,6 +5422,9 @@ MonoBehaviour:
   goalText: {fileID: 929458182}
   goalTextCanvas: {fileID: 236193929}
   particlePrefab: {fileID: 480041540813458189, guid: 76dd8bba75139a0478f0fb48805bcb1c, type: 3}
+  moneyHandler: {fileID: 0}
+  howMoneyAdd: 0
+  howMoneyRemove: 0
 --- !u!1 &1682619728
 GameObject:
   m_ObjectHideFlags: 0

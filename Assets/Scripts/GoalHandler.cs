@@ -1,3 +1,6 @@
+using JetBrains.Annotations;
+using Mono.Cecil.Cil;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,6 +27,7 @@ public class GoalHandler : MonoBehaviour
     private int howManyGoals;
     [SerializeField] private Text goalText;
     [SerializeField] private GameObject goalTextCanvas;
+    public GameObject particlePrefab;
 
     void Awake()
     {
@@ -31,6 +35,8 @@ public class GoalHandler : MonoBehaviour
         player2startPos = player2.transform.position;
         puckStartPos = puck.transform.position;
         puckRb = puck.GetComponent<Rigidbody2D>();
+        var ps = particlePrefab.GetComponent<ParticleSystem>();
+        var psMain = ps.main;
     }
 
     void Start()
@@ -58,6 +64,7 @@ public class GoalHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.CompareTag("GoalTrigger1"))
         {
             score1++;
@@ -106,8 +113,21 @@ public class GoalHandler : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other) 
+    private void OnCollisionEnter2D(Collision2D collision) 
     {
+        var ps = particlePrefab.GetComponent<ParticleSystem>();
+        var psMain = ps.main;
+        // Получаем точку контакта для точности
+        ContactPoint2D contact = collision.contacts[0];
+        Vector3 spawnPos = contact.point;
+        spawnPos.z = -1f;
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+        psMain.startColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
+           
+        // Создаем частицы в месте удара
+        var newParticles = Instantiate(particlePrefab, contact.point, rotation);
+        newParticles.GetComponent<ParticleSystem>().Play();
+
         audioSource.PlayOneShot(puckSound);
     }
 

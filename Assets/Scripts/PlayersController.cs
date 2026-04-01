@@ -20,6 +20,8 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
         targetPos = rb.position;
         float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         AudioListener.volume = volume;
+        if(gameObject.name.Equals("Player1")) GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PlayerPrefs.GetString("CurrentSkin"));
+        else if(gameObject.name.Equals("Player2")) GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PlayerPrefs.GetString("CurrentSkin") + "Pl2");
     }
 
     public void OnBeginDrag(PointerEventData eventData)

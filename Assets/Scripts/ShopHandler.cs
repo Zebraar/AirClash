@@ -1,0 +1,48 @@
+using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class ShopHandler : MonoBehaviour
+{
+    [SerializeField] private MoneyHandler moneyHandler;
+    [SerializeField] private Text moneyText;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private AudioClip cancelSound;
+    [SerializeField] private AudioClip buySound;
+
+    void Start()
+    {
+        moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
+        audioSource.clip = menuMusic;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+    public void CloseShop()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public bool BuySkin(string skinName, int skinCoast)
+    {
+        if(moneyHandler.GetMoney() >= skinCoast)
+        {
+            audioSource.PlayOneShot(buySound);
+            moneyHandler.RemoveMoney(skinCoast);
+            PlayerPrefs.SetString("CurrentSkin", skinName);
+            moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
+            return true;
+        } else
+        {
+            audioSource.PlayOneShot(cancelSound);
+            return false;
+        } 
+    }
+
+    public void EquipSkin(string skinName)
+    {
+        PlayerPrefs.SetString("CurrentSkin", skinName);
+    }
+
+}

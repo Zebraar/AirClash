@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
         audioSource.Play();
         rectTransform = mainMenuText.GetComponent<RectTransform>();
         moneyText.text = "Money " + Convert.ToString(PlayerPrefs.GetInt("Money"));
+        moneyHandler.AddMoney(999999999);
     }
 
     void Update()
@@ -140,6 +141,11 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void OpenShop()
+    {
+        SceneManager.LoadScene("ShopScene");
     }
 
 

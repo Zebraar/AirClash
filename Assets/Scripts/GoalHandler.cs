@@ -19,8 +19,6 @@ public class GoalHandler : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip puckSound;
     public AudioClip StartGameSound;
-    private Rigidbody2D puckRb;
-    public float maxSpeed = 20f;
     [SerializeField] private BotsAI botsAI;
     private int howManyGoals;
     [SerializeField] private Text goalText;
@@ -36,7 +34,6 @@ public class GoalHandler : MonoBehaviour
         player1startPos = player1.transform.position;
         player2startPos = player2.transform.position;
         puckStartPos = puck.transform.position;
-        puckRb = puck.GetComponent<Rigidbody2D>();
         var ps = particlePrefab.GetComponent<ParticleSystem>();
         var psMain = ps.main;
         if(PlayerPrefs.GetInt("Particle") == 0) isParticlesOn = false;
@@ -52,23 +49,7 @@ public class GoalHandler : MonoBehaviour
         howMoneyRemove = PlayerPrefs.GetInt("HowMoneyRemove");    
     }
 
-    void FixedUpdate()
-    {
-        if (puckRb.linearVelocity.magnitude > maxSpeed)
-        {
-            puckRb.linearVelocity = Vector3.ClampMagnitude(puckRb.linearVelocity, maxSpeed);
-        }
-        if(puckRb.linearVelocityY < 0.1f && puckRb.linearVelocityY > -0.1f && !timer.TimerOn && puckRb.linearVelocityX != 0)
-        {
-            puckRb.linearVelocity = new Vector2(puckRb.linearVelocity.x, 0.1f * Mathf.Sign(puckRb.linearVelocity.y));
-        }
-        if(puckRb.linearVelocityX < 0.1f && puckRb.linearVelocityX > -0.1f && !timer.TimerOn && puckRb.linearVelocityY != 0)
-        {
-            puckRb.linearVelocity = new Vector2(puckRb.linearVelocity.y, 0.1f * Mathf.Sign(puckRb.linearVelocity.x));
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnGoalTrigger(Collider2D collision)
     {
 
         if (collision.gameObject.CompareTag("GoalTrigger1"))
@@ -132,7 +113,7 @@ public class GoalHandler : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) 
+    public void OnPuckCollisionEnter2D(Collision2D collision) 
     {
         if(isParticlesOn == true)
         {

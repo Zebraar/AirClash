@@ -46,4 +46,10 @@ public class ShopHandler : MonoBehaviour
         PlayerPrefs.SetString("CurrentSkin", skinName);
     }
 
+    public void PlusMoney()
+    {
+        moneyHandler.AddMoney(100);
+        moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
+    }
+
 }

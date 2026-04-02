@@ -23,8 +23,8 @@ public class MainMenu : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
         rectTransform = mainMenuText.GetComponent<RectTransform>();
-        moneyText.text = "Money " + Convert.ToString(PlayerPrefs.GetInt("Money"));
         moneyHandler.AddMoney(999999999);
+        moneyText.text = "Money " + Convert.ToString(PlayerPrefs.GetInt("Money"));
     }
 
     void Update()

@@ -26,11 +26,12 @@ public class ShopHandler : MonoBehaviour
 
     public bool BuySkin(string skinName, int skinCoast)
     {
-        if(moneyHandler.GetMoney() >= skinCoast)
+        if(moneyHandler.GetMoney() >= skinCoast && PlayerPrefs.GetInt(skinName) == 0)
         {
             audioSource.PlayOneShot(buySound);
             moneyHandler.RemoveMoney(skinCoast);
             PlayerPrefs.SetString("CurrentSkin", skinName);
+            PlayerPrefs.SetInt(skinName, 1);
             moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
             return true;
         } else

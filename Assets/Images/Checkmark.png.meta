@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3f53ce0eb00a7f841984e857ae27f37c
+guid: dc0334b7298c3124a909bb8b6fdc228d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7623382770411192682
-    second: github_logo_icon_206752_0
+      213: 2780540300400067551
+    second: Checkmark_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: github_logo_icon_206752_0
+      name: Checkmark_0
       rect:
         serializedVersion: 2
-        x: 41
-        y: 52
-        width: 430
-        height: 419
+        x: 2
+        y: 221
+        width: 1998
+        height: 1506
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6141314d32bbc960800000000000000
-      internalID: 7623382770411192682
+      spriteID: fd30109dba6769620800000000000000
+      internalID: 2780540300400067551
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      github_logo_icon_206752_0: 7623382770411192682
+      Checkmark_0: 2780540300400067551
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

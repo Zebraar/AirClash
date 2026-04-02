@@ -28,6 +28,7 @@ public class GoalHandler : MonoBehaviour
     public MoneyHandler moneyHandler;
     [SerializeField] private int howMoneyAdd;
     [SerializeField] private int howMoneyRemove;
+    private Color wallParticleColor;
 
     void Awake()
     {
@@ -46,7 +47,11 @@ public class GoalHandler : MonoBehaviour
         audioSource.PlayOneShot(StartGameSound);
         howManyGoals = PlayerPrefs.GetInt("Goals");
         howMoneyAdd = PlayerPrefs.GetInt("HowMoneyAdd") * Mathf.Max(1, howManyGoals / 2);
-        howMoneyRemove = PlayerPrefs.GetInt("HowMoneyRemove");    
+        howMoneyRemove = PlayerPrefs.GetInt("HowMoneyRemove");  
+        if (!ColorUtility.TryParseHtmlString("#30C7FE", out wallParticleColor))
+        {
+            wallParticleColor = Color.white; // Цвет по умолчанию, если Hex неверный
+        } 
     }
 
     public void OnGoalTrigger(Collider2D collision)
@@ -115,7 +120,7 @@ public class GoalHandler : MonoBehaviour
 
     public void OnPuckCollisionEnter2D(Collision2D collision) 
     {
-        if(isParticlesOn == true)
+        if(isParticlesOn == true && collision.gameObject.CompareTag("Wall"))
         {
             var ps = particlePrefab.GetComponent<ParticleSystem>();
             var psMain = ps.main;
@@ -123,12 +128,10 @@ public class GoalHandler : MonoBehaviour
             Vector3 spawnPos = contact.point;
             spawnPos.z = -1f;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            psMain.startColor = collision.gameObject.GetComponent<SpriteRenderer>().color;
-           
+            psMain.startColor = wallParticleColor;     
             var newParticles = Instantiate(particlePrefab, contact.point, rotation);
             newParticles.GetComponent<ParticleSystem>().Play();
         }
-
         audioSource.PlayOneShot(puckSound);
     }
 

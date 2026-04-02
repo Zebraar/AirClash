@@ -23,8 +23,10 @@ public class MainMenu : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
         rectTransform = mainMenuText.GetComponent<RectTransform>();
-        moneyHandler.AddMoney(999999999);
         moneyText.text = "Money " + Convert.ToString(PlayerPrefs.GetInt("Money"));
+        QualitySettings.vSyncCount = 0;
+        if(PlayerPrefs.GetInt("FPS") == 0) Application.targetFrameRate = 60;
+        else Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
     }
 
     void Update()

@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text mainMenuText;
     [SerializeField] private Text moneyText;
     [SerializeField] private MoneyHandler moneyHandler;
+    [SerializeField] private GameObject mentionsPanel;
     public float rotationSpeed = 10f;
     private RectTransform rectTransform;
 
@@ -117,6 +118,7 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetActive(false);
         onlinePanel.SetActive(false);
         botPanel.SetActive(false);
+        mentionsPanel.SetActive(false);
     }
 
     public void VeryEasyMode()
@@ -155,8 +157,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("ShopScene");
     }
 
-    public void DeletePlayerPrefs()
+    public void OpenMentions()
     {
-        PlayerPrefs.DeleteAll();
+        mentionsPanel.SetActive(true);
     }
 }

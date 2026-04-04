@@ -14,7 +14,7 @@ public class SettingsHandler : MonoBehaviour
     public float volumeLevel = 0.5f;
 
     void Start() {
-        if(PlayerPrefs.GetInt("MusicVolume") == 0) PlayerPrefs.SetFloat("MusicVolume", 1f);
+        if(PlayerPrefs.GetInt("MusicVolume") == 0) PlayerPrefs.SetFloat("MusicVolume", 0.5f);
         else Application.targetFrameRate = PlayerPrefs.GetInt("MusicVolume");
         volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         if(PlayerPrefs.GetInt("Goals") == 0) PlayerPrefs.SetInt("Goals", 5);

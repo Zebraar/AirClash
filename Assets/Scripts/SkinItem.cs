@@ -7,6 +7,7 @@ public class SkinItem : MonoBehaviour
     public ShopHandler shop;
     public bool isBuy;
     public UnityEngine.UI.Image checkmark;
+    public UnityEngine.UI.Image equipArrow;
 
     void Start()
     {
@@ -21,12 +22,17 @@ public class SkinItem : MonoBehaviour
     {
         if(!isBuy)
         {
-            shop.BuySkin(skinName, skinPrice);
-            isBuy = shop.BuySkin(skinName, skinPrice);
-            if(isBuy) checkmark.gameObject.SetActive(true);
-        } else
+            isBuy = shop.BuySkin(skinName, skinPrice);      
+            if(isBuy) 
+            {
+                checkmark.gameObject.SetActive(true);
+                shop.EquipSkin(skinName);
+            }
+        } 
+        else
         {
             shop.EquipSkin(skinName);
         }
-    }
+    }  
+
 }

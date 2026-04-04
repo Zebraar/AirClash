@@ -54,30 +54,35 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetFloat("Difficulty", 3.1415926535f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 3);
                 PlayerPrefs.SetInt("HowMoneyRemove", 1);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
                 PlayerPrefs.SetFloat("Difficulty", 7.5f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 4);
                 PlayerPrefs.SetInt("HowMoneyRemove", 1);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
                 PlayerPrefs.SetFloat("Difficulty", 13.5f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 6);
                 PlayerPrefs.SetInt("HowMoneyRemove", 3);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
                 PlayerPrefs.SetFloat("Difficulty", 25f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 10);
                 PlayerPrefs.SetInt("HowMoneyRemove", 5);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
                 PlayerPrefs.SetFloat("Difficulty", 50f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 20);
                 PlayerPrefs.SetInt("HowMoneyRemove", 15);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             default:
@@ -150,5 +155,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("ShopScene");
     }
 
-
+    public void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }

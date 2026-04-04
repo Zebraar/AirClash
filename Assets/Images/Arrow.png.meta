@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: dc0334b7298c3124a909bb8b6fdc228d
+guid: 3611cc0383381d84bb3438eb6b34f615
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2780540300400067551
-    second: Checkmark_0
+      213: 5478425480816230772
+    second: 959159_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Checkmark_0
+      name: 959159_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 221
-        width: 1998
-        height: 1506
+        x: 67
+        y: 0
+        width: 378
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fd30109dba6769620800000000000000
-      internalID: 2780540300400067551
+      spriteID: 4710088e2f6470c40800000000000000
+      internalID: 5478425480816230772
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Checkmark_0: 2780540300400067551
+      959159_0: 5478425480816230772
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

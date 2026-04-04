@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class ShopHandler : MonoBehaviour
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip cancelSound;
     [SerializeField] private AudioClip buySound;
+    [SerializeField] private SkinItem[] allSkins; 
 
     void Start()
     {
@@ -18,6 +20,8 @@ public class ShopHandler : MonoBehaviour
         audioSource.clip = menuMusic;
         audioSource.loop = true;
         audioSource.Play();
+        string currentSkin = PlayerPrefs.GetString("CurrentSkin", "DefSkin");
+        EquipSkin(currentSkin);
     }
     public void CloseShop()
     {
@@ -32,6 +36,7 @@ public class ShopHandler : MonoBehaviour
             moneyHandler.RemoveMoney(skinCoast);
             PlayerPrefs.SetString("CurrentSkin", skinName);
             PlayerPrefs.SetInt(skinName, 1);
+            PlayerPrefs.Save();
             moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
             return true;
         } else
@@ -44,6 +49,12 @@ public class ShopHandler : MonoBehaviour
     public void EquipSkin(string skinName)
     {
         PlayerPrefs.SetString("CurrentSkin", skinName);
+        PlayerPrefs.Save();
+
+        foreach (var skin in allSkins)
+        {
+            skin.equipArrow.gameObject.SetActive(skin.skinName == skinName);
+        }
     }
 
     public void PlusMoney()

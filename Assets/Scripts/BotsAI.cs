@@ -63,7 +63,7 @@ public class BotsAI : MonoBehaviour
         } else if(puck.position.x < -6)
         {
             targetDestination = puck.position;
-            currentSpeed = moveSpeed * 2f;
+            currentSpeed = moveSpeed * 1.5f;
             isRand = false;
         } else if(puck.position.x < -4)
         {

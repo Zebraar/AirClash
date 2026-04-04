@@ -14,7 +14,7 @@ public class ShopHandler : MonoBehaviour
 
     void Start()
     {
-        moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
+        moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
         audioSource.clip = menuMusic;
         audioSource.loop = true;
         audioSource.Play();
@@ -32,7 +32,7 @@ public class ShopHandler : MonoBehaviour
             moneyHandler.RemoveMoney(skinCoast);
             PlayerPrefs.SetString("CurrentSkin", skinName);
             PlayerPrefs.SetInt(skinName, 1);
-            moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
+            moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
             return true;
         } else
         {
@@ -49,7 +49,7 @@ public class ShopHandler : MonoBehaviour
     public void PlusMoney()
     {
         moneyHandler.AddMoney(100);
-        moneyText.text = "Money " + Convert.ToString(moneyHandler.GetMoney());
+        moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
     }
 
 }

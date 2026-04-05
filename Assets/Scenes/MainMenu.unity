@@ -2962,6 +2962,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007784906}
   m_CullTransparentMesh: 1
+--- !u!1 &1016994371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1016994373}
+  - component: {fileID: 1016994372}
+  m_Layer: 0
+  m_Name: AnimManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1016994372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016994371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e3f3d480bdb13047880297e4781cda5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinManager
+  coinPrefab: {fileID: 5798145503516758745, guid: c4ef48ca378c92140aabce90c453d46d, type: 3}
+  targetPosition: {fileID: 788529099}
+  coinText: {fileID: 1207129119}
+  canvasParent: {fileID: 1912076072}
+  duration: 2
+  delayBetween: 0.05
+  coinSound: {fileID: 8300000, guid: 5fc5bda55b8fae04d9bfb61fc45a3be5, type: 3}
+  moneyHandler: {fileID: 1114898952}
+--- !u!4 &1016994373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016994371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1031013064
 GameObject:
   m_ObjectHideFlags: 0
@@ -7613,6 +7665,7 @@ MonoBehaviour:
   moneyText: {fileID: 1207129119}
   moneyHandler: {fileID: 1114898952}
   mentionsPanel: {fileID: 1124770557}
+  coinMover: {fileID: 1016994372}
   rotationSpeed: 10
 --- !u!1 &1912893293
 GameObject:
@@ -7989,3 +8042,4 @@ SceneRoots:
   - {fileID: 1529992832}
   - {fileID: 1074905604}
   - {fileID: 1114898953}
+  - {fileID: 1016994373}

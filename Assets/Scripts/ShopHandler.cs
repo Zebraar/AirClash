@@ -57,10 +57,12 @@ public class ShopHandler : MonoBehaviour
         }
     }
 
-    public void PlusMoney()
+
+    public void RemoveAllMoney()
     {
-        moneyHandler.AddMoney(100);
+        moneyHandler.RemoveMoney(moneyHandler.GetMoney());
         moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
     }
+
 
 }

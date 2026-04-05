@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text moneyText;
     [SerializeField] private MoneyHandler moneyHandler;
     [SerializeField] private GameObject mentionsPanel;
+    [SerializeField] private CoinMover coinMover;
     public float rotationSpeed = 10f;
     private RectTransform rectTransform;
 
@@ -25,13 +26,17 @@ public class MainMenu : MonoBehaviour
         audioSource.Play();
         rectTransform = mainMenuText.GetComponent<RectTransform>();
         moneyText.text = "Деньги " + Convert.ToString(PlayerPrefs.GetInt("Money"));
-        QualitySettings.vSyncCount = 0;
-        if(PlayerPrefs.GetInt("FPS") == 0) Application.targetFrameRate = 60;
-        else Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
-        if(PlayerPrefs.GetInt("MusicVolume") == 0) PlayerPrefs.SetFloat("MusicVolume", 0.5f);
-        else Application.targetFrameRate = PlayerPrefs.GetInt("MusicVolume");
-        if(PlayerPrefs.GetInt("Goals") == 0) PlayerPrefs.SetInt("Goals", 5);
-        else Application.targetFrameRate = PlayerPrefs.GetInt("Goals");
+        if(PlayerPrefs.GetInt("isAfterGame") == 0)
+        {
+            PlayerPrefs.SetInt("HowMoneyAdds", 0);
+            PlayerPrefs.SetInt("isAfterGame", 0);
+            PlayerPrefs.Save();    
+        } else
+        {
+            AddMoney(PlayerPrefs.GetInt("HowMoneyAdds"));
+            PlayerPrefs.SetInt("isAfterGame", 0);
+            PlayerPrefs.Save();
+        }
     }
 
     void Update()
@@ -57,36 +62,36 @@ public class MainMenu : MonoBehaviour
         {
             case "VeryEasy":
                 PlayerPrefs.SetFloat("Difficulty", 3.1415926535f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 3);
+                PlayerPrefs.SetInt("HowMoneyAdd", 1);
                 PlayerPrefs.SetInt("HowMoneyRemove", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
                 PlayerPrefs.SetFloat("Difficulty", 7.5f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 4);
+                PlayerPrefs.SetInt("HowMoneyAdd", 2);
                 PlayerPrefs.SetInt("HowMoneyRemove", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
                 PlayerPrefs.SetFloat("Difficulty", 13.5f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 6);
+                PlayerPrefs.SetInt("HowMoneyAdd", 4);
                 PlayerPrefs.SetInt("HowMoneyRemove", 3);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
                 PlayerPrefs.SetFloat("Difficulty", 25f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 10);
+                PlayerPrefs.SetInt("HowMoneyAdd", 5);
                 PlayerPrefs.SetInt("HowMoneyRemove", 5);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
                 PlayerPrefs.SetFloat("Difficulty", 50f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 20);
-                PlayerPrefs.SetInt("HowMoneyRemove", 15);
+                PlayerPrefs.SetInt("HowMoneyAdd", 8);
+                PlayerPrefs.SetInt("HowMoneyRemove", 10);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
@@ -164,5 +169,10 @@ public class MainMenu : MonoBehaviour
     public void OpenMentions()
     {
         mentionsPanel.SetActive(true);
+    }
+
+    public void AddMoney(int amount)
+    {
+        coinMover.AddCoins(new Vector3(0, 0, 0), amount);
     }
 }

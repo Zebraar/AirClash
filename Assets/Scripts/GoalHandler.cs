@@ -46,11 +46,11 @@ public class GoalHandler : MonoBehaviour
         timer.TimerStart();
         audioSource.PlayOneShot(StartGameSound);
         howManyGoals = PlayerPrefs.GetInt("Goals");
-        howMoneyAdd = PlayerPrefs.GetInt("HowMoneyAdd") * Mathf.Max(1, howManyGoals / 2);
+        howMoneyAdd = PlayerPrefs.GetInt("HowMoneyAdd") * Mathf.Max(1, Convert.ToInt32(howManyGoals / 1.5f));
         howMoneyRemove = PlayerPrefs.GetInt("HowMoneyRemove");  
         if (!ColorUtility.TryParseHtmlString("#30C7FE", out wallParticleColor))
         {
-            wallParticleColor = Color.white; // Цвет по умолчанию, если Hex неверный
+            wallParticleColor = Color.white;
         } 
     }
 
@@ -63,23 +63,15 @@ public class GoalHandler : MonoBehaviour
             scoreText1.text = score1.ToString(); 
             if(score1 >= howManyGoals)
             {
-                if(SceneManager.GetActiveScene().name == "BotsGame")
-                {
-                    moneyHandler.RemoveMoney(howMoneyRemove);
-                    if(moneyHandler.GetMoney() <= 0) moneyHandler.RemoveMoney(moneyHandler.GetMoney());
-                    PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
-                    PlayerPrefs.Save();
-                }
-                goalTextCanvas.SetActive(true);
-                goalText.text = "Игрок 2 выиграл!";
-                Invoke("RestartGame", 3f);
+                if(SceneManager.GetActiveScene().name == "BotsGame") Lose();
+                else Win();
             } else
             {
                 if(SceneManager.GetActiveScene().name == "BotsGame")
                 {
-                    botsAI.EasyMode();
-                    ResetPosition();
-                    timer.Goal();
+                        botsAI.EasyMode();
+                        ResetPosition();
+                        timer.Goal();
                 } else
                 {
                     ResetPosition();
@@ -93,15 +85,7 @@ public class GoalHandler : MonoBehaviour
             scoreText2.text = score2.ToString(); 
             if(score2 >= howManyGoals)
             {
-                if(SceneManager.GetActiveScene().name == "BotsGame")
-                {
-                    moneyHandler.AddMoney(howMoneyAdd);
-                    PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
-                    PlayerPrefs.Save();
-                }
-                goalTextCanvas.SetActive(true);
-                goalText.text = "Игрок 1 выиграл!";    
-                Invoke("RestartGame", 3f);
+                Win();
             } else
             {
                 if(SceneManager.GetActiveScene().name == "BotsGame")
@@ -159,8 +143,44 @@ public class GoalHandler : MonoBehaviour
         score2 = 0;
         scoreText1.text = "0";
         scoreText2.text = "0";
+        PlayerPrefs.SetInt("HowMoneyAdds", 0);
+        PlayerPrefs.Save();
         ResetPosition();
         audioSource.PlayOneShot(StartGameSound);
         timer.TimerStart();
+    }
+
+    public void Win()
+    {
+        if(SceneManager.GetActiveScene().name == "BotsGame")
+        {
+            PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
+            PlayerPrefs.SetInt("HowMoneyAdds", howMoneyAdd);
+            PlayerPrefs.SetInt("isAfterGame", 1);
+            PlayerPrefs.Save();
+        }
+        goalTextCanvas.SetActive(true);
+        if(score1 >= howManyGoals) goalText.text = "Игрок 1 выиграл!";  
+        else if(score2 >= howManyGoals) goalText.text = "Игрок 2 выиграл!";  
+        Invoke("LoadMainMenu", 4f);
+    }
+    public void Lose()
+    {
+        if(SceneManager.GetActiveScene().name == "BotsGame")
+        {
+            moneyHandler.RemoveMoney(howMoneyRemove);
+            PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
+            PlayerPrefs.SetInt("HowMoneyAdds", 0);
+            PlayerPrefs.SetInt("isAfterGame", 1);
+            PlayerPrefs.Save();
+        }
+        goalTextCanvas.SetActive(true);
+        if(score1 >= howManyGoals) goalText.text = "Игрок 1 выиграл!";  
+        else if(score2 >= howManyGoals) goalText.text = "Игрок 2 выиграл!";  
+        Invoke("LoadMainMenu", 4f);
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

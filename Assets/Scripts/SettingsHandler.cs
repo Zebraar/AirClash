@@ -13,7 +13,14 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Toggle particleToggle;
     public float volumeLevel = 0.5f;
 
-    void Start() {
+    public void Start() {
+        QualitySettings.vSyncCount = 0;
+        if(PlayerPrefs.GetInt("FPS") == 0) PlayerPrefs.SetInt("FPS", 60);
+        else Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
+        if(PlayerPrefs.GetInt("MusicVolume") == 0) PlayerPrefs.SetFloat("MusicVolume", 0.5f);
+        else Application.targetFrameRate = PlayerPrefs.GetInt("MusicVolume");
+        if(PlayerPrefs.GetInt("Goals") == 0) PlayerPrefs.SetInt("Goals", 5);
+        else Application.targetFrameRate = PlayerPrefs.GetInt("Goals");
         volumeSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         goalsSlider.value = PlayerPrefs.GetInt("Goals");
         fpsSlider.value = PlayerPrefs.GetInt("FPS");

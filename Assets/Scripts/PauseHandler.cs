@@ -36,6 +36,8 @@ public class PauseHandler : MonoBehaviour
     }
     public void MainMenu()
     {
+        PlayerPrefs.SetInt("HowMoneyAdds", 0);
+        PlayerPrefs.Save();
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }

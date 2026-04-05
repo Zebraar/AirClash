@@ -28,6 +28,10 @@ public class MainMenu : MonoBehaviour
         QualitySettings.vSyncCount = 0;
         if(PlayerPrefs.GetInt("FPS") == 0) Application.targetFrameRate = 60;
         else Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
+        if(PlayerPrefs.GetInt("MusicVolume") == 0) PlayerPrefs.SetFloat("MusicVolume", 0.5f);
+        else Application.targetFrameRate = PlayerPrefs.GetInt("MusicVolume");
+        if(PlayerPrefs.GetInt("Goals") == 0) PlayerPrefs.SetInt("Goals", 5);
+        else Application.targetFrameRate = PlayerPrefs.GetInt("Goals");
     }
 
     void Update()

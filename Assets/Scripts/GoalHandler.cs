@@ -28,6 +28,7 @@ public class GoalHandler : MonoBehaviour
     public MoneyHandler moneyHandler;
     [SerializeField] private int howMoneyAdd;
     [SerializeField] private int howMoneyRemove;
+    [SerializeField] private AchievementsHandler achievementsHandler;
     private Color wallParticleColor;
 
     void Awake()
@@ -90,6 +91,9 @@ public class GoalHandler : MonoBehaviour
             {
                 if(SceneManager.GetActiveScene().name == "BotsGame")
                 {
+                    achievementsHandler.UpdateProgress("a_start_has_been_made", 1);
+                    achievementsHandler.UpdateProgress("begginer", 1);
+                    achievementsHandler.UpdateProgress("amateur", 1);
                     botsAI.Fury();
                     ResetPosition();
                     timer.Goal();

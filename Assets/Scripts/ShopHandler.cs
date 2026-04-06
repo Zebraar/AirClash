@@ -64,5 +64,10 @@ public class ShopHandler : MonoBehaviour
         moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
     }
 
+    public void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
 
 }

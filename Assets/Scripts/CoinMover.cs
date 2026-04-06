@@ -6,15 +6,15 @@ using System.Collections;
 public class CoinMover : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private GameObject coinPrefab;    // Префаб монетки (UI Image)
-    [SerializeField] private Transform targetPosition; // Иконка монетки в углу экрана
-    [SerializeField] private Text coinText; // Текст счетчика
-    [SerializeField] private Transform canvasParent;   // Родитель для спавна монет (обычно Canvas)
+    [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private Transform targetPosition;
+    [SerializeField] private Text coinText;
+    [SerializeField] private Transform canvasParent;
 
     [Header("Settings")]
-    [SerializeField] private float duration = 2f;    // Время полета монеты
-    [SerializeField] private float delayBetween = 0.05f; // Задержка между вылетами
-    [SerializeField] private AudioClip coinSound;      // Звук монетки
+    [SerializeField] private float duration = 2f;
+    [SerializeField] private float delayBetween = 0.05f;
+    [SerializeField] private AudioClip coinSound;
     [Header("Scripts")]
     [SerializeField] private MoneyHandler moneyHandler;
     
@@ -28,7 +28,6 @@ public class CoinMover : MonoBehaviour
         UpdateUI();
     }
 
-    // Главный метод: вызывайте его, когда игрок получает награду
     public void AddCoins(Vector3 spawnPosition, int amount)
     {
         StartCoroutine(AnimateCoins(spawnPosition, amount));
@@ -77,7 +76,6 @@ public class CoinMover : MonoBehaviour
     {
         if (coinSound != null)
         {
-            // Повышаем Pitch (высоту звука) с каждой монетой для "прикольного" эффекта
             audioSource.pitch = 1f + (currentCoinsCount % 10 * 0.05f); 
             audioSource.PlayOneShot(coinSound);
         }

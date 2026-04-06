@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private MoneyHandler moneyHandler;
     [SerializeField] private GameObject mentionsPanel;
     [SerializeField] private CoinMover coinMover;
+    [SerializeField] private GameObject achievementsPanel;
     public float rotationSpeed = 10f;
     private RectTransform rectTransform;
 
@@ -128,6 +129,7 @@ public class MainMenu : MonoBehaviour
         onlinePanel.SetActive(false);
         botPanel.SetActive(false);
         mentionsPanel.SetActive(false);
+        achievementsPanel.SetActive(false);
     }
 
     public void VeryEasyMode()
@@ -169,6 +171,10 @@ public class MainMenu : MonoBehaviour
     public void OpenMentions()
     {
         mentionsPanel.SetActive(true);
+    }
+    public void OpenAchievements()
+    {
+        achievementsPanel.SetActive(true);
     }
 
     public void AddMoney(int amount)

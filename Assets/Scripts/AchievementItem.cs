@@ -17,7 +17,7 @@ public class AchievementItem : MonoBehaviour
         Progress = achievementsHandler.GetProgress(Title);
         Target = achievementsHandler.GetTarget(Title);
         progressText.text = Progress.ToString() + "/" + Target.ToString();
-        if(Progress == Target) unlockedCheckMark.SetActive(true);
+        if(IsUnlocked) unlockedCheckMark.SetActive(true);
         else unlockedCheckMark.SetActive(false);
     }
 }

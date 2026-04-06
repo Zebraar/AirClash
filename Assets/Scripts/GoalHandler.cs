@@ -91,9 +91,7 @@ public class GoalHandler : MonoBehaviour
             {
                 if(SceneManager.GetActiveScene().name == "BotsGame")
                 {
-                    achievementsHandler.UpdateProgress("a_start_has_been_made", 1);
-                    achievementsHandler.UpdateProgress("begginer", 1);
-                    achievementsHandler.UpdateProgress("amateur", 1);
+                    UpdateAchievements();
                     botsAI.Fury();
                     ResetPosition();
                     timer.Goal();
@@ -158,6 +156,25 @@ public class GoalHandler : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "BotsGame")
         {
+            UpdateAchievements();
+            switch(PlayerPrefs.GetFloat("Difficulty"))
+            {
+                case 3.1415926535f:
+                    achievementsHandler.UpdateProgress("light_warm-up", 1);
+                    break;
+                case 7.5f:
+                    achievementsHandler.UpdateProgress("warm-up", 1);
+                    break;
+                case 13.5f:
+                    achievementsHandler.UpdateProgress("training", 1);
+                    break;
+                case 25f:
+                    achievementsHandler.UpdateProgress("fight", 1);
+                    break;
+                case 50f:
+                    achievementsHandler.UpdateProgress("competitions", 1);
+                    break;
+            }  
             PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
             PlayerPrefs.SetInt("HowMoneyAdds", howMoneyAdd);
             PlayerPrefs.SetInt("isAfterGame", 1);
@@ -186,5 +203,16 @@ public class GoalHandler : MonoBehaviour
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+    public void UpdateAchievements()
+    {
+        achievementsHandler.UpdateProgress("a_start_has_been_made", 1);
+        achievementsHandler.UpdateProgress("begginer", 1);
+        achievementsHandler.UpdateProgress("amateur", 1);
+        achievementsHandler.UpdateProgress("professional", 1);
+        achievementsHandler.UpdateProgress("master", 1);
+        achievementsHandler.UpdateProgress("world_champion", 1);
+        achievementsHandler.UpdateProgress("best_in_the_galaxy", 1);
+        achievementsHandler.UpdateProgress("best_in_the_universe", 1);
     }
 }

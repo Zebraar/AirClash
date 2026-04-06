@@ -18,9 +18,21 @@ public class AchievementsHandler : MonoBehaviour
 
     void Start()
     {
+        // Ачивки на голы
         achievements.Add("a_start_has_been_made", new Achievement { Title = "Начало положено", Target = 1 });
         achievements.Add("begginer", new Achievement { Title = "Новичок", Target = 10 });
         achievements.Add("amateur", new Achievement {Title = "Любитель", Target = 30});
+        achievements.Add("professional", new Achievement {Title = "Профессионал", Target = 70});
+        achievements.Add("master", new Achievement {Title = "Мастер", Target = 100});
+        achievements.Add("world_champion", new Achievement {Title = "Всемирный чемпион", Target = 400});
+        achievements.Add("best_in_the_galaxy", new Achievement {Title = "Лучший в галактике", Target = 1000});
+        achievements.Add("best_in_the_universe", new Achievement {Title = "Лучший во вселенной", Target = 10000});
+        // Ачивки на победы над ботами
+        achievements.Add("light_warm-up", new Achievement { Title = "Лёгкая разминка", Target = 1});
+        achievements.Add("warm-up", new Achievement { Title = "Разминка", Target = 1});
+        achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1});
+        achievements.Add("fight", new Achievement { Title = "Бой", Target = 1});
+        achievements.Add("competitions", new Achievement { Title = "Соревнования", Target = 1});
         LoadAchievements();
     }
 

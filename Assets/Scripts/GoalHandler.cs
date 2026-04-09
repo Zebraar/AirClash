@@ -192,7 +192,7 @@ public class GoalHandler : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "BotsGame")
         {
-            if(PlayerPrefs.GetInt("Difficulty") == 7.5f) achievementsHandler.UpdateProgress("seriously", 1);
+            if(PlayerPrefs.GetFloat("Difficulty") == 7.5f) achievementsHandler.UpdateProgress("seriously", 1);
             moneyHandler.RemoveMoney(howMoneyRemove);
             PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
             PlayerPrefs.SetInt("HowMoneyAdds", 0);

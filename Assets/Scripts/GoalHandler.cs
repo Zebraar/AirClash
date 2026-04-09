@@ -30,6 +30,7 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private int howMoneyRemove;
     [SerializeField] private AchievementsHandler achievementsHandler;
     private Color wallParticleColor;
+    private string lastCollision;
 
     void Awake()
     {
@@ -57,9 +58,9 @@ public class GoalHandler : MonoBehaviour
 
     public void OnGoalTrigger(Collider2D collision)
     {
-
         if (collision.gameObject.CompareTag("GoalTrigger1"))
         {
+            if(lastCollision == "Player1") achievementsHandler.UpdateProgress("own_goal", 1);
             score1++;
             scoreText1.text = score1.ToString(); 
             if(score1 >= howManyGoals)
@@ -86,6 +87,7 @@ public class GoalHandler : MonoBehaviour
             scoreText2.text = score2.ToString(); 
             if(score2 >= howManyGoals)
             {
+                if(score2 == 10) achievementsHandler.UpdateProgress("ten", 10);
                 Win();
             } else
             {
@@ -106,6 +108,7 @@ public class GoalHandler : MonoBehaviour
 
     public void OnPuckCollisionEnter2D(Collision2D collision) 
     {
+        lastCollision = collision.gameObject.name;
         if(isParticlesOn == true && collision.gameObject.CompareTag("Wall"))
         {
             var ps = particlePrefab.GetComponent<ParticleSystem>();
@@ -189,6 +192,7 @@ public class GoalHandler : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "BotsGame")
         {
+            if(PlayerPrefs.GetInt("Difficulty") == 7.5f) achievementsHandler.UpdateProgress("seriously", 1);
             moneyHandler.RemoveMoney(howMoneyRemove);
             PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
             PlayerPrefs.SetInt("HowMoneyAdds", 0);

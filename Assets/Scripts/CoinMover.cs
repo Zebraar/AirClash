@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening; // Нужно установить DOTween
+using DG.Tweening;
 using System.Collections;
 
 public class CoinMover : MonoBehaviour

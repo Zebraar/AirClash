@@ -13,6 +13,7 @@ public class ShopHandler : MonoBehaviour
     [SerializeField] private AudioClip cancelSound;
     [SerializeField] private AudioClip buySound;
     [SerializeField] private SkinItem[] allSkins; 
+    [SerializeField] private AchievementsHandler achievementsHandler;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class ShopHandler : MonoBehaviour
     {
         if(moneyHandler.GetMoney() >= skinCoast && PlayerPrefs.GetInt(skinName) == 0)
         {
+            achievementsHandler.UpdateProgress("large_wardrobe", 1);
             audioSource.PlayOneShot(buySound);
             moneyHandler.RemoveMoney(skinCoast);
             PlayerPrefs.SetString("CurrentSkin", skinName);

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f198d7bb2c05949459027f01fa25a9d2
+guid: 3791fea15cf3dd3449a6ef10cd317654
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7162366295330194763
-    second: achievementForWinExtreme_0
+      213: -8284335618415188681
+    second: achievementLargeWardrobe_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: achievementForWinExtreme_0
+      name: achievementLargeWardrobe_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5bafc9f5dc92a9c90800000000000000
-      internalID: -7162366295330194763
+      spriteID: 7352f38b5a0280d80800000000000000
+      internalID: -8284335618415188681
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      achievementForWinExtreme_0: -7162366295330194763
+      achievementLargeWardrobe_0: -8284335618415188681
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
 using UnityEngine;
 
 public class AchievementsHandler : MonoBehaviour
@@ -33,6 +31,11 @@ public class AchievementsHandler : MonoBehaviour
         achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1});
         achievements.Add("fight", new Achievement { Title = "Бой", Target = 1});
         achievements.Add("competitions", new Achievement { Title = "Соревнования", Target = 1});
+        // Ачивки от подписчиков
+        achievements.Add("ten", new Achievement {Title = "Десятка", Target = 10});
+        achievements.Add("seriously", new Achievement {Title = "Серьёзно?", Target = 1});
+        achievements.Add("large_wardrobe", new Achievement {Title = "Большой гардероб", Target = 7});
+        achievements.Add("own_goal", new Achievement {Title = "Автогол", Target = 2});
         LoadAchievements();
     }
 
@@ -50,7 +53,6 @@ public class AchievementsHandler : MonoBehaviour
             {
                 ach.IsUnlocked = true;
                 PlayerPrefs.SetInt(id + "_unlocked", 1); 
-                Debug.Log($"Достижение получено: {ach.Title}");
             }
         
             PlayerPrefs.Save();
@@ -68,7 +70,6 @@ public class AchievementsHandler : MonoBehaviour
             {
                 ach.IsUnlocked = true;
                 ach.Progress = ach.Target;
-                Debug.Log("Достижение " + ach.Title + " разблокировано");
             }
             else
             {

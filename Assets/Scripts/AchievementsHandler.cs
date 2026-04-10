@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AchievementsHandler : MonoBehaviour
 {
+    [SerializeField] private AnimationsHandler animationsHandler;
     
     public class Achievement
     {
@@ -53,6 +55,7 @@ public class AchievementsHandler : MonoBehaviour
             {
                 ach.IsUnlocked = true;
                 PlayerPrefs.SetInt(id + "_unlocked", 1); 
+                animationsHandler.ShowAchievement(ach.Title);
             }
         
             PlayerPrefs.Save();

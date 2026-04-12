@@ -27,7 +27,7 @@ public class GoalHandler : MonoBehaviour
     private bool isParticlesOn;
     public MoneyHandler moneyHandler;
     [SerializeField] private int howMoneyAdd;
-    [SerializeField] private int howMoneyRemove;
+    [SerializeField] private int howMoneyAddAsLose;
     [SerializeField] private AchievementsHandler achievementsHandler;
     private Color wallParticleColor;
     private string lastCollision;
@@ -49,7 +49,7 @@ public class GoalHandler : MonoBehaviour
         audioSource.PlayOneShot(StartGameSound);
         howManyGoals = PlayerPrefs.GetInt("Goals");
         howMoneyAdd = PlayerPrefs.GetInt("HowMoneyAdd") * Mathf.Max(1, Convert.ToInt32(howManyGoals / 1.5f));
-        howMoneyRemove = PlayerPrefs.GetInt("HowMoneyRemove");  
+        howMoneyAddAsLose = PlayerPrefs.GetInt("HowMoneyAddAsLose");  
         if (!ColorUtility.TryParseHtmlString("#30C7FE", out wallParticleColor))
         {
             wallParticleColor = Color.white;
@@ -179,7 +179,7 @@ public class GoalHandler : MonoBehaviour
                     break;
             }  
             PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
-            PlayerPrefs.SetInt("HowMoneyAdds", howMoneyAdd);
+            PlayerPrefs.SetInt("HowMoneyAdds", PlayerPrefs.GetInt("HowMoneyAdds") + howMoneyAdd);
             PlayerPrefs.SetInt("isAfterGame", 1);
             PlayerPrefs.Save();
         }
@@ -193,9 +193,8 @@ public class GoalHandler : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "BotsGame")
         {
             if(PlayerPrefs.GetFloat("Difficulty") == 7.5f) achievementsHandler.UpdateProgress("seriously", 1);
-            moneyHandler.RemoveMoney(howMoneyRemove);
             PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
-            PlayerPrefs.SetInt("HowMoneyAdds", 0);
+            PlayerPrefs.SetInt("HowMoneyAdds", howMoneyAddAsLose);
             PlayerPrefs.SetInt("isAfterGame", 1);
             PlayerPrefs.Save();
         }

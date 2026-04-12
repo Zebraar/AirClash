@@ -3528,6 +3528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AchievementsHandler
   animationsHandler: {fileID: 1358771901}
+  moneyHandler: {fileID: 2065031118}
 --- !u!4 &1029591087
 Transform:
   m_ObjectHideFlags: 0

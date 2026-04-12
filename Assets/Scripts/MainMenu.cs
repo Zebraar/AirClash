@@ -64,35 +64,35 @@ public class MainMenu : MonoBehaviour
             case "VeryEasy":
                 PlayerPrefs.SetFloat("Difficulty", 3.1415926535f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 1);
-                PlayerPrefs.SetInt("HowMoneyRemove", 1);
+                PlayerPrefs.SetInt("HowMoneyAddAsLose", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
                 PlayerPrefs.SetFloat("Difficulty", 7.5f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 2);
-                PlayerPrefs.SetInt("HowMoneyRemove", 1);
+                PlayerPrefs.SetInt("HowMoneyAdd", 3);
+                PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
                 PlayerPrefs.SetFloat("Difficulty", 13.5f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 4);
-                PlayerPrefs.SetInt("HowMoneyRemove", 3);
+                PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
                 PlayerPrefs.SetFloat("Difficulty", 25f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 5);
-                PlayerPrefs.SetInt("HowMoneyRemove", 5);
+                PlayerPrefs.SetInt("HowMoneyAdd", 7);
+                PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
                 PlayerPrefs.SetFloat("Difficulty", 50f);
-                PlayerPrefs.SetInt("HowMoneyAdd", 8);
-                PlayerPrefs.SetInt("HowMoneyRemove", 10);
+                PlayerPrefs.SetInt("HowMoneyAdd", 15);
+                PlayerPrefs.SetInt("HowMoneyAddAsLose", 1);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;

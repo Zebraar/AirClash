@@ -2969,7 +2969,7 @@ MonoBehaviour:
   particlePrefab: {fileID: 480041540813458189, guid: 76dd8bba75139a0478f0fb48805bcb1c, type: 3}
   moneyHandler: {fileID: 1342946019}
   howMoneyAdd: 0
-  howMoneyRemove: 0
+  howMoneyAddAsLose: 0
   achievementsHandler: {fileID: 1636014922}
 --- !u!4 &793148557
 Transform:
@@ -5263,6 +5263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AchievementsHandler
   animationsHandler: {fileID: 1353554833}
+  moneyHandler: {fileID: 1342946019}
 --- !u!4 &1636014923
 Transform:
   m_ObjectHideFlags: 0

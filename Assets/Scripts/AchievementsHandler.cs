@@ -5,6 +5,7 @@ using UnityEngine;
 public class AchievementsHandler : MonoBehaviour
 {
     [SerializeField] private AnimationsHandler animationsHandler;
+    [SerializeField] private MoneyHandler moneyHandler;
     
     public class Achievement
     {
@@ -12,6 +13,7 @@ public class AchievementsHandler : MonoBehaviour
         public bool IsUnlocked;
         public int Progress;
         public int Target;
+        public int Award;
     }
 
     private Dictionary<string, Achievement> achievements = new Dictionary<string, Achievement>();
@@ -19,25 +21,25 @@ public class AchievementsHandler : MonoBehaviour
     void Start()
     {
         // Ачивки на голы
-        achievements.Add("a_start_has_been_made", new Achievement { Title = "Начало положено", Target = 1 });
-        achievements.Add("begginer", new Achievement { Title = "Новичок", Target = 10 });
-        achievements.Add("amateur", new Achievement {Title = "Любитель", Target = 30});
-        achievements.Add("professional", new Achievement {Title = "Профессионал", Target = 70});
-        achievements.Add("master", new Achievement {Title = "Мастер", Target = 100});
-        achievements.Add("world_champion", new Achievement {Title = "Всемирный чемпион", Target = 400});
-        achievements.Add("best_in_the_galaxy", new Achievement {Title = "Лучший в галактике", Target = 1000});
-        achievements.Add("best_in_the_universe", new Achievement {Title = "Лучший во вселенной", Target = 10000});
+        achievements.Add("a_start_has_been_made", new Achievement { Title = "Начало положено", Target = 1, Award = 1});
+        achievements.Add("begginer", new Achievement { Title = "Новичок", Target = 10, Award = 3});
+        achievements.Add("amateur", new Achievement {Title = "Любитель", Target = 30, Award = 5});
+        achievements.Add("professional", new Achievement {Title = "Профессионал", Target = 70, Award = 10});
+        achievements.Add("master", new Achievement {Title = "Мастер", Target = 100, Award = 40});
+        achievements.Add("world_champion", new Achievement {Title = "Всемирный чемпион", Target = 400, Award = 100});
+        achievements.Add("best_in_the_galaxy", new Achievement {Title = "Лучший в галактике", Target = 1000, Award = 400});
+        achievements.Add("best_in_the_universe", new Achievement {Title = "Лучший во вселенной", Target = 10000, Award = 1000});
         // Ачивки на победы над ботами
-        achievements.Add("light_warm-up", new Achievement { Title = "Лёгкая разминка", Target = 1});
-        achievements.Add("warm-up", new Achievement { Title = "Разминка", Target = 1});
-        achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1});
-        achievements.Add("fight", new Achievement { Title = "Бой", Target = 1});
-        achievements.Add("competitions", new Achievement { Title = "Соревнования", Target = 1});
+        achievements.Add("light_warm-up", new Achievement { Title = "Лёгкая разминка", Target = 1, Award = 1});
+        achievements.Add("warm-up", new Achievement { Title = "Разминка", Target = 1, Award = 5});
+        achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1, Award = 10});
+        achievements.Add("fight", new Achievement { Title = "Бой", Target = 1, Award = 30});
+        achievements.Add("competitions", new Achievement { Title = "Соревнования", Target = 1, Award = 50});
         // Ачивки от подписчиков
-        achievements.Add("ten", new Achievement {Title = "Десятка", Target = 10});
-        achievements.Add("seriously", new Achievement {Title = "Серьёзно?", Target = 1});
-        achievements.Add("large_wardrobe", new Achievement {Title = "Большой гардероб", Target = 7});
-        achievements.Add("own_goal", new Achievement {Title = "Автогол", Target = 2});
+        achievements.Add("ten", new Achievement {Title = "Десятка", Target = 10, Award = 10});
+        achievements.Add("seriously", new Achievement {Title = "Серьёзно?", Target = 1, Award = 1});
+        achievements.Add("large_wardrobe", new Achievement {Title = "Большой гардероб", Target = 7, Award = 30});
+        achievements.Add("own_goal", new Achievement {Title = "Автогол", Target = 2, Award = 5});
         LoadAchievements();
     }
 
@@ -54,6 +56,8 @@ public class AchievementsHandler : MonoBehaviour
             if (ach.Progress >= ach.Target)
             {
                 ach.IsUnlocked = true;
+                moneyHandler.AddMoney(ach.Award);
+                PlayerPrefs.SetInt("HowMoneyAdds", ach.Award);
                 PlayerPrefs.SetInt(id + "_unlocked", 1); 
                 animationsHandler.ShowAchievement(ach.Title);
             }

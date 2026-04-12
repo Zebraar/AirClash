@@ -13,7 +13,7 @@ public class BotsAI : MonoBehaviour
     [SerializeField] private GoalHandler goalHandler;
     private int score1, score2 = 0;
     private float baseSpeed;
-    [SerializeField] Vector3 PuckKoof;
+    [SerializeField] private Vector3 PuckKoof;
     private bool isRand = false;
 
     void Start()
@@ -34,13 +34,11 @@ public class BotsAI : MonoBehaviour
         if(puck.position.x > 0 && puck.position.x < 3)
         {
             Vector2 puckPos = puck.position;
-            if(!isRand)
-            {
-                puckPos.x += UnityEngine.Random.Range(-3.0f, 3.0f);
-                puckPos.y += UnityEngine.Random.Range(-1.2f, 1.2f); 
-                isRand = true;   
-            }
-            targetDestination = new Vector2(puckPos.x * -1, puckPos.y);          
+            puckPos.x *= -1.0f;
+            puckPos.x -= PlayerPrefs.GetFloat("BotOffsetX");
+            if(UnityEngine.Random.Range(0, 1) == 0) puckPos.y += PlayerPrefs.GetInt("BotOffsetY");
+            else puckPos.y -= PlayerPrefs.GetInt("BotOffsetY");
+            targetDestination = puckPos;          
             currentSpeed = moveSpeed / 2;
         } else if(puck.position.x > 3)
         {

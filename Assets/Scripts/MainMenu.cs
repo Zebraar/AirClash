@@ -65,6 +65,8 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetFloat("Difficulty", 3.1415926535f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 1);
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 1);
+                PlayerPrefs.SetFloat("BotOffsetX", 1f);
+                PlayerPrefs.SetFloat("BotOffsetY", 0.8f);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
@@ -72,6 +74,8 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetFloat("Difficulty", 7.5f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 3);
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
+                PlayerPrefs.SetFloat("BotOffsetX", 0.7f);
+                PlayerPrefs.SetFloat("BotOffsetY", 0.7f);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
@@ -79,6 +83,8 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetFloat("Difficulty", 13.5f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 4);
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
+                PlayerPrefs.SetFloat("BotOffsetX", 0.4f);
+                PlayerPrefs.SetFloat("BotOffsetY", 0.5f);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
@@ -86,6 +92,8 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetFloat("Difficulty", 25f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 7);
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
+                PlayerPrefs.SetFloat("BotOffsetX", 0.3f);
+                PlayerPrefs.SetFloat("BotOffsetY", 0.2f);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;
@@ -93,6 +101,8 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetFloat("Difficulty", 50f);
                 PlayerPrefs.SetInt("HowMoneyAdd", 15);
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 1);
+                PlayerPrefs.SetFloat("BotOffsetX", 0.15f);
+                PlayerPrefs.SetFloat("BotOffsetY", 0.1f);
                 PlayerPrefs.Save();
                 SceneManager.LoadScene("BotsGame");
                 break;

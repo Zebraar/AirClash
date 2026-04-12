@@ -14,7 +14,6 @@ public class BotsAI : MonoBehaviour
     private int score1, score2 = 0;
     private float baseSpeed;
     [SerializeField] private Vector3 PuckKoof;
-    private bool isRand = false;
 
     void Start()
     {
@@ -44,22 +43,18 @@ public class BotsAI : MonoBehaviour
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 3;
-            isRand = false;
         } else if(puck.position.x < 0 && (puck.position.y > 4 || puck.position.y < -4))
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 4;
-            isRand = false;
         } else if(puck.position.x < -6 && (puck.position.y > 3.5f || puck.position.y < -3.5f))
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 4;
-            isRand = false;
         } else if(puck.position.x < -6)
         {
             targetDestination = puck.position;
             currentSpeed = moveSpeed * 1.5f;
-            isRand = false;
         } else if(puck.position.x < -4)
         {
             if(puck.position.y > 0)
@@ -81,7 +76,6 @@ public class BotsAI : MonoBehaviour
             }
         } else
         {
-            isRand = false;
             if(puck.position.y > 0)
             {
                 PuckKoof.y += 0.5f;

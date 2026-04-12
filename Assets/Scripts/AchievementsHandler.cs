@@ -56,7 +56,6 @@ public class AchievementsHandler : MonoBehaviour
             if (ach.Progress >= ach.Target)
             {
                 ach.IsUnlocked = true;
-                moneyHandler.AddMoney(ach.Award);
                 PlayerPrefs.SetInt("HowMoneyAdds", ach.Award);
                 PlayerPrefs.SetInt(id + "_unlocked", 1); 
                 animationsHandler.ShowAchievement(ach.Title);

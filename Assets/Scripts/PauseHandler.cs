@@ -3,7 +3,6 @@ using UnityEngine;
 public class PauseHandler : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject settingsPanel;
     private bool isPaused = false;
     [SerializeField] private GoalHandler goalHandler;
 
@@ -19,21 +18,9 @@ public class PauseHandler : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
-        if (!isPaused)
-        {
-            settingsPanel.SetActive(false);
-        }
     }
 
-    public void OpenSettings()
-    {
-        settingsPanel.SetActive(true);
-    }
 
-    public void CloseSettings()
-    {
-        settingsPanel.SetActive(false);
-    }
     public void MainMenu()
     {
         PlayerPrefs.SetInt("HowMoneyAdds", 0);

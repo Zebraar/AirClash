@@ -30,7 +30,7 @@ public class BotsAI : MonoBehaviour
         Vector2 targetDestination;
         float currentSpeed = moveSpeed;
 
-        if(puck.position.x > 0 && puck.position.x < 3)
+        if(puck.position.x > 0 && puck.position.x < 2f)
         {
             Vector2 puckPos = puck.position;
             puckPos.x *= -1.0f;
@@ -38,8 +38,8 @@ public class BotsAI : MonoBehaviour
             if(UnityEngine.Random.Range(0, 1) == 0) puckPos.y += PlayerPrefs.GetInt("BotOffsetY");
             else puckPos.y -= PlayerPrefs.GetInt("BotOffsetY");
             targetDestination = puckPos;          
-            currentSpeed = moveSpeed / 2;
-        } else if(puck.position.x > 3)
+            currentSpeed = moveSpeed / 4;
+        } else if(puck.position.x > 2)
         {
             targetDestination = botStartPos;
             currentSpeed = moveSpeed / 3;

@@ -9,16 +9,25 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject onlinePanel;
     [SerializeField] private GameObject botPanel;
+    [SerializeField] private GameObject mentionsPanel;
+    [SerializeField] private GameObject achievementsPanel;
+    [SerializeField] private GameObject gamemodesPanel;
+    [SerializeField] private GameObject userGamemodePanel;
+    [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip menuMusic;
+    [Header("UI Elements")]
     [SerializeField] private Text mainMenuText;
     [SerializeField] private Text moneyText;
+    [SerializeField] private Slider goalsSlider;
+    [SerializeField] private Text goalsText;
+    [Header("Scripts")]
     [SerializeField] private MoneyHandler moneyHandler;
-    [SerializeField] private GameObject mentionsPanel;
     [SerializeField] private CoinMover coinMover;
-    [SerializeField] private GameObject achievementsPanel;
+    [Header("Floats")]
     public float rotationSpeed = 10f;
     private RectTransform rectTransform;
+    private string toScene;
 
     void Start()
     {
@@ -67,8 +76,6 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 1);
                 PlayerPrefs.SetFloat("BotOffsetX", 1f);
                 PlayerPrefs.SetFloat("BotOffsetY", 0.8f);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("BotsGame");
                 break;
             case "Easy":
                 PlayerPrefs.SetFloat("Difficulty", 7.5f);
@@ -76,8 +83,6 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
                 PlayerPrefs.SetFloat("BotOffsetX", 0.7f);
                 PlayerPrefs.SetFloat("BotOffsetY", 0.7f);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("BotsGame");
                 break;
             case "Medium":
                 PlayerPrefs.SetFloat("Difficulty", 13.5f);
@@ -85,8 +90,6 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
                 PlayerPrefs.SetFloat("BotOffsetX", 0.4f);
                 PlayerPrefs.SetFloat("BotOffsetY", 0.5f);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("BotsGame");
                 break;
             case "Hard":
                 PlayerPrefs.SetFloat("Difficulty", 25f);
@@ -94,8 +97,6 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 2);
                 PlayerPrefs.SetFloat("BotOffsetX", 0.3f);
                 PlayerPrefs.SetFloat("BotOffsetY", 0.2f);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("BotsGame");
                 break;
             case "Extreme":
                 PlayerPrefs.SetFloat("Difficulty", 50f);
@@ -103,13 +104,15 @@ public class MainMenu : MonoBehaviour
                 PlayerPrefs.SetInt("HowMoneyAddAsLose", 1);
                 PlayerPrefs.SetFloat("BotOffsetX", 0.15f);
                 PlayerPrefs.SetFloat("BotOffsetY", 0.1f);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("BotsGame");
                 break;
             default:
                 PlayerPrefs.SetFloat("Difficulty", 2f);
                 break;
         }
+        PlayerPrefs.Save();
+        toScene = "BotsGame";
+        CloseAllPanels();
+        gamemodesPanel.SetActive(true);
     }
 
     public void OpenSettings()
@@ -140,6 +143,8 @@ public class MainMenu : MonoBehaviour
         botPanel.SetActive(false);
         mentionsPanel.SetActive(false);
         achievementsPanel.SetActive(false);
+        gamemodesPanel.SetActive(false);
+        userGamemodePanel.SetActive(false);
     }
 
     public void VeryEasyMode()
@@ -170,7 +175,9 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        toScene = "GameScene";
+        CloseAllPanels();
+        gamemodesPanel.SetActive(true);
     }
 
     public void OpenShop()
@@ -186,9 +193,34 @@ public class MainMenu : MonoBehaviour
     {
         achievementsPanel.SetActive(true);
     }
+    public void OpenUserGamemode()
+    {
+        CloseAllPanels();
+        userGamemodePanel.SetActive(true);
+        if(PlayerPrefs.GetInt("Goals") == 0) PlayerPrefs.SetInt("Goals", 5);
+        else PlayerPrefs.SetInt("Goals", PlayerPrefs.GetInt("Goals"));
+        goalsSlider.value = PlayerPrefs.GetInt("Goals");
+        goalsText.text = Convert.ToString(PlayerPrefs.GetInt("Goals"));
+    }
 
     public void AddMoney(int amount)
     {
         coinMover.AddCoins(new Vector3(0, 0, 0), amount);
+    }
+    public void SetGamemode(int howManyGoals)
+    {
+        PlayerPrefs.SetInt("Goals", howManyGoals);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(toScene);
+    }
+    public void SetUserGamemode()
+    {
+        PlayerPrefs.SetInt("Goals", Convert.ToInt32(goalsSlider.value));
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(toScene);
+    }
+    public void OnGoalsSliderChanged()
+    {
+        goalsText.text = Convert.ToString(Convert.ToInt32(goalsSlider.value));
     }
 }

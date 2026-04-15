@@ -669,6 +669,7 @@ MonoBehaviour:
   minY: -4.05
   maxY: 4.05
   timer: {fileID: 236193934}
+  particleSkin: {fileID: 8062503738438466386, guid: 2faa806d4d3b94a4480fb0f835b9bac2, type: 3}
 --- !u!1 &254366891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,7 +1907,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseHandler
   pauseMenu: {fileID: 897252422}
-  settingsPanel: {fileID: 0}
   goalHandler: {fileID: 793148556}
 --- !u!1 &929458179
 GameObject:

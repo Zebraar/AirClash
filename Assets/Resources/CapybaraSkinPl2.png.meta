@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 213e0b414a111f94ab95ee494de761b5
+guid: 47b17cc7de1bb9b43a60804d5143baf2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3297405359636775106
-    second: FootballSkinPl2_0
+      213: -4980635812136188472
+    second: CapybaraSkinPl2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FootballSkinPl2_0
+      name: CapybaraSkinPl2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c08e9544bcb2cd20800000000000000
-      internalID: 3297405359636775106
+      spriteID: 8c5880e0e1a31eab0800000000000000
+      internalID: -4980635812136188472
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FootballSkinPl2_0: 3297405359636775106
+      CapybaraSkinPl2_0: -4980635812136188472
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

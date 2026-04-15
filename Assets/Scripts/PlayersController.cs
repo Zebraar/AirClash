@@ -10,6 +10,8 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public float minX, maxX, minY, maxY;
     [SerializeField] private TimerScr timer;    private Vector2 targetPos;
     private bool isDragging = false;
+    public GameObject particleSkin;
+    private Color particleColor;
 
     void Start()
     {
@@ -21,9 +23,26 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
         targetPos = rb.position;
         float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         AudioListener.volume = volume;
+        
         if(PlayerPrefs.GetString("CurrentSkin") == "") PlayerPrefs.SetString("CurrentSkin", "DefSkin");
         if(gameObject.name.Equals("Player1")) GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PlayerPrefs.GetString("CurrentSkin"));
         else if(gameObject.name.Equals("Player2")) GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PlayerPrefs.GetString("CurrentSkin") + "Pl2");
+        if(PlayerPrefs.GetString("CurrentSkin") == "ParticleSkin") 
+        {
+            var ps = particleSkin.GetComponent<ParticleSystem>();
+            var psMain = ps.main;
+            particleSkin.gameObject.SetActive(true);
+            if(gameObject.name.Equals("Player2") && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
+            {
+                psMain.startColor = particleColor;
+            } else if(gameObject.name.Equals("Player1") && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
+            {
+                psMain.startColor = particleColor;
+            }
+            var newParticles = Instantiate(particleSkin, GetComponent<Transform>());
+            newParticles.gameObject.SetActive(true);
+            newParticles.GetComponent<ParticleSystem>().Play();
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)

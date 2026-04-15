@@ -71,5 +71,10 @@ public class ShopHandler : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
+    public void PlusMoney(int money)
+    {
+        moneyHandler.AddMoney(money);
+        moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
+    }
 
 }

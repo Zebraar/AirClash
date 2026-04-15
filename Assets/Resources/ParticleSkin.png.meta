@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 213e0b414a111f94ab95ee494de761b5
+guid: 24d84b3c332a0ad468c3413bc2cf91c2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3297405359636775106
-    second: FootballSkinPl2_0
+      213: 3345508739736421500
+    second: Player2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FootballSkinPl2_0
+      name: Player2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c08e9544bcb2cd20800000000000000
-      internalID: 3297405359636775106
+      spriteID: c7444f83972ad6e20800000000000000
+      internalID: 3345508739736421500
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      FootballSkinPl2_0: 3297405359636775106
+      Player2_0: 3345508739736421500
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

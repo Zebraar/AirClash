@@ -31,6 +31,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Версия игры до обновления Unity");
         audioSource.clip = menuMusic;
         audioSource.loop = true;
         audioSource.Play();

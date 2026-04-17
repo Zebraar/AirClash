@@ -34,6 +34,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Версия игры после обновления Unity");
         audioSource.clip = menuMusic;
         audioSource.loop = true;
+        audioSource.time = PlayerPrefs.GetFloat("Music");
         audioSource.Play();
         rectTransform = mainMenuText.GetComponent<RectTransform>();
         moneyText.text = "Деньги " + Convert.ToString(PlayerPrefs.GetInt("Money"));
@@ -183,6 +184,8 @@ public class MainMenu : MonoBehaviour
 
     public void OpenShop()
     {
+        PlayerPrefs.SetFloat("Music", audioSource.time);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("ShopScene");
     }
 

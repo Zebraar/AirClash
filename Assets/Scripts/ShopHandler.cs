@@ -20,12 +20,15 @@ public class ShopHandler : MonoBehaviour
         moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
         audioSource.clip = menuMusic;
         audioSource.loop = true;
+        audioSource.time = PlayerPrefs.GetFloat("Music");
         audioSource.Play();
         string currentSkin = PlayerPrefs.GetString("CurrentSkin", "DefSkin");
         EquipSkin(currentSkin);
     }
     public void CloseShop()
     {
+        PlayerPrefs.SetFloat("Music", audioSource.time);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("MainMenu");
     }
 

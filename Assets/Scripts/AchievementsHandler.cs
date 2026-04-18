@@ -5,7 +5,6 @@ using UnityEngine;
 public class AchievementsHandler : MonoBehaviour
 {
     [SerializeField] private AnimationsHandler animationsHandler;
-    [SerializeField] private MoneyHandler moneyHandler;
     
     public class Achievement
     {
@@ -31,14 +30,14 @@ public class AchievementsHandler : MonoBehaviour
         achievements.Add("best_in_the_universe", new Achievement {Title = "Лучший во вселенной", Target = 10000, Award = 1000});
         // Ачивки на победы над ботами
         achievements.Add("light_warm-up", new Achievement { Title = "Лёгкая разминка", Target = 1, Award = 1});
-        achievements.Add("warm-up", new Achievement { Title = "Разминка", Target = 1, Award = 5});
-        achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1, Award = 10});
-        achievements.Add("fight", new Achievement { Title = "Бой", Target = 1, Award = 30});
-        achievements.Add("competitions", new Achievement { Title = "Соревнования", Target = 1, Award = 50});
+        achievements.Add("warm-up", new Achievement { Title = "Разминка", Target = 1, Award = 3});
+        achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1, Award = 7});
+        achievements.Add("fight", new Achievement { Title = "Бой", Target = 1, Award = 20});
+        achievements.Add("competitions", new Achievement { Title = "Соревнования", Target = 1, Award = 40});
         // Ачивки от подписчиков
         achievements.Add("ten", new Achievement {Title = "Десятка", Target = 10, Award = 10});
         achievements.Add("seriously", new Achievement {Title = "Серьёзно?", Target = 1, Award = 1});
-        achievements.Add("large_wardrobe", new Achievement {Title = "Большой гардероб", Target = 7, Award = 30});
+        achievements.Add("large_wardrobe", new Achievement {Title = "Большой гардероб", Target = 12, Award = 40});
         achievements.Add("own_goal", new Achievement {Title = "Автогол", Target = 2, Award = 5});
         LoadAchievements();
     }

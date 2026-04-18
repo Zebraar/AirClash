@@ -450,6 +450,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -670,6 +671,7 @@ MonoBehaviour:
   maxY: 4.05
   timer: {fileID: 236193934}
   particleSkin: {fileID: 8062503738438466386, guid: 2faa806d4d3b94a4480fb0f835b9bac2, type: 3}
+  bubbleParticles: {fileID: 7871815180265863228, guid: 819d6f27244ec794cb74893e0673f613, type: 3}
 --- !u!1 &254366891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,6 +1400,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1579,6 +1582,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -1888,6 +1892,7 @@ MonoBehaviour:
   maxY: 4.05
   timer: {fileID: 236193934}
   particleSkin: {fileID: 8062503738438466386, guid: 2faa806d4d3b94a4480fb0f835b9bac2, type: 3}
+  bubbleParticles: {fileID: 7871815180265863228, guid: 819d6f27244ec794cb74893e0673f613, type: 3}
 --- !u!1 &1079908083
 GameObject:
   m_ObjectHideFlags: 0
@@ -3149,6 +3154,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

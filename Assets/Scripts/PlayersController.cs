@@ -11,7 +11,10 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     [SerializeField] private TimerScr timer;    private Vector2 targetPos;
     private bool isDragging = false;
     public GameObject particleSkin;
+    public GameObject bubbleParticles;
     private Color particleColor;
+    private bool isParticleSkin = false;
+    private GameObject particles;
 
     void Start()
     {
@@ -23,23 +26,35 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
         targetPos = rb.position;
         float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         AudioListener.volume = volume;
-        
         if(PlayerPrefs.GetString("CurrentSkin") == "") PlayerPrefs.SetString("CurrentSkin", "DefSkin");
         if(gameObject.name.Equals("Player1")) GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PlayerPrefs.GetString("CurrentSkin"));
         else if(gameObject.name.Equals("Player2")) GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(PlayerPrefs.GetString("CurrentSkin") + "Pl2");
-        if(PlayerPrefs.GetString("CurrentSkin") == "ParticleSkin") 
+        switch(PlayerPrefs.GetString("CurrentSkin")) {
+            case "ParticleSkin":
+                isParticleSkin = true;
+                particles = particleSkin;
+                break;
+            case "BubbleSkin":
+                isParticleSkin = true;
+                particles = bubbleParticles;
+                break;    
+            default:
+                isParticleSkin = false;
+                break;    
+        }
+        if(isParticleSkin)
         {
-            var ps = particleSkin.GetComponent<ParticleSystem>();
+            var ps = particles.GetComponent<ParticleSystem>();
             var psMain = ps.main;
-            particleSkin.gameObject.SetActive(true);
+            particles.gameObject.SetActive(true);
             if(gameObject.name.Equals("Player2") && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
             {
-                psMain.startColor = particleColor;
+            psMain.startColor = particleColor;
             } else if(gameObject.name.Equals("Player1") && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
             {
                 psMain.startColor = particleColor;
             }
-            var newParticles = Instantiate(particleSkin, GetComponent<Transform>());
+            var newParticles = Instantiate(particles, GetComponent<Transform>());
             newParticles.gameObject.SetActive(true);
             newParticles.GetComponent<ParticleSystem>().Play();
         }

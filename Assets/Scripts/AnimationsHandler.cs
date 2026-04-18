@@ -9,34 +9,41 @@ public class AnimationsHandler : MonoBehaviour
     [SerializeField] private GameObject achievementPanel;
     [SerializeField] private Text achievementText;
     [Header("Floats")]
-    public float achievementSpeed;
-    public Vector3 endDotToMoveAchievementPanel;
-    private Vector3 startPosAchievementPanel;
+    public Vector2 endDotToMoveAchievementPanel;
+    private Vector2 startPosAchievementPanel;
     [Header("Other")]
     private RectTransform achievementPanelTransform;
+    private Coroutine currentCoroutine;
 
     void Awake()
     {
         achievementPanelTransform = achievementPanel.GetComponent<RectTransform>(); 
         startPosAchievementPanel = achievementPanelTransform.anchoredPosition;
     }
+
     public void ShowAchievement(string achievementTitle)
     {
+        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+        
         achievementPanel.SetActive(true);
         achievementText.text = achievementTitle;
-        StartCoroutine(AchievementCoroutine());
+        currentCoroutine = StartCoroutine(AchievementCoroutine());
     }
+
     IEnumerator AchievementCoroutine()
     {
         achievementPanelTransform.DOKill();
 
-        achievementPanelTransform.DOAnchorPos(endDotToMoveAchievementPanel, 2.0f);
+        achievementPanelTransform.DOAnchorPos(endDotToMoveAchievementPanel, 2.0f)
+            .SetLink(achievementPanel);
 
         yield return new WaitForSeconds(3f);
 
-        achievementPanelTransform.DOAnchorPos(startPosAchievementPanel, 2.0f);
+        achievementPanelTransform.DOAnchorPos(startPosAchievementPanel, 2.0f)
+            .SetLink(achievementPanel);
 
         yield return new WaitForSeconds(2f);
+        
         achievementPanel.SetActive(false);
     }
 }

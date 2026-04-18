@@ -5,32 +5,48 @@ using UnityEngine.UI;
 
 public class GoalHandler : MonoBehaviour
 {
+        [Header("UI Elements")]
     public Text scoreText1;
     public Text scoreText2;
+    [SerializeField] private Text goalText;
+    [SerializeField] private GameObject goalTextCanvas;
+
+    [Header("Players & Puck")]
     [SerializeField] private GameObject player1;
     [SerializeField] private GameObject player2;
+    public GameObject puck;
+    [SerializeField] private BotsAI botsAI;
+
+    [Header("Positions")]
     private Vector2 player1startPos;
     private Vector2 player2startPos;
     private Vector2 puckStartPos;
-    public GameObject puck;
+
+    [Header("Game Logic & Scoring")]
     public int score1 = 0;
     public int score2 = 0;
-    [SerializeField] private TimerScr timer;
-    public AudioSource audioSource;
-    public AudioClip puckSound;
-    public AudioClip StartGameSound;
-    [SerializeField] private BotsAI botsAI;
     private int howManyGoals;
-    [SerializeField] private Text goalText;
-    [SerializeField] private GameObject goalTextCanvas;
+    [SerializeField] private TimerScr timer;
+    private string lastCollision;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip defPuckSound;
+    public AudioClip goldPuckSound;
+    private AudioClip puckSound;
+    public AudioClip StartGameSound;
+
+    [Header("Effects")]
     public GameObject particlePrefab;
     private bool isParticlesOn;
+    private Color wallParticleColor;
+
+    [Header("Economy & Achievements")]
     public MoneyHandler moneyHandler;
     [SerializeField] private int howMoneyAdd;
     [SerializeField] private int howMoneyAddAsLose;
     [SerializeField] private AchievementsHandler achievementsHandler;
-    private Color wallParticleColor;
-    private string lastCollision;
+
 
     void Awake()
     {
@@ -45,6 +61,14 @@ public class GoalHandler : MonoBehaviour
 
     void Start()
     {
+        switch(PlayerPrefs.GetString("CurrentSkin")) {
+            case "GoldSkin":
+                puckSound = goldPuckSound;
+                break;
+            default:
+                puckSound = defPuckSound;
+                break; 
+        }           
         timer.TimerStart();
         audioSource.PlayOneShot(StartGameSound);
         howManyGoals = PlayerPrefs.GetInt("Goals");

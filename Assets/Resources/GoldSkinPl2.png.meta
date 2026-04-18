@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9aecea1bf60786a40bd5e8a8cd92ba50
+guid: b9bcf87b064386b4296c5a1bb01fd073
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1127718979568939321
-    second: pngtree-coins-icon-creative-design-template-png-image_1998330-removebg-preview_0
+      213: 4225142459158042945
+    second: GoldSkinPl2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 2000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pngtree-coins-icon-creative-design-template-png-image_1998330-removebg-preview_0
+      name: GoldSkinPl2_0
       rect:
         serializedVersion: 2
-        x: 44
-        y: 45
-        width: 272
-        height: 271
+        x: 0
+        y: 0
+        width: 2000
+        height: 2000
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9313cafdf6676af00800000000000000
-      internalID: 1127718979568939321
+      spriteID: 149198b4ea8b2aa30800000000000000
+      internalID: 4225142459158042945
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      pngtree-coins-icon-creative-design-template-png-image_1998330-removebg-preview_0: 1127718979568939321
+      GoldSkinPl2_0: 4225142459158042945
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -12,6 +12,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     private bool isDragging = false;
     public GameObject particleSkin;
     public GameObject bubbleParticles;
+    public GameObject goldParticles;
     private Color particleColor;
     private bool isParticleSkin = false;
     private GameObject particles;
@@ -37,7 +38,11 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
             case "BubbleSkin":
                 isParticleSkin = true;
                 particles = bubbleParticles;
-                break;    
+                break;  
+            case "GoldSkin":
+                isParticleSkin = true;
+                particles = goldParticles;
+                break;      
             default:
                 isParticleSkin = false;
                 break;    
@@ -49,7 +54,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
             particles.gameObject.SetActive(true);
             if(gameObject.name.Equals("Player2") && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
             {
-            psMain.startColor = particleColor;
+                psMain.startColor = particleColor;
             } else if(gameObject.name.Equals("Player1") && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
             {
                 psMain.startColor = particleColor;

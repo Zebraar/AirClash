@@ -672,6 +672,7 @@ MonoBehaviour:
   timer: {fileID: 236193934}
   particleSkin: {fileID: 8062503738438466386, guid: 2faa806d4d3b94a4480fb0f835b9bac2, type: 3}
   bubbleParticles: {fileID: 7871815180265863228, guid: 819d6f27244ec794cb74893e0673f613, type: 3}
+  goldParticles: {fileID: 7871815180265863228, guid: 224f375812f8b684381d7f76307fc87c, type: 3}
 --- !u!1 &254366891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,18 +1027,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GoalHandler
   scoreText1: {fileID: 1682619730}
   scoreText2: {fileID: 125974678}
+  goalText: {fileID: 929458182}
+  goalTextCanvas: {fileID: 236193929}
   player1: {fileID: 243884039}
   player2: {fileID: 932977366}
   puck: {fileID: 1644972818}
+  botsAI: {fileID: 0}
   score1: 0
   score2: 0
   timer: {fileID: 236193934}
   audioSource: {fileID: 2094474884}
-  puckSound: {fileID: 8300000, guid: 8346d24a7b5724c4ba889b8a1d541bf7, type: 3}
+  defPuckSound: {fileID: 8300000, guid: 8346d24a7b5724c4ba889b8a1d541bf7, type: 3}
+  goldPuckSound: {fileID: 8300000, guid: 04f800c59f5811449a44209ad929295b, type: 3}
   StartGameSound: {fileID: 8300000, guid: c295a870e60704548a182d990ed27ee7, type: 3}
-  botsAI: {fileID: 0}
-  goalText: {fileID: 929458182}
-  goalTextCanvas: {fileID: 236193929}
   particlePrefab: {fileID: 480041540813458189, guid: 76dd8bba75139a0478f0fb48805bcb1c, type: 3}
   moneyHandler: {fileID: 0}
   howMoneyAdd: 0
@@ -1893,6 +1895,7 @@ MonoBehaviour:
   timer: {fileID: 236193934}
   particleSkin: {fileID: 8062503738438466386, guid: 2faa806d4d3b94a4480fb0f835b9bac2, type: 3}
   bubbleParticles: {fileID: 7871815180265863228, guid: 819d6f27244ec794cb74893e0673f613, type: 3}
+  goldParticles: {fileID: 7871815180265863228, guid: 224f375812f8b684381d7f76307fc87c, type: 3}
 --- !u!1 &1079908083
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,12 +52,18 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
             var ps = particles.GetComponent<ParticleSystem>();
             var psMain = ps.main;
             particles.gameObject.SetActive(true);
-            if(gameObject.name.Equals("Player2") && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
+            if(PlayerPrefs.GetString("CurrentSkin") == "GoldSkin")
             {
-                psMain.startColor = particleColor;
-            } else if(gameObject.name.Equals("Player1") && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
+                psMain.startColor = Color.white;
+            } else
             {
-                psMain.startColor = particleColor;
+                if(gameObject.name.Equals("Player2") && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
+                {
+                    psMain.startColor = particleColor;
+                } else if(gameObject.name.Equals("Player1") && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
+                {
+                    psMain.startColor = particleColor;
+                }
             }
             var newParticles = Instantiate(particles, GetComponent<Transform>());
             newParticles.gameObject.SetActive(true);

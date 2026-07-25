@@ -54,6 +54,7 @@ public class GoalHandler : MonoBehaviour
     private int howManyXpAddForGoal;
     private int howManyXpAddAsLose;
     private int totalXpEarned;
+
     [Header("Quests")]
     [SerializeField] private DailyQuestHandler dailyQuestHandler;
     [SerializeField] private QuestsHandler questsHandler;

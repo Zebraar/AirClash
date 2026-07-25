@@ -3365,6 +3365,7 @@ MonoBehaviour:
   xpHandler: {fileID: 1740135151}
   dailyQuestHandler: {fileID: 1508050407}
   questsHandler: {fileID: 235091421}
+  vibrationHandler: {fileID: 0}
 --- !u!4 &793148557
 Transform:
   m_ObjectHideFlags: 0

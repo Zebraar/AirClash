@@ -30,7 +30,6 @@ public class AchievementsHandler : MonoBehaviour
         achievements.Add("best_in_the_galaxy", new Achievement {Title = "Лучший в галактике", Target = 1000, Award = 400});
         achievements.Add("best_in_the_universe", new Achievement {Title = "Лучший во вселенной", Target = 10000, Award = 2000});
         // Ачивки на победы над ботами
-        achievements.Add("light_warm-up", new Achievement { Title = "Лёгкая разминка", Target = 1, Award = 5});
         achievements.Add("warm-up", new Achievement { Title = "Разминка", Target = 1, Award = 10});
         achievements.Add("training", new Achievement { Title = "Тренировка", Target = 1, Award = 20});
         achievements.Add("fight", new Achievement { Title = "Бой", Target = 1, Award = 50});

@@ -162,7 +162,14 @@ public class MainMenu : MonoBehaviour
     }
     public void ClosePanel(GameObject panel)
     {
-        StartCoroutine(AnimateClosePanel(panel));
+        var rect = panel.GetComponent<RectTransform>();
+        rect.DOScale(Vector3.zero, 0.3f)
+            .SetEase(Ease.InBack)
+            .OnComplete(() => 
+            {
+                panel.SetActive(false);
+                rect.localScale = Vector3.one;
+            });
     }
     public void OpenPanel(GameObject panel)
     {
@@ -185,14 +192,7 @@ public class MainMenu : MonoBehaviour
             userGamemodeBtn.SetActive(false);
         }
     }
-    IEnumerator AnimateClosePanel(GameObject panel)
-    {
-        var rect = panel.GetComponent<RectTransform>();
-        rect.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack);
-        yield return new WaitForSeconds(0.35f);
-        panel.SetActive(false);
-        rect.localScale = Vector3.one;
-    }
+
     public void VeryEasyMode()
     {
         PlayBots("VeryEasy");

@@ -983,7 +983,11 @@ MonoBehaviour:
   TimeLeft: 5
   TimerOn: 0
   audioSource: {fileID: 2094474884}
-  goalSound: {fileID: 8300000, guid: 4e1b57aa2bad8fc4e933d842cc64b672, type: 3}
+  goalSounds:
+  - {fileID: 8300000, guid: 4e1b57aa2bad8fc4e933d842cc64b672, type: 3}
+  - {fileID: 8300000, guid: 5ed4be1bb6d3c2240ab2e5f4f0f9069f, type: 3}
+  - {fileID: 8300000, guid: 8f585cb08583b374bb6c4d9a18b92873, type: 3}
+  - {fileID: 8300000, guid: 1722a862b2929bd4ab1ff400e7dbcfe7, type: 3}
   timerSound: {fileID: 8300000, guid: d062d4280d8a0a3468b4c3e3d3b9c4c3, type: 3}
   restartBtn: {fileID: 998409144}
 --- !u!1 &243884039
@@ -1831,6 +1835,10 @@ MonoBehaviour:
   audioSource: {fileID: 2094474884}
   puckSound: {fileID: 8300000, guid: 8346d24a7b5724c4ba889b8a1d541bf7, type: 3}
   StartGameSound: {fileID: 8300000, guid: c295a870e60704548a182d990ed27ee7, type: 3}
+  gameMusics:
+  - {fileID: 8300000, guid: 865b48fafd8714747a89b9a1585bef23, type: 3}
+  - {fileID: 8300000, guid: 56701c4420fd10847ab0a8fb5d64e059, type: 3}
+  - {fileID: 8300000, guid: 2e80b3d46d679844888deacf02519f9c, type: 3}
   particlePrefab: {fileID: 480041540813458189, guid: 76dd8bba75139a0478f0fb48805bcb1c, type: 3}
   moneyHandler: {fileID: 0}
   howMoneyAdd: 0
@@ -2624,8 +2632,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339168b2146b7944e938e929bb35e7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  clickSound: {fileID: 8300000, guid: 3c8a026d410bd414f813c4a2b4d6d9d8, type: 3}
   whooshSound: {fileID: 8300000, guid: e3b4dffcabf93f042a5b04df3559d9f9, type: 3}
+  clickSound: {fileID: 8300000, guid: 3c8a026d410bd414f813c4a2b4d6d9d8, type: 3}
   audioSource: {fileID: 2094474884}
 --- !u!4 &888105965
 Transform:

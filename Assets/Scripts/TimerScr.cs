@@ -9,7 +9,7 @@ public class TimerScr : MonoBehaviour
     public int TimeLeft = 4;
     public bool TimerOn = false;
     public AudioSource audioSource;
-    public AudioClip goalSound;
+    public AudioClip[] goalSounds;
     public AudioClip timerSound;
 
     [SerializeField] private Button restartBtn;
@@ -21,7 +21,8 @@ public class TimerScr : MonoBehaviour
         TimerText.text = "GOAL";
         TimerOn = true;
         restartBtn.interactable = false;
-        audioSource.PlayOneShot(goalSound);
+        int rand = UnityEngine.Random.Range(0, goalSounds.Length);
+        audioSource.PlayOneShot(goalSounds[rand]);
         Invoke("TimerStart", 1f);
     }
 

@@ -36,6 +36,7 @@ public class GoalHandler : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip puckSound;
     public AudioClip StartGameSound;
+    [SerializeField] private AudioClip[] gameMusics;
 
     [Header("Effects")]
     public GameObject particlePrefab;
@@ -77,6 +78,15 @@ public class GoalHandler : MonoBehaviour
         xpHandler.ResetOldXp();   
         timer.TimerStart();
         audioSource.PlayOneShot(StartGameSound);
+        bool isMusic = PlayerPrefs.GetInt("BgMusicInGame", 1) != 0;
+        if(isMusic)
+        {
+            int rand = UnityEngine.Random.Range(0, gameMusics.Length);
+            audioSource.clip = gameMusics[rand];
+            audioSource.loop = true;
+            audioSource.time = 0;
+            audioSource.Play();
+        }
         howManyGoals = PlayerPrefs.GetInt("Goals");
         howMoneyAdd = Convert.ToInt32(PlayerPrefs.GetFloat("Difficulty") / 3 * Mathf.Max(1, howManyGoals));
         howManyXpAddForGoal = Convert.ToInt32(PlayerPrefs.GetFloat("Difficulty") / 2);

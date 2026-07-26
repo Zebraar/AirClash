@@ -17,7 +17,7 @@ public class XpUiScr : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip levelUpSound;
+    [SerializeField] private AudioClip[] levelUpSounds;
     
     [Header("Scripts")]
     [SerializeField] private XpHandler xpHandler;
@@ -76,7 +76,8 @@ public class XpUiScr : MonoBehaviour
     {
         isAnim = true;
         yield return new WaitForSeconds(1.1f);
-        audioSource.PlayOneShot(levelUpSound);
+        int rand = UnityEngine.Random.Range(0, levelUpSounds.Length);
+        audioSource.PlayOneShot(levelUpSounds[rand]);
         panel.transform.DOScale(1.5f, 0.4f).OnComplete(() => panel.transform.DOScale(1.0f, 0.2f));
         canvasGroup.DOFade(1.0f, 0.4f).OnComplete(() => canvasGroup.DOFade(0f, 0.2f));
         yield return new WaitForSeconds(0.2f);

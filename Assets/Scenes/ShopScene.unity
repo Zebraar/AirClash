@@ -17448,8 +17448,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339168b2146b7944e938e929bb35e7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  clickSound: {fileID: 8300000, guid: 3c8a026d410bd414f813c4a2b4d6d9d8, type: 3}
   whooshSound: {fileID: 8300000, guid: e3b4dffcabf93f042a5b04df3559d9f9, type: 3}
+  clickSound: {fileID: 8300000, guid: 3c8a026d410bd414f813c4a2b4d6d9d8, type: 3}
   audioSource: {fileID: 1190845891}
 --- !u!4 &1592820834
 Transform:

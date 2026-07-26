@@ -3,8 +3,8 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     [Header("Sounds")]
-    [SerializeField] private AudioClip clickSound;
     [SerializeField] private AudioClip whooshSound;
+    [SerializeField] private AudioClip clickSound;
 
     [Header("Other")]
     [SerializeField] private AudioSource audioSource;

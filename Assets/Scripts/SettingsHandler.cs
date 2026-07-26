@@ -22,6 +22,7 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Toggle trailToggle;
     [SerializeField] private Toggle puckTrailToggle;
     [SerializeField] private Toggle fpsCounterToggle;
+    [SerializeField] private Toggle bgMusicInGameToggle;
 
     [Header("Other")]
     [SerializeField] private IsAnimToggleEvent isAnimToggleEvent;
@@ -38,6 +39,7 @@ public class SettingsHandler : MonoBehaviour
         animBgToggle.isOn = PlayerPrefs.GetInt("isAnimBg", 1) != 0;
         puckTrailToggle.isOn = PlayerPrefs.GetInt("PuckTrail", 1) != 0;
         fpsCounterToggle.isOn = PlayerPrefs.GetInt("FpsCounter", 0) != 0;
+        bgMusicInGameToggle.isOn = PlayerPrefs.GetInt("BgMusicInGame", 1) != 0;
     }
 
     public void OnVolumeSliderChanged() {
@@ -75,6 +77,12 @@ public class SettingsHandler : MonoBehaviour
         PlayerPrefs.SetInt("FpsCounter", fpsCounterToggle.isOn ? 1 : 0);
         PlayerPrefs.Save();
         isFpsCounterEvent.Invoke(fpsCounterToggle.isOn);
+    }
+
+    public void OnBgMusicInGameToggleChanged()
+    {
+        PlayerPrefs.SetInt("BgMusicInGame", bgMusicInGameToggle.isOn ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     public void ShowTelegram()

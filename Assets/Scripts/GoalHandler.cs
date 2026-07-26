@@ -33,7 +33,8 @@ public class GoalHandler : MonoBehaviour
     private string lastCollision;
 
     [Header("Audio")]
-    public AudioSource audioSource;
+    public AudioSource audioSourceSfx;
+    public AudioSource audioSourceBgMusic;
     public AudioClip puckSound;
     public AudioClip StartGameSound;
     [SerializeField] private AudioClip[] gameMusics;
@@ -77,15 +78,15 @@ public class GoalHandler : MonoBehaviour
         totalXpEarned = 0;
         xpHandler.ResetOldXp();   
         timer.TimerStart();
-        audioSource.PlayOneShot(StartGameSound);
+        audioSourceSfx.PlayOneShot(StartGameSound);
         bool isMusic = PlayerPrefs.GetInt("BgMusicInGame", 1) != 0;
         if(isMusic)
         {
             int rand = UnityEngine.Random.Range(0, gameMusics.Length);
-            audioSource.clip = gameMusics[rand];
-            audioSource.loop = true;
-            audioSource.time = 0;
-            audioSource.Play();
+            audioSourceBgMusic.clip = gameMusics[rand];
+            audioSourceBgMusic.loop = true;
+            audioSourceBgMusic.time = 0;
+            audioSourceBgMusic.Play();
         }
         howManyGoals = PlayerPrefs.GetInt("Goals");
         howMoneyAdd = Convert.ToInt32(PlayerPrefs.GetFloat("Difficulty") / 3 * Mathf.Max(1, howManyGoals));
@@ -175,7 +176,7 @@ public class GoalHandler : MonoBehaviour
         }
         if(!(collision.gameObject.name.Equals("Player1") || collision.gameObject.name.Equals("Player2")))
         {
-            audioSource.PlayOneShot(puckSound);
+            audioSourceSfx.PlayOneShot(puckSound);
         }
     }
 
@@ -207,7 +208,7 @@ public class GoalHandler : MonoBehaviour
         PlayerPrefs.SetInt("HowXpAdds", 0);
         PlayerPrefs.Save();
         ResetPosition();
-        audioSource.PlayOneShot(StartGameSound);
+        audioSourceSfx.PlayOneShot(StartGameSound);
         timer.TimerStart();
     }
 

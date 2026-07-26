@@ -19,6 +19,7 @@ public class ShopHandler : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceBgMusic;
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip buySound;
     [SerializeField] private AudioClip cancelSound;
@@ -31,16 +32,16 @@ public class ShopHandler : MonoBehaviour
     void Start()
     {
         moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
-        audioSource.clip = menuMusic;
-        audioSource.loop = true;
-        audioSource.time = PlayerPrefs.GetFloat("Music");
-        audioSource.Play();
+        audioSourceBgMusic.clip = menuMusic;
+        audioSourceBgMusic.loop = true;
+        audioSourceBgMusic.time = PlayerPrefs.GetFloat("Music");
+        audioSourceBgMusic.Play();
         string currentSkin = PlayerPrefs.GetString("CurrentSkin", "DefSkin");
         EquipSkin(currentSkin);
     }
     public void CloseShop()
     {
-        PlayerPrefs.SetFloat("Music", audioSource.time);
+        PlayerPrefs.SetFloat("Music", audioSourceBgMusic.time);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainMenu");
     }

@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -41,6 +42,7 @@ public class GoalHandler : MonoBehaviour
 
     [Header("Effects")]
     public GameObject particlePrefab;
+    [SerializeField] private Light2D light2D;
     private bool isParticlesOn;
     private Color wallParticleColor;
 
@@ -69,6 +71,9 @@ public class GoalHandler : MonoBehaviour
         puckStartPos = puck.transform.position;
         if(PlayerPrefs.GetInt("Particle") == 0) isParticlesOn = false;
         else isParticlesOn = true;
+        light2D.intensity = 1.0f;
+        player1.GetComponentInChildren<Light2D>().intensity = 0;
+        player2.GetComponentInChildren<Light2D>().intensity = 0;
     }
 
     void Start()
@@ -307,6 +312,11 @@ public class GoalHandler : MonoBehaviour
                     {
                         puckScript.maxSpeed = 40f;
                     }
+                    break;
+                case "Fog":
+                    light2D.intensity = 0;
+                    player1.GetComponentInChildren<Light2D>().intensity = 1;
+                    player2.GetComponentInChildren<Light2D>().intensity = 1;
                     break;
                 case "None":
                     break;

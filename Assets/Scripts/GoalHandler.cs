@@ -82,6 +82,12 @@ public class GoalHandler : MonoBehaviour
         player2.GetComponentInChildren<Light2D>().intensity = 0;
         areaEffector2D.gameObject.SetActive(false);
         isWind = false;
+        Color cameraBackgroundColor;
+        if(!ColorUtility.TryParseHtmlString("#003E99", out cameraBackgroundColor))
+        {
+            Camera.main.backgroundColor = Color.white;
+        } 
+        Camera.main.backgroundColor = cameraBackgroundColor;
         for(int i = 0; i < additionalWalls.Length; i++)
         {
             additionalWalls[i].SetActive(false);
@@ -341,6 +347,7 @@ public class GoalHandler : MonoBehaviour
                     player1.GetComponentInChildren<Light2D>().intensity = 1;
                     player2.GetComponentInChildren<Light2D>().intensity = 1;
                     modificatorsMoney += 0.75f;
+                    Camera.main.backgroundColor = Color.black;
                     break;
                 case "Wind":
                     areaEffector2D.gameObject.SetActive(true);

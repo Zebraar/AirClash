@@ -30216,7 +30216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60.00004, y: -65.00003}
+  m_AnchoredPosition: {x: 60.00003, y: -65.00003}
   m_SizeDelta: {x: 86, y: 86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &898324666
@@ -71008,6 +71008,7 @@ MonoBehaviour:
   speedText: {fileID: 952011430}
   userGamemodeBtn: {fileID: 628249583}
   speedPanel: {fileID: 1633668172}
+  modificatorsMultiplyText: {fileID: 2070173341}
   moneyHandler: {fileID: 1114898952}
   coinMover: {fileID: 1016994372}
   xpHandler: {fileID: 695791783}
@@ -76054,7 +76055,7 @@ GameObject:
   - component: {fileID: 2070173344}
   - component: {fileID: 2070173343}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: ModificatorMultiplyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76127,7 +76128,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0414\u0435\u043D\u044C\u0433\u0438 1.0x"
+  m_Text: "\u0414\u0435\u043D\u044C\u0433\u0438 1,0x"
 --- !u!222 &2070173345
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -34,6 +34,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text speedText;
     [SerializeField] private GameObject userGamemodeBtn;
     [SerializeField] private GameObject speedPanel;
+    [SerializeField] private GameObject modificatorsMultiplyText;
     [Header("Scripts")]
     [SerializeField] private MoneyHandler moneyHandler;
     [SerializeField] private CoinMover coinMover;
@@ -251,6 +252,8 @@ public class MainMenu : MonoBehaviour
     }
     public void SwithcToModificatorsPanel()
     {
+        if(toScene == "BotsGame") modificatorsMultiplyText.SetActive(true);
+        else if(toScene == "GameScene") modificatorsMultiplyText.SetActive(false);
         CloseAllPanels();
         modificatorsPanel.SetActive(true);
     }

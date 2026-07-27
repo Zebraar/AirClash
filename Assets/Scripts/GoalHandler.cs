@@ -42,8 +42,6 @@ public class GoalHandler : MonoBehaviour
 
     [Header("Effects")]
     public GameObject particlePrefab;
-    [SerializeField] private Light2D light2D;
-    [SerializeField] private AreaEffector2D areaEffector2D;
     private bool isParticlesOn;
     private bool isWind;
     private Color wallParticleColor;
@@ -66,6 +64,11 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private DailyQuestHandler dailyQuestHandler;
     [SerializeField] private QuestsHandler questsHandler;
 
+    [Header("Modificators")]
+    [SerializeField] private Light2D light2D;
+    [SerializeField] private GameObject[] additionalWalls;
+    [SerializeField] private AreaEffector2D areaEffector2D;
+
 
     void Awake()
     {
@@ -78,6 +81,11 @@ public class GoalHandler : MonoBehaviour
         player1.GetComponentInChildren<Light2D>().intensity = 0;
         player2.GetComponentInChildren<Light2D>().intensity = 0;
         areaEffector2D.gameObject.SetActive(false);
+        isWind = false;
+        for(int i = 0; i < additionalWalls.Length; i++)
+        {
+            additionalWalls[i].SetActive(false);
+        }
     }
 
     void Start()
@@ -169,7 +177,7 @@ public class GoalHandler : MonoBehaviour
 
     void Update() 
     {
-        if (Time.time < _nextUpdate) return;
+        if (Time.time < _nextUpdate && isWind) return;
         _nextUpdate = Time.time + 5f;
 
         areaEffector2D.forceAngle = UnityEngine.Random.Range(-360, 360);
@@ -332,6 +340,14 @@ public class GoalHandler : MonoBehaviour
                     break;
                 case "Wind":
                     areaEffector2D.gameObject.SetActive(true);
+                    isWind = true;
+                    break;
+                case "MoreWalls":
+                    for(int k = 0; k < additionalWalls.Length; k++)
+                    {
+                        additionalWalls[k].SetActive(true);
+                    }
+                    MoveWallsRelative();
                     break;
                 case "None":
                     break;
@@ -341,6 +357,15 @@ public class GoalHandler : MonoBehaviour
             }
         }
         PlayerPrefs.SetString("CurrentModificators", "None");
+    }
+    private void MoveWallsRelative()
+    {
+        for(int i = 0; i < additionalWalls.Length; i++)
+        {
+            additionalWalls[i].transform.DOBlendableMoveBy(new Vector3(0, 6.9f, 0), 5.0f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
     }
     public void UpdateAchievements()
     {

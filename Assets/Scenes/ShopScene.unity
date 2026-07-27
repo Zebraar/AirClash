@@ -15688,7 +15688,7 @@ MonoBehaviour:
   surePanel: {fileID: 824279542}
   audioSource: {fileID: 1190845891}
   audioSourceBgMusic: {fileID: 1794981143}
-  menuMusic: {fileID: 8300000, guid: 28aa2f1f0d3d6ce4fb156e38ed6c23f4, type: 3}
+  shopMusic: {fileID: 8300000, guid: 5154926c3039eb248bedbbe36e9f857d, type: 3}
   buySound: {fileID: 8300000, guid: 882ec6c48c7d35e468fcbe0ae5b59f93, type: 3}
   cancelSound: {fileID: 8300000, guid: 96a64f20e83e9374a8b6e6b9be262a82, type: 3}
   warningSound: {fileID: 8300000, guid: eccab9c3650ab244fa53af8fc328acfa, type: 3}

@@ -60,10 +60,9 @@ public class MainMenu : MonoBehaviour
     {
         audioSource.clip = menuMusic;
         audioSource.loop = true;
-        audioSource.time = PlayerPrefs.GetFloat("Music", 0);
+        audioSource.time = PlayerPrefs.GetFloat("MainMenuMusicTime", 0);
         audioSource.Play();
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
-        audioSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
         rectTransform = mainMenuText.GetComponent<RectTransform>();
         moneyText.text = "Деньги " + moneyHandler.GetMoney(); 
         saveManager.SaveData();
@@ -221,7 +220,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenShop()
     {
-        PlayerPrefs.SetFloat("Music", audioSource.time);
+        PlayerPrefs.SetFloat("MainMenuMusicTime", audioSource.time);
         PlayerPrefs.Save();
         SceneManager.LoadScene("ShopScene");
     }

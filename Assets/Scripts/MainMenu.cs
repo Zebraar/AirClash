@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject profilePanel;
     [SerializeField] private GameObject editProfilePanel;
     [SerializeField] private GameObject cloudPanel;
+    [SerializeField] private GameObject modificatorsPanel;
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip menuMusic;
@@ -158,6 +159,8 @@ public class MainMenu : MonoBehaviour
         dailyQuestPanel.SetActive(false);
         profilePanel.SetActive(false);
         editProfilePanel.SetActive(false);
+        cloudPanel.SetActive(false);
+        modificatorsPanel.SetActive(false);
     }
     public void ClosePanel(GameObject panel)
     {
@@ -245,6 +248,18 @@ public class MainMenu : MonoBehaviour
         profilePanel.SetActive(false);
         cloudPanel.SetActive(true);
     }
+    public void SwithcToModificatorsPanel()
+    {
+        CloseAllPanels();
+        modificatorsPanel.SetActive(true);
+    }
+
+    public void SwitchToGameModesPanel()
+    {
+        CloseAllPanels();
+        gamemodesPanel.SetActive(true);
+        OnGamemodePanel();
+    }
     public void OpenDailyQuestPanel()
     {
         questPanel.SetActive(false);
@@ -295,6 +310,11 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetInt("Goals", Convert.ToInt32(goalsSlider.value));
         PlayerPrefs.SetFloat("Difficulty", speedSlider.value);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(toScene);
+    }
+    public void LoadToScene()
+    {
         PlayerPrefs.Save();
         SceneManager.LoadScene(toScene);
     }

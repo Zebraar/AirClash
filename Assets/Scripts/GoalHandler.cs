@@ -67,8 +67,6 @@ public class GoalHandler : MonoBehaviour
         player1startPos = player1.transform.position;
         player2startPos = player2.transform.position;
         puckStartPos = puck.transform.position;
-        var ps = particlePrefab.GetComponent<ParticleSystem>();
-        var psMain = ps.main;
         if(PlayerPrefs.GetInt("Particle") == 0) isParticlesOn = false;
         else isParticlesOn = true;
     }
@@ -100,6 +98,7 @@ public class GoalHandler : MonoBehaviour
             wallParticleColor = Color.white;
         } 
         puck.GetComponent<TrailRenderer>().enabled = PlayerPrefs.GetInt("PuckTrail", 1) != 0;
+        CheckModificators();
     }
 
     public void OnGoalTrigger(Collider2D collision)
@@ -284,6 +283,39 @@ public class GoalHandler : MonoBehaviour
     {
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void CheckModificators()
+    {
+        string modificators = PlayerPrefs.GetString("CurrentModificators", "None");
+        string[] parts = modificators.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        for(int i = 0; i < parts.Length; i++)
+        {
+            string currentModifier = parts[i].Trim(); 
+
+            switch(currentModifier)
+            {
+                case "BigPlayers":
+                    player1.transform.DOScale(new Vector3(2.0f, 2.0f, 2.0f), 1.0f).SetEase(Ease.OutBack);
+                    player2.transform.DOScale(new Vector3(2.0f, 2.0f, 2.0f), 1.0f).SetEase(Ease.OutBack);
+                    break;
+                case "BigPuck":
+                    puck.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.0f).SetEase(Ease.OutBack);
+                    break;
+                case "X2PuckSpeed":
+                    if(puck.TryGetComponent<PuckScr>(out var puckScript))
+                    {
+                        puckScript.maxSpeed = 40f;
+                    }
+                    break;
+                case "None":
+                    break;
+                default:
+                    Debug.LogWarning("Неизвестный модификатор: " + parts[i]);
+                    break;
+            }
+        }
+        PlayerPrefs.SetString("CurrentModificators", "None");
     }
     public void UpdateAchievements()
     {

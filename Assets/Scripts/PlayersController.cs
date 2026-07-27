@@ -32,8 +32,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     void Start()
     {
         QualitySettings.vSyncCount = 0;
-        if(PlayerPrefs.GetInt("FPS") < 15) Application.targetFrameRate = 60;
-        else Application.targetFrameRate = PlayerPrefs.GetInt("FPS");
+        Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         targetPos = rb.position;

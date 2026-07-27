@@ -43,13 +43,16 @@ public class GoalHandler : MonoBehaviour
     [Header("Effects")]
     public GameObject particlePrefab;
     [SerializeField] private Light2D light2D;
+    [SerializeField] private AreaEffector2D areaEffector2D;
     private bool isParticlesOn;
+    private bool isWind;
     private Color wallParticleColor;
 
     [Header("Economy & Achievements")]
     public MoneyHandler moneyHandler;
     public int howMoneyAdd;
     private int howMoneyAddAsLose;
+    private float _nextUpdate;
     [SerializeField] private AchievementsHandler achievementsHandler;
 
     [Header("Xp Logic")]
@@ -74,6 +77,7 @@ public class GoalHandler : MonoBehaviour
         light2D.intensity = 1.0f;
         player1.GetComponentInChildren<Light2D>().intensity = 0;
         player2.GetComponentInChildren<Light2D>().intensity = 0;
+        areaEffector2D.gameObject.SetActive(false);
     }
 
     void Start()
@@ -161,6 +165,14 @@ public class GoalHandler : MonoBehaviour
                 }   
             }
         }
+    }
+
+    void Update() 
+    {
+        if (Time.time < _nextUpdate) return;
+        _nextUpdate = Time.time + 5f;
+
+        areaEffector2D.forceAngle = UnityEngine.Random.Range(-360, 360);
     }
 
     public void OnPuckCollisionEnter2D(Collision2D collision) 
@@ -317,6 +329,9 @@ public class GoalHandler : MonoBehaviour
                     light2D.intensity = 0;
                     player1.GetComponentInChildren<Light2D>().intensity = 1;
                     player2.GetComponentInChildren<Light2D>().intensity = 1;
+                    break;
+                case "Wind":
+                    areaEffector2D.gameObject.SetActive(true);
                     break;
                 case "None":
                     break;

@@ -47,11 +47,11 @@ Physics2DSettings:
   m_MinSubStepFPS: 30
   m_UseSubStepping: 0
   m_UseSubStepContacts: 0
-  m_QueriesHitTriggers: 1
+  m_QueriesHitTriggers: 0
   m_QueriesStartInColliders: 1
   m_CallbacksOnDisable: 1
   m_ReuseCollisionCallbacks: 1
   m_AutoSyncTransforms: 0
   m_GizmoOptions: 10
-  m_LayerCollisionMatrix: c9ffffffc8ffffffc8ffffffffffffffc8ffffffc8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  m_LayerCollisionMatrix: cdffffffc8ffffffc9ffffffffffffffc8ffffffc8ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   m_PhysicsLowLevelSettings: {fileID: 0}

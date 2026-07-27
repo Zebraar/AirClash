@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ModificatorsHandler : MonoBehaviour
 {
     [Header("UI")]
+    [SerializeField] private Text moneyMultiplyText;
     [SerializeField] private Toggle[] modificatorsToggles;
 
     public void SetModificators()
@@ -26,5 +27,17 @@ public class ModificatorsHandler : MonoBehaviour
             PlayerPrefs.SetString("CurrentModificators", result);
         }
         PlayerPrefs.Save();
+    }
+    public void OnValueChanged()
+    {
+        float modificatorsMultiply = 1;
+        for(int i = 0; i < modificatorsToggles.Length; i++)
+        {
+            if(modificatorsToggles[i].isOn)
+            {
+                modificatorsMultiply += modificatorsToggles[i].GetComponent<ModidficatorToggleItem>().ModificatorXMoney;
+            }
+        }
+        moneyMultiplyText.text = "Деньги " + modificatorsMultiply + "x";
     }
 }

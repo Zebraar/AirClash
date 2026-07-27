@@ -68,7 +68,7 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private Light2D light2D;
     [SerializeField] private GameObject[] additionalWalls;
     [SerializeField] private AreaEffector2D areaEffector2D;
-
+    private float modificatorsMoney = 1;
 
     void Awake()
     {
@@ -94,6 +94,7 @@ public class GoalHandler : MonoBehaviour
         xpHandler.ResetOldXp();   
         timer.TimerStart();
         audioSourceSfx.PlayOneShot(StartGameSound);
+        CheckModificators();
         bool isMusic = PlayerPrefs.GetInt("BgMusicInGame", 1) != 0;
         if(isMusic)
         {
@@ -103,9 +104,9 @@ public class GoalHandler : MonoBehaviour
             audioSourceBgMusic.time = 0;
             audioSourceBgMusic.Play();
         }
-        howManyGoals = PlayerPrefs.GetInt("Goals");
-        howMoneyAdd = Convert.ToInt32(PlayerPrefs.GetFloat("Difficulty") / 3 * Mathf.Max(1, howManyGoals));
-        howManyXpAddForGoal = Convert.ToInt32(PlayerPrefs.GetFloat("Difficulty") / 2);
+        howManyGoals = PlayerPrefs.GetInt("Goals", 4);
+        howMoneyAdd = Convert.ToInt32((PlayerPrefs.GetFloat("Difficulty", 12) / 3 * Mathf.Max(1, howManyGoals)) * modificatorsMoney);
+        howManyXpAddForGoal = Convert.ToInt32(PlayerPrefs.GetFloat("Difficulty", 12) / 2);
         howManyXpAddAsWin = howManyXpAddForGoal * Mathf.Max(1, Convert.ToInt32(howManyGoals / 1.5f));
         howManyXpAddAsLose = 1;
         howMoneyAddAsLose = 1;  
@@ -115,7 +116,6 @@ public class GoalHandler : MonoBehaviour
             wallParticleColor = Color.white;
         } 
         puck.GetComponent<TrailRenderer>().enabled = PlayerPrefs.GetInt("PuckTrail", 1) != 0;
-        CheckModificators();
     }
 
     public void OnGoalTrigger(Collider2D collision)
@@ -323,33 +323,40 @@ public class GoalHandler : MonoBehaviour
                 case "BigPlayers":
                     player1.transform.DOScale(new Vector3(2.0f, 2.0f, 2.0f), 1.0f).SetEase(Ease.OutBack);
                     player2.transform.DOScale(new Vector3(2.0f, 2.0f, 2.0f), 1.0f).SetEase(Ease.OutBack);
+                    modificatorsMoney += 0.3f;
                     break;
                 case "BigPuck":
                     puck.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.0f).SetEase(Ease.OutBack);
+                    modificatorsMoney += 0.25f;
                     break;
                 case "X2PuckSpeed":
                     if(puck.TryGetComponent<PuckScr>(out var puckScript))
                     {
                         puckScript.maxSpeed = 40f;
                     }
+                    modificatorsMoney += 0.3f;
                     break;
                 case "Fog":
                     light2D.intensity = 0;
                     player1.GetComponentInChildren<Light2D>().intensity = 1;
                     player2.GetComponentInChildren<Light2D>().intensity = 1;
+                    modificatorsMoney += 0.75f;
                     break;
                 case "Wind":
                     areaEffector2D.gameObject.SetActive(true);
                     isWind = true;
+                    modificatorsMoney += 0.15f;
                     break;
                 case "MoreWalls":
                     for(int k = 0; k < additionalWalls.Length; k++)
                     {
                         additionalWalls[k].SetActive(true);
                     }
+                    modificatorsMoney += 0.4f;
                     MoveWallsRelative();
                     break;
                 case "None":
+                    modificatorsMoney = 1;
                     break;
                 default:
                     Debug.LogWarning("Неизвестный модификатор: " + parts[i]);
@@ -357,6 +364,7 @@ public class GoalHandler : MonoBehaviour
             }
         }
         PlayerPrefs.SetString("CurrentModificators", "None");
+        PlayerPrefs.Save();
     }
     private void MoveWallsRelative()
     {

@@ -46,7 +46,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private float maxAngle = 6f;  
     private RectTransform rectTransform;
     private string toScene;
-
+    private string lastOpenMenu;
 
     void Awake()
     {
@@ -186,6 +186,7 @@ public class MainMenu : MonoBehaviour
     }
     public void OnGamemodePanel()
     {
+        lastOpenMenu = "GamemodePanel";
         if(toScene == "GameScene")
         {
             userGamemodeBtn.SetActive(true);
@@ -257,8 +258,14 @@ public class MainMenu : MonoBehaviour
     public void SwitchToGameModesPanel()
     {
         CloseAllPanels();
-        gamemodesPanel.SetActive(true);
-        OnGamemodePanel();
+        if(lastOpenMenu == "GamemodePanel")
+        {
+            gamemodesPanel.SetActive(true);
+            OnGamemodePanel();
+        } else if(lastOpenMenu == "UserGameModePanel")
+        {
+            OpenUserGamemode();
+        }
     }
     public void OpenDailyQuestPanel()
     {
@@ -269,6 +276,7 @@ public class MainMenu : MonoBehaviour
     {
         CloseAllPanels();
         userGamemodePanel.SetActive(true);
+        lastOpenMenu = "UserGameModePanel";
         if(toScene == "BotsGame")
         {
             goalsSlider.value = PlayerPrefs.GetInt("Goals", 4);

@@ -36,11 +36,11 @@ public class SettingsHandler : MonoBehaviour
     private const string mixerParameterNameSFX = "SFX";
     private const string mixerParameterNameBgMusic = "BgMusic";
 
-    public void Awake() 
+    void Start() 
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
-        float masterVol = PlayerPrefs.GetFloat("MusicVolume", 1.0f);
+        float masterVol = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
         float sfxVol = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
         float bgMusicVol = PlayerPrefs.GetFloat("BgMusicVolume", 1.0f);
 
@@ -64,7 +64,7 @@ public class SettingsHandler : MonoBehaviour
         float dbValue = Mathf.Log10(masterVolumeSlider.value) * 20;
         audioMixer.SetFloat(mixerParameterNameMaster, dbValue);
 
-        PlayerPrefs.SetFloat("MusicVolume", sliderValue);
+        PlayerPrefs.SetFloat("MasterVolume", sliderValue);
         PlayerPrefs.Save();
     }
     public void OnBgMusicVolumeSliderChanged() {

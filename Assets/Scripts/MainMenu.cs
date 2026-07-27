@@ -298,7 +298,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnGoalsSliderChanged()
     {
-        goalsText.text = Convert.ToInt32(goalsSlider.value).ToString();
+        goalsText.text = goalsSlider.value.ToString();
     }
 
     public void OnSpeedSliderChanged()

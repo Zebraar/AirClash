@@ -70,6 +70,8 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private AreaEffector2D areaEffector2D;
     private float modificatorsMoney = 1;
     private bool isFog = false;
+    private bool isBigPlayer = false;
+    private bool isSmallPlayer = false;
     private Camera mainCamera;
     private Color cameraBackgroundColor;
 
@@ -279,6 +281,10 @@ public class GoalHandler : MonoBehaviour
             PlayerPrefs.SetInt("Money", moneyHandler.GetMoney());
             PlayerPrefs.SetInt("HowMoneyAdds", PlayerPrefs.GetInt("HowMoneyAdds") + howMoneyAdd);
             PlayerPrefs.SetInt("isAfterGame", 1);
+            if(isFog) achievementsHandler.UpdateProgress("the_fog", 1);
+            if(isWind) achievementsHandler.UpdateProgress("wind", 1);
+            if(isBigPlayer) achievementsHandler.UpdateProgress("big", 1);
+            if(isSmallPlayer) achievementsHandler.UpdateProgress("small", 1);
             PlayerPrefs.Save();
         } else
         {
@@ -352,6 +358,7 @@ public class GoalHandler : MonoBehaviour
                     player1.transform.DOScale(new Vector3(2.0f, 2.0f, 2.0f), 1.0f).SetEase(Ease.OutBack);
                     player2.transform.DOScale(new Vector3(2.0f, 2.0f, 2.0f), 1.0f).SetEase(Ease.OutBack);
                     modificatorsMoney += 0.3f;
+                    isBigPlayer = true;
                     break;
                 case "BigPuck":
                     puck.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 1.0f).SetEase(Ease.OutBack);
@@ -391,6 +398,7 @@ public class GoalHandler : MonoBehaviour
                     player1.transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 1.0f).SetEase(Ease.InBack);
                     player2.transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 1.0f).SetEase(Ease.InBack);
                     modificatorsMoney += 0.15f;
+                    isSmallPlayer = true;
                     break;
                 case "SmallPuck":
                     puck.transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 1.0f).SetEase(Ease.InBack);

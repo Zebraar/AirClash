@@ -53,6 +53,11 @@ public class AchievementsHandler : MonoBehaviour
         achievements.Add("master_of_goals", new Achievement {Title = "Мастер голов", Target = 6, Award = 200});
         achievements.Add("master_xp", new Achievement {Title = "Мастер XP", Target = 6, Award = 200});
         achievements.Add("daily", new Achievement {Title = "Ежедневка", Target = 3, Award = 40});
+        // Ачивки для модификаторов
+        achievements.Add("the_fog", new Achievement {Title = "The Fog", Target = 2, Award = 75});
+        achievements.Add("wind", new Achievement {Title = "Воздухан", Target = 5, Award = 50});
+        achievements.Add("small", new Achievement {Title = "Маленький", Target = 5, Award = 50});
+        achievements.Add("big", new Achievement {Title = "Большой", Target = 5, Award = 50});
         LoadAchievements();
     }
 

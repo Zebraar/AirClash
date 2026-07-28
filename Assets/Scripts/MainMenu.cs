@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,9 +30,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text mainMenuText;
     [SerializeField] private Text moneyText;
     [SerializeField] private Slider goalsSlider;
-    [SerializeField] private Text goalsText;
+    [SerializeField] private TextMeshProUGUI goalsText;
     [SerializeField] private Slider speedSlider;
-    [SerializeField] private Text speedText;
+    [SerializeField] private TextMeshProUGUI speedText;
     [SerializeField] private GameObject userGamemodeBtn;
     [SerializeField] private GameObject speedPanel;
     [SerializeField] private GameObject modificatorsMultiplyText;

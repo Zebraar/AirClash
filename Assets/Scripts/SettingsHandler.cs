@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Audio;
+using TMPro;
 
 [System.Serializable]
 public class IsAnimToggleEvent : UnityEvent<bool> { }
@@ -18,7 +18,7 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Slider sfxVolumeSlider;
 
     [Header("Texts")]
-    [SerializeField] private Text fpsText;
+    [SerializeField] private TextMeshProUGUI fpsText;
 
     [Header("Toggles")]
     [SerializeField] private Toggle animBgToggle;
@@ -61,32 +61,22 @@ public class SettingsHandler : MonoBehaviour
 
     public void OnVolumeSliderChanged() {
         float sliderValue = masterVolumeSlider.value;
-        float dbValue = Mathf.Log10(masterVolumeSlider.value) * 20;
+        float dbValue = Mathf.Log10(sliderValue) * 20;
         audioMixer.SetFloat(mixerParameterNameMaster, dbValue);
-
-        PlayerPrefs.SetFloat("MasterVolume", sliderValue);
-        PlayerPrefs.Save();
     }
     public void OnBgMusicVolumeSliderChanged() {
         float sliderValue = bgMusicSlider.value;
-        float dbValue = Mathf.Log10(bgMusicSlider.value) * 20;
+        float dbValue = Mathf.Log10(sliderValue) * 20;
         audioMixer.SetFloat(mixerParameterNameBgMusic, dbValue);
-
-        PlayerPrefs.SetFloat("BgMusicVolume", sliderValue);
-        PlayerPrefs.Save();
     }
     public void OnSoundEffectsSliderChanged() {
         float sliderValue = sfxVolumeSlider.value;
-        float dbValue = Mathf.Log10(sfxVolumeSlider.value) * 20;
+        float dbValue = Mathf.Log10(sliderValue) * 20;
         audioMixer.SetFloat(mixerParameterNameSFX, dbValue);
-
-        PlayerPrefs.SetFloat("SFXVolume", sliderValue);
-        PlayerPrefs.Save();
     }
     public void OnFpsSliderChanged()
     {
-        PlayerPrefs.SetInt("FPS", Convert.ToInt32(fpsSlider.value));
-        fpsText.text = Convert.ToString(Convert.ToInt32(fpsSlider.value));
+        fpsText.text = fpsSlider.value.ToString();
         Application.targetFrameRate = Convert.ToInt32(fpsSlider.value);
     }
 
@@ -135,5 +125,14 @@ public class SettingsHandler : MonoBehaviour
     public void ShowWebSite()
     {
         Application.OpenURL("https://zebrarsgames.github.io/AirClash/");
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetInt("FPS", Convert.ToInt32(fpsSlider.value));
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
+        PlayerPrefs.SetFloat("BgMusicVolume", bgMusicSlider.value);
+        PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
+        PlayerPrefs.Save();
     }
 }

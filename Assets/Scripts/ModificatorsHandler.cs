@@ -28,16 +28,33 @@ public class ModificatorsHandler : MonoBehaviour
         }
         PlayerPrefs.Save();
     }
-    public void OnValueChanged()
+    public void OnToggleClicked(Toggle clickedToggle)
+    {
+        if(clickedToggle.isOn)
+        {
+            var currentModificator = clickedToggle.GetComponent<ModidficatorToggleItem>();
+            
+            if(currentModificator.ModificatorOpposite != null)
+            {
+                currentModificator.ModificatorOpposite.SetIsOnWithoutNotify(false);
+            }
+        }
+
+        CalculateTotalMoney();
+    }
+
+    private void CalculateTotalMoney()
     {
         float modificatorsMultiply = 1;
         for(int i = 0; i < modificatorsToggles.Length; i++)
         {
             if(modificatorsToggles[i].isOn)
             {
-                modificatorsMultiply += modificatorsToggles[i].GetComponent<ModidficatorToggleItem>().ModificatorXMoney;
+                var currentModificator = modificatorsToggles[i].GetComponent<ModidficatorToggleItem>();
+                modificatorsMultiply += currentModificator.ModificatorXMoney;
             }
         }
+
         moneyMultiplyText.text = "Деньги " + modificatorsMultiply + "x";
     }
 }

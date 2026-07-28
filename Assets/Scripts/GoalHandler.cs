@@ -387,6 +387,15 @@ public class GoalHandler : MonoBehaviour
                     modificatorsMoney += 0.4f;
                     MoveWallsRelative();
                     break;
+                case "SmallPlayers":
+                    player1.transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 1.0f).SetEase(Ease.InBack);
+                    player2.transform.DOScale(new Vector3(0.6f, 0.6f, 0.6f), 1.0f).SetEase(Ease.InBack);
+                    modificatorsMoney += 0.15f;
+                    break;
+                case "SmallPuck":
+                    puck.transform.DOScale(new Vector3(0.45f, 0.45f, 0.45f), 1.0f).SetEase(Ease.InBack);
+                    modificatorsMoney += 0.1f;
+                    break;
                 case "None":
                     modificatorsMoney = 1;
                     break;

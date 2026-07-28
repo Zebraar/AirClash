@@ -69,9 +69,13 @@ public class GoalHandler : MonoBehaviour
     [SerializeField] private GameObject[] additionalWalls;
     [SerializeField] private AreaEffector2D areaEffector2D;
     private float modificatorsMoney = 1;
+    private bool isFog = false;
+    private Camera mainCamera;
+    private Color cameraBackgroundColor;
 
     void Awake()
     {
+        mainCamera = Camera.main; 
         player1startPos = player1.transform.position;
         player2startPos = player2.transform.position;
         puckStartPos = puck.transform.position;
@@ -82,12 +86,12 @@ public class GoalHandler : MonoBehaviour
         player2.GetComponentInChildren<Light2D>().intensity = 0;
         areaEffector2D.gameObject.SetActive(false);
         isWind = false;
-        Color cameraBackgroundColor;
         if(!ColorUtility.TryParseHtmlString("#003E99", out cameraBackgroundColor))
         {
-            Camera.main.backgroundColor = Color.white;
+            mainCamera.backgroundColor = Color.white;
         } 
-        Camera.main.backgroundColor = cameraBackgroundColor;
+        mainCamera.backgroundColor = cameraBackgroundColor;
+        isFog = false;
         for(int i = 0; i < additionalWalls.Length; i++)
         {
             additionalWalls[i].SetActive(false);
@@ -282,6 +286,15 @@ public class GoalHandler : MonoBehaviour
             endScreen.StartEndScreen(0, xpBefore);
         }
         goalTextCanvas.SetActive(true);
+        if(isFog)
+        {
+            DOTween.To(() => light2D.intensity, x => light2D.intensity = x, 1f, 3f);
+            DOTween.To(() => player1.GetComponentInChildren<Light2D>().intensity, x => player1.GetComponentInChildren<Light2D>().intensity = x, 0f, 3f);
+            DOTween.To(() => player2.GetComponentInChildren<Light2D>().intensity, x => player2.GetComponentInChildren<Light2D>().intensity = x, 0f, 3f);
+            Sequence fadeSequence = DOTween.Sequence();
+            fadeSequence.Join(mainCamera.DOColor(cameraBackgroundColor, 3f));
+            fadeSequence.SetEase(Ease.InOutQuad);
+        }
         var rect = endSreenPanel.GetComponent<RectTransform>();
         rect.localScale = Vector3.zero;
         endSreenPanel.SetActive(true);
@@ -305,6 +318,15 @@ public class GoalHandler : MonoBehaviour
             PlayerPrefs.Save();
         }
         goalTextCanvas.SetActive(true);
+        if(isFog)
+        {
+            DOTween.To(() => light2D.intensity, x => light2D.intensity = x, 1f, 3f);
+            DOTween.To(() => player1.GetComponentInChildren<Light2D>().intensity, x => player1.GetComponentInChildren<Light2D>().intensity = x, 0f, 3f);
+            DOTween.To(() => player2.GetComponentInChildren<Light2D>().intensity, x => player2.GetComponentInChildren<Light2D>().intensity = x, 0f, 3f);
+            Sequence fadeSequence = DOTween.Sequence();
+            fadeSequence.Join(mainCamera.DOColor(cameraBackgroundColor, 3f));
+            fadeSequence.SetEase(Ease.InOutQuad);
+        }
         var rect = endSreenPanel.GetComponent<RectTransform>();
         rect.localScale = Vector3.zero;
         endSreenPanel.SetActive(true);
@@ -343,11 +365,14 @@ public class GoalHandler : MonoBehaviour
                     modificatorsMoney += 0.3f;
                     break;
                 case "Fog":
-                    light2D.intensity = 0;
-                    player1.GetComponentInChildren<Light2D>().intensity = 1;
-                    player2.GetComponentInChildren<Light2D>().intensity = 1;
+                    isFog = true;
+                    DOTween.To(() => light2D.intensity, x => light2D.intensity = x, 0f, 3f);
+                    DOTween.To(() => player1.GetComponentInChildren<Light2D>().intensity, x => player1.GetComponentInChildren<Light2D>().intensity = x, 1f, 3f);
+                    DOTween.To(() => player2.GetComponentInChildren<Light2D>().intensity, x => player2.GetComponentInChildren<Light2D>().intensity = x, 1f, 3f);
                     modificatorsMoney += 0.75f;
-                    Camera.main.backgroundColor = Color.black;
+                    Sequence fadeSequence = DOTween.Sequence();
+                    fadeSequence.Join(mainCamera.DOColor(Color.black, 3f));
+                    fadeSequence.SetEase(Ease.InOutQuad);
                     break;
                 case "Wind":
                     areaEffector2D.gameObject.SetActive(true);

@@ -46,15 +46,18 @@ public class ShopHandler : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public bool BuySkin(string skinName, int skinCoast)
+    public bool BuySkin(string skinName, int skinCost)
     {
-        if(moneyHandler.GetMoney() >= skinCoast && PlayerPrefs.GetInt(skinName) == 0)
+        if(moneyHandler.GetMoney() >= skinCost && PlayerPrefs.GetInt(skinName) == 0)
         {
             achievementsHandler.UpdateProgress("large_wardrobe", 1);
             audioSource.PlayOneShot(buySound);
-            moneyHandler.RemoveMoney(skinCoast);
+            moneyHandler.RemoveMoney(skinCost);
             PlayerPrefs.SetString("CurrentSkin", skinName);
             PlayerPrefs.SetInt(skinName, 1);
+            string skins = PlayerPrefs.GetString("AllBuySkins", "DefSkin");
+            skins += "," + skinName;
+            PlayerPrefs.SetString("AllBuySkins", skins);
             PlayerPrefs.Save();
             moneyText.text = "Деньги " + Convert.ToString(moneyHandler.GetMoney());
             return true;

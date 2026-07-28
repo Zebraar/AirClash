@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.IO;
-using System.Collections.Generic;
+using System;
 
 public class SaveManager : MonoBehaviour
 {
@@ -34,9 +34,12 @@ public class SaveManager : MonoBehaviour
             playerData.AchievementsProgress[i] = achievementsHandler.GetProgress(id);
         }
 
+        string skins = PlayerPrefs.GetString("AllBuySkins", "DefSkin");
+        string[] parts = skins.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        playerData.AllBuySkins = parts;
+
         string json = JsonUtility.ToJson(playerData);
         File.WriteAllText(Application.persistentDataPath + "/save.json", json);
-        PlayerPrefs.DeleteKey("Nick");
         PlayerPrefs.Save();
         Debug.Log("Data Saved!");
     }
@@ -94,6 +97,10 @@ public class SaveManager : MonoBehaviour
             playerData.AchievementsProgress[i] = 0;
         }
 
+        string skins = "DefSkin";
+        string[] parts = skins.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        playerData.AllBuySkins = parts;
+
         PlayerPrefs.Save();
         string json = JsonUtility.ToJson(playerData);
         File.WriteAllText(Application.persistentDataPath + "/save.json", json);
@@ -126,6 +133,10 @@ public class SaveManager : MonoBehaviour
             playerData.AchievementsIds[i] = id;
             playerData.AchievementsProgress[i] = 0;
         }
+
+        string skins = "DefSkin";
+        string[] parts = skins.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        playerData.AllBuySkins = parts;
 
         PlayerPrefs.Save();
         return playerData;

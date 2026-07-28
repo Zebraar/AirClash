@@ -91,6 +91,16 @@ public class SkinItem : MonoBehaviour
             isBuy = true;
             checkmark.gameObject.SetActive(true);
         }
+        string skins = PlayerPrefs.GetString("AllBuySkins", "DefSkin");
+        string[] parts = skins.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        bool isHasThisSkin = false;
+        for(int i = 0; i < parts.Length; i ++) if(parts[i] == skinName) isHasThisSkin = true;
+        if(PlayerPrefs.GetInt(skinName, 0) == 1 && !isHasThisSkin)
+        {
+            skins += "," + skinName;
+            PlayerPrefs.SetString("AllBuySkins", skins);
+            PlayerPrefs.Save();
+        }
         if(isCanBuy)
         {
             priceText.text = skinPrice.ToString();

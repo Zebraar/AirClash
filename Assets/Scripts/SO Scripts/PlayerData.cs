@@ -16,6 +16,7 @@ public class PlayerData
     public string CurrentSkinName;
     public float Playtime;
     public string[] AchievementsIds;
+    public string[] AllBuySkins;
     public int[] AchievementsProgress;
     public string avatarBase64; 
 }

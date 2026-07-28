@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -94,6 +95,13 @@ public class CloudUIScr : MonoBehaviour
                 string id = achievementsHandler.GetStringId(i);
                 achievementsHandler.SetProgress(id, playerData.AchievementsProgress[i]);
             }
+
+            string[] parts = playerData.AllBuySkins;
+            for(int i = 0; i < parts.Length; i++)
+            {
+                PlayerPrefs.SetInt(parts[i], 1);
+            }
+
             PlayerPrefs.Save();
             saveManager.SaveData();
         } else

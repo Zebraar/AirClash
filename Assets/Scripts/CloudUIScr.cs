@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System;
 using TMPro;
 using UnityEngine.UI;
@@ -33,23 +34,32 @@ public class CloudUIScr : MonoBehaviour
     [SerializeField] private XpHandler xpHandler;
     [SerializeField] private FirebaseManager firebaseManager;
 
+    private HashSet<string> forbiddenWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
     void Start()
     {
         usernameInput.text = saveManager.GetData().NickName;
+        LoadBadWords();
     }
 
     public void OnClickLoginOrRegister()
     {
+        bool isTextValid = IsTextValid();
+        if(!isTextValid) return;
         firebaseManager.AccountAuth(usernameInput.text, passwordInput.text);
     }
 
     public void OnClickSave()
     {
+        bool isTextValid = IsTextValid();
+        if(!isTextValid) return;
         firebaseManager.SaveProgress(usernameInput.text, passwordInput.text);
     }
 
     public void OnClickLoad()
     {
+        bool isTextValid = IsTextValid();
+        if(!isTextValid) return;
         firebaseManager.LoadProgress(usernameInput.text, passwordInput.text);
     }
 
@@ -172,5 +182,96 @@ public class CloudUIScr : MonoBehaviour
         questsHandler.SetQuestProgress("goal300", amount);
         questsHandler.SetQuestProgress("goal500", amount);
         dailyQuestHandler.UpdateQuestProgress("goal20", amount);
+    }
+
+    private bool IsTextValid()
+    {
+        foreach(char c in usernameInput.text)
+        {
+            if(!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c))
+            {
+                Debug.LogWarning($"Найден запрещенный символ: {c}");
+                statusText.text = $"Статус: Найден запрещенный символ: {c}";
+                return false;
+            }
+        }
+
+        foreach(char c in passwordInput.text)
+        {
+            if(!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c))
+            {
+                Debug.LogWarning($"Найден запрещенный символ: {c}");
+                statusText.text = $"Статус: Найден запрещенный символ: {c}";
+                return false;
+            }
+        }
+
+        string preparedInput = PrepareText(usernameInput.text);
+
+        foreach (var badWord in forbiddenWords)
+        {
+            if (preparedInput.Contains(badWord))
+            {
+                statusText.text = "Логин содержит запрещенное слово!";
+                Debug.LogWarning($"Блокировка: Ввод '{usernameInput.text}' содержит '{badWord}'");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void LoadBadWords()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("network_config");
+        
+        if(textAsset != null)
+        {
+            try
+            {
+                byte[] decodedBytes = Convert.FromBase64String(textAsset.text);
+                
+                string decodedText = System.Text.Encoding.UTF8.GetString(decodedBytes);
+
+                string[] lines = decodedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                
+                foreach (var word in lines)
+                {
+                    string trimmed = word.Trim().ToLower();
+                    if (!string.IsNullOrEmpty(trimmed) && trimmed.Length > 2)
+                    {
+                        forbiddenWords.Add(trimmed);
+                    }
+                }
+                Debug.Log($"[System] Данные конфигурации сети успешно инициализированы. Элементов: {forbiddenWords.Count}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Ошибка чтения конфигурации сети: {e.Message}");
+            }
+        }
+        else
+        {
+            Debug.LogError("Файл конфигурации network_config.dat не найден в Resources!");
+        }
+    }
+
+
+    private string PrepareText(string input)
+    {
+        if(string.IsNullOrEmpty(input)) return "";
+
+        string text = input.ToLower();
+
+        text = text.Replace("0", "о")
+                   .Replace("1", "и")
+                   .Replace("3", "з")
+                   .Replace("4", "ч")
+                   .Replace("a", "а")
+                   .Replace("o", "о")
+                   .Replace("e", "е")
+                   .Replace("x", "х");
+
+        return text;
     }
 }

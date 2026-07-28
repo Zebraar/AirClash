@@ -33,6 +33,11 @@ public class CloudUIScr : MonoBehaviour
     [SerializeField] private XpHandler xpHandler;
     [SerializeField] private FirebaseManager firebaseManager;
 
+    void Start()
+    {
+        usernameInput.text = saveManager.GetData().NickName;
+    }
+
     public void OnClickLoginOrRegister()
     {
         firebaseManager.AccountAuth(usernameInput.text, passwordInput.text);

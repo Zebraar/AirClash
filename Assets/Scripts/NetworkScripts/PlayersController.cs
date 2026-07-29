@@ -1,7 +1,8 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Movement")]
     public float minX;
@@ -9,11 +10,6 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public float minY;
     public float maxY;
     [SerializeField] private TimerScr timer;
-
-    [Header("Particles")]
-    public GameObject particleSkin;
-    public GameObject bubbleParticles;
-    public GameObject goldParticles;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -53,6 +49,7 @@ public class PlayersController : MonoBehaviour, IBeginDragHandler, IDragHandler,
     public void OnDrag(PointerEventData eventData)
     {
         // if (!isDragging || timer.TimerOn) return;
+        if(!isLocalPlayer) return;
         if (!isDragging) return;
 
         Vector3 mousePos = cam.ScreenToWorldPoint(eventData.position);

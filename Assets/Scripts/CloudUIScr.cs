@@ -91,7 +91,7 @@ public class CloudUIScr : MonoBehaviour
         if(playerData != null)
         {
             SetMoneyQuests(playerData.TotalMoney);
-            SetXpQuests(playerData.XP);
+            SetXpQuests(playerData.TotalXP);
             SetGoalQuests(playerData.Goals);
             PlayerPrefs.SetString("Nick", usernameInput.text);
             PlayerPrefs.SetInt("TotalGoals", playerData.Goals);

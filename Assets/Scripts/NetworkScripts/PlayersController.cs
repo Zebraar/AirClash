@@ -19,6 +19,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private Rigidbody2D rb;
     private Camera cam;
     private Vector3 offset;
+    [SyncVar]
     private Vector2 targetPos;
     private bool isDragging = false;
     private Color particleColor;
@@ -31,7 +32,13 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
-        targetPos = rb.position;
+
+        if(isServer)
+        {
+            targetPos = rb.position;
+        }
+
+        if(timer == null) timer = FindAnyObjectByType<TimerScr>();
         float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         AudioListener.volume = volume;
         if(PlayerPrefs.GetString("CurrentSkin") == "") PlayerPrefs.SetString("CurrentSkin", "DefSkin");
@@ -41,40 +48,44 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(!isLocalPlayer) return; 
+
         Vector3 mousePos = cam.ScreenToWorldPoint(eventData.position);
-        offset = transform.position - new Vector3(mousePos.x, mousePos.y);
+        offset = (Vector2)transform.position - (Vector2)mousePos;
         isDragging = true;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // if (!isDragging || timer.TimerOn) return;
-        if(!isLocalPlayer) return;
-        if (!isDragging) return;
+        if (timer != null && timer.TimerOn) return; 
+        if (!isLocalPlayer || !isDragging) return;
 
         Vector3 mousePos = cam.ScreenToWorldPoint(eventData.position);
-        targetPos = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
+        Vector2 calculatedPos = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
 
-        targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
-        targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
+        calculatedPos.x = Mathf.Clamp(calculatedPos.x, minX, maxX);
+        calculatedPos.y = Mathf.Clamp(calculatedPos.y, minY, maxY);
+
+        CmdUpdatePosition(calculatedPos);
     }
 
-    private void FixedUpdate() {
-        // if (isDragging && !timer.TimerOn)
-        if(isDragging)
+    private void FixedUpdate()
+    {
+        if(isServer || isLocalPlayer || targetPos != Vector2.zero)
         {
             rb.MovePosition(targetPos);
         }
-        // else if(timer.TimerOn)
-        // {
-        //     rb.linearVelocity = Vector2.zero;
-        //     rb.angularVelocity = 0f;
-        //     targetPos = rb.position;
-        // }
+    }
+
+    [Command]
+    private void CmdUpdatePosition(Vector2 newPos)
+    {
+        targetPos = newPos;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isLocalPlayer) return;
         isDragging = false;
     }
 

@@ -17,7 +17,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     [Header("Internal variables")]
     private Rigidbody2D rb;
-    private Camera cam;
+    private Camera cam; 
     private Vector3 offset;
     [SyncVar]
     private Vector2 targetPos;
@@ -25,13 +25,16 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private Color particleColor;
     private GameObject particles;
 
+    void Awake()
+    {
+        cam = Camera.main;
+    }
 
     void Start()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
         rb = GetComponent<Rigidbody2D>();
-        cam = Camera.main;
 
         if(isServer)
         {

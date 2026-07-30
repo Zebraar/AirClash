@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class GoalHandlerNetwork : NetworkBehaviour
 {
+    public static GoalHandlerNetwork Instance;
+
     [Header("UI Elements")]
     public Text scoreText1;
     public Text scoreText2;
@@ -78,6 +80,7 @@ public class GoalHandlerNetwork : NetworkBehaviour
 
     void Awake()
     {
+        Instance = this;
         mainCamera = Camera.main; 
         player1startPos = player1.transform.position;
         player2startPos = player2.transform.position;
@@ -131,19 +134,33 @@ public class GoalHandlerNetwork : NetworkBehaviour
         puck.GetComponent<TrailRenderer>().enabled = PlayerPrefs.GetInt("PuckTrail", 1) != 0;
     }
 
-    [Command]
-    public void CmdGoal(uint GoalPlayerNetId) => Goal(GoalPlayerNetId);
+    [Server] 
+    public void ServerProcessGoal(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("GoalTrigger1"))
+        {
+            score1++;
+        }
+        else if (collision.gameObject.CompareTag("GoalTrigger2"))
+        {
+            score2++;
+        }
+
+        RpcOnGoalScored(score1, score2);
+    }
 
     [ClientRpc]
-    private void Goal(uint GoalPlayerNetId)
+    private void RpcOnGoalScored(int newScore1, int newScore2)
     {
-        var isPlayer1 = GoalPlayerNetId = NetworkClient.localPlayer.netId;
-        Debug.Log("Гол забил " + isPlayer1);
+        Debug.Log($"Сервер сообщил: Забит гол! Текущий счет: {newScore1} {newScore2}");
+        scoreText1.text = newScore1.ToString(); 
+        scoreText2.text = newScore2.ToString(); 
+        ResetPosition();
+        timer.Goal();
     }
 
     public void OnGoalTrigger(Collider2D collision)
     {
-        CmdGoal(netId);
         if (collision.gameObject.CompareTag("GoalTrigger1"))
         {
             if(lastCollision == "Player1" && SceneManager.GetActiveScene().name.Equals("BotsGame")) achievementsHandler.UpdateProgress("own_goal", 1);

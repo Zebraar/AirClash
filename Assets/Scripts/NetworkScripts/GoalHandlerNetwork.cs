@@ -159,6 +159,18 @@ public class GoalHandlerNetwork : NetworkBehaviour
         timer.Goal();
     }
 
+    public void RegisterPlayer(GameObject player, string name)
+    {
+        if(name == "Player1")
+        {
+            player1 = player;
+        }
+        else if(name == "Player2")
+        {
+            player2 = player;
+        }
+    }
+
     public void OnGoalTrigger(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("GoalTrigger1"))

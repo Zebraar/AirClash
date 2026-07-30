@@ -25,27 +25,96 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private Color particleColor;
     private GameObject particles;
 
+    [SyncVar(hook = nameof(OnPlayerIndexChanged))]
+    private int netPlayerIndex = 0;
+
     void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
     }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        if(NetworkServer.connections.Count <= 1)
+        {
+            netPlayerIndex = 1;
+        }
+        else
+        {
+            netPlayerIndex = 2;
+        }
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        string skinKey = PlayerPrefs.GetString("CurrentSkin", "DefSkin");
+        CmdRequestSkin(skinKey);
+    }
+
+    private void OnPlayerIndexChanged(int oldIndex, int newIndex)
+    {
+        if(newIndex == 1)
+        {
+            gameObject.name = "Player1";
+            minX = 0.5f;
+            maxX = 6.65f;
+            SetPlayerPosition(5.186f);
+        }
+        else if(newIndex == 2)
+        {
+            gameObject.name = "Player2";
+            minX = -6.65f;
+            maxX = -0.5f;
+            SetPlayerPosition(-5.186f);
+        }
+
+        if(GoalHandlerNetwork.Instance != null)
+        {
+            GoalHandlerNetwork.Instance.RegisterPlayer(gameObject, gameObject.name);
+        }
+    }
+
+    private void SetPlayerPosition(float xPos)
+    {
+        Vector3 newPos = new Vector3(xPos, transform.position.y, transform.position.z);
+        transform.position = newPos;
+        if(rb != null) 
+        {
+            rb.position = newPos;
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    [Command]
+    private void CmdRequestSkin(string skinName)
+    {
+        RpcApplySkinForAll(skinName);
+    }
+
+    [ClientRpc]
+    private void RpcApplySkinForAll(string skinName)
+    {
+        SkinData currentSkin = Resources.Load<SkinData>(skinName);
+        ApplySkin(currentSkin);
+    }
+
 
     void Start()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
-        rb = GetComponent<Rigidbody2D>();
 
-        if(isServer)
-        {
-            targetPos = rb.position;
-        }
+        targetPos = rb.position;
 
         if(timer == null) timer = FindAnyObjectByType<TimerScr>();
         float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
         AudioListener.volume = volume;
-        if(PlayerPrefs.GetString("CurrentSkin") == "") PlayerPrefs.SetString("CurrentSkin", "DefSkin");
-        SkinData currentSkin = Resources.Load<SkinData>(PlayerPrefs.GetString("CurrentSkin"));
+        SkinData currentSkin = Resources.Load<SkinData>(PlayerPrefs.GetString("CurrentSkin", "DefSkin"));
         ApplySkin(currentSkin);
     }
 
@@ -110,6 +179,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         GetComponent<SpriteRenderer>().sprite = skin.sprite;
         puckSound = skin.sound;
         if(skin.particles != null) { 
+            if(GetComponentInChildren<ParticleSystem>()) Destroy(GetComponentInChildren<ParticleSystem>().gameObject);
             particles = skin.particles;
             var ps = particles.GetComponent<ParticleSystem>();
             var psMain = ps.main;

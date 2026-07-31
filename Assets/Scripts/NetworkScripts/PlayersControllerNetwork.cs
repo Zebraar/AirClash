@@ -242,8 +242,19 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
             rb.transform.position = newStartPos;
         }
         
-        RpcForceTeleportClient(newStartPos);
-        StartCoroutine(UnblockMovement());
+        if(netIdentity != null)
+        {
+            RpcForceTeleportClient(newStartPos);
+        }
+
+        if(gameObject.activeInHierarchy)
+        {
+            StartCoroutine(UnblockMovement());
+        }
+        else
+        {
+            isMovementBlocked = false; 
+        }
     }
 
     [ClientRpc]

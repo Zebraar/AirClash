@@ -1,3 +1,4 @@
+using System.Collections;
 using Mirror;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,6 +28,8 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     [SyncVar(hook = nameof(OnPlayerIndexChanged))]
     private int netPlayerIndex = 0;
+    [SyncVar]
+    private bool isMovementBlocked = false;
 
     void Awake()
     {
@@ -129,8 +132,9 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (timer != null && timer.TimerOn) return; 
-        if (!isLocalPlayer || !isDragging) return;
+        if(timer != null && timer.TimerOn) return; 
+        if(isMovementBlocked) return; 
+        if(!isLocalPlayer || !isDragging) return;
 
         Vector3 mousePos = cam.ScreenToWorldPoint(eventData.position);
         Vector2 calculatedPos = new Vector2(mousePos.x + offset.x, mousePos.y + offset.y);
@@ -152,12 +156,13 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     [Command]
     private void CmdUpdatePosition(Vector2 newPos)
     {
+        if(isMovementBlocked) return; 
         targetPos = newPos;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!isLocalPlayer) return;
+        if(!isLocalPlayer) return;
         isDragging = false;
     }
 
@@ -225,4 +230,51 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         }
     }
 
+    public void ResetTargetPosition(Vector2 newStartPos)
+    {
+        isMovementBlocked = true; 
+        targetPos = newStartPos;
+        if(rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.position = newStartPos;
+            rb.transform.position = newStartPos;
+        }
+        
+        RpcForceTeleportClient(newStartPos);
+        StartCoroutine(UnblockMovement());
+    }
+
+    [ClientRpc]
+    private void RpcForceTeleportClient(Vector2 newStartPos)
+    {
+        if(isLocalPlayer)
+        {
+            isDragging = false; 
+        }
+
+        targetPos = newStartPos;
+
+        if(rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.position = newStartPos;
+            rb.transform.position = newStartPos;
+        }
+
+        if(TryGetComponent<NetworkTransformBase>(out var netTransform))
+        {
+            netTransform.Reset();
+        }
+        
+    }
+
+    [Server]
+    IEnumerator UnblockMovement()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        isMovementBlocked = false;
+    }
 }

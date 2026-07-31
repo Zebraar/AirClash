@@ -61,7 +61,6 @@ public class GoalHandlerNetwork : NetworkBehaviour
     private int howManyXpAddAsWin;
     private int howManyXpAddForGoal;
     private int howManyXpAddAsLose;
-    private int totalXpEarned;
 
     [Header("Quests")]
     [SerializeField] private DailyQuestHandler dailyQuestHandler;
@@ -106,7 +105,6 @@ public class GoalHandlerNetwork : NetworkBehaviour
 
     void Start()
     {      
-        totalXpEarned = 0;
         xpHandler.ResetOldXp();   
         timer.TimerStart();
         audioSourceSfx.PlayOneShot(StartGameSound);
@@ -137,16 +135,17 @@ public class GoalHandlerNetwork : NetworkBehaviour
     [Server] 
     public void ServerProcessGoal(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("GoalTrigger1"))
+        if(collision.gameObject.CompareTag("GoalTrigger1"))
         {
             score1++;
         }
-        else if (collision.gameObject.CompareTag("GoalTrigger2"))
+        else if(collision.gameObject.CompareTag("GoalTrigger2"))
         {
             score2++;
         }
 
         RpcOnGoalScored(score1, score2);
+        ServerResetPosition();
     }
 
     [ClientRpc]
@@ -155,7 +154,6 @@ public class GoalHandlerNetwork : NetworkBehaviour
         Debug.Log($"Сервер сообщил: Забит гол! Текущий счет: {newScore1} {newScore2}");
         scoreText1.text = newScore1.ToString(); 
         scoreText2.text = newScore2.ToString(); 
-        ResetPosition();
         timer.Goal();
     }
 
@@ -168,63 +166,6 @@ public class GoalHandlerNetwork : NetworkBehaviour
         else if(name == "Player2")
         {
             player2 = player;
-        }
-    }
-
-    public void OnGoalTrigger(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("GoalTrigger1"))
-        {
-            if(lastCollision == "Player1" && SceneManager.GetActiveScene().name.Equals("BotsGame")) achievementsHandler.UpdateProgress("own_goal", 1);
-            score1++;
-            scoreText1.text = score1.ToString(); 
-            if(score1 >= howManyGoals)
-            {
-                if(SceneManager.GetActiveScene().name == "BotsGame") Lose();
-                else Win();
-            } else
-            {
-                if(SceneManager.GetActiveScene().name == "BotsGame")
-                {
-                        botsAI.UpdateBotSpeed(score1, score2);
-                        ResetPosition();
-                        timer.Goal();
-                } else
-                {
-                    ResetPosition();
-                    timer.Goal();
-                }
-            }
-        }
-        else if (collision.gameObject.CompareTag("GoalTrigger2"))
-        {
-            score2++;
-            scoreText2.text = score2.ToString(); 
-            if(score2 >= howManyGoals)
-            {
-                if(SceneManager.GetActiveScene().name == "BotsGame")
-                {
-                    if(score2 >= 10) achievementsHandler.UpdateProgress("ten", 10);
-                    UpdateGoalQuests();
-                }
-                Win();
-            } else
-            {
-                if(SceneManager.GetActiveScene().name == "BotsGame")
-                {
-                    if(score2 >= 10) achievementsHandler.UpdateProgress("ten", 10);
-                    totalXpEarned += howManyXpAddForGoal;
-                    UpdateGoalQuests();
-                    UpdateAchievements();
-                    botsAI.UpdateBotSpeed(score1, score2);
-                    ResetPosition();
-                    timer.Goal();
-                } else
-                {
-                    ResetPosition();
-                    timer.Goal();
-                }   
-            }
         }
     }
 
@@ -257,20 +198,40 @@ public class GoalHandlerNetwork : NetworkBehaviour
         }
     }
 
-    public void ResetPosition()
+    private void ServerResetPosition()
     {
-        if (puck != null)
+        if(puck != null)
         {
-            puck.transform.position = puckStartPos;
-            player1.transform.position = player1startPos;
-            player1.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-            player2.transform.position = player2startPos;
-            player2.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
-            Rigidbody2D rb = puck.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            TeleportAndReset(puck.GetComponent<Rigidbody2D>(), puckStartPos);
+            TeleportAndReset(player1.GetComponent<Rigidbody2D>(), player1startPos);
+            TeleportAndReset(player2.GetComponent<Rigidbody2D>(), player2startPos);
+        }
+    }
+
+    private void TeleportAndReset(Rigidbody2D rb, Vector2 targetPos)
+    {
+        if(rb == null) return;
+
+        if(rb.TryGetComponent<PlayersControllerNetwork>(out var controller))
+        {
+            controller.ResetTargetPosition(targetPos); 
+        }
+        else 
+        {
+            if(rb.TryGetComponent<NetworkTransformBase>(out var netTransform))
             {
-                rb.linearVelocity = Vector2.zero;
-                rb.angularVelocity = 0f;
+                netTransform.enabled = false;
+                netTransform.Reset();
+            }
+
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.position = targetPos;
+            rb.transform.position = targetPos;
+
+            if(netTransform != null)
+            {
+                netTransform.enabled = true;
             }
         }
     }
@@ -284,7 +245,7 @@ public class GoalHandlerNetwork : NetworkBehaviour
         PlayerPrefs.SetInt("HowMoneyAdds", 0);
         PlayerPrefs.SetInt("HowXpAdds", 0);
         PlayerPrefs.Save();
-        ResetPosition();
+        ServerResetPosition();
         audioSourceSfx.PlayOneShot(StartGameSound);
         timer.TimerStart();
     }

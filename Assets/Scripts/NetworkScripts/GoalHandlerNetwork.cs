@@ -14,6 +14,9 @@ public class GoalHandlerNetwork : NetworkBehaviour
     public Text scoreText1;
     public Text scoreText2;
     [SerializeField] private TextMeshProUGUI winOrLoseText;
+    [SerializeField] private TextMeshProUGUI rematchButtonText;
+    [SerializeField] private Button mainMenuBtn;
+    [SerializeField] private Button rematchButton;
     [SerializeField] private GameObject goalTextCanvas;
     [SerializeField] private GameObject endSreenPanel;
 
@@ -28,11 +31,10 @@ public class GoalHandlerNetwork : NetworkBehaviour
     private Vector2 puckStartPos;
 
     [Header("Game Logic & Scoring")]
-    public int score1 = 0;
-    public int score2 = 0;
+    private int score1 = 0;
+    private int score2 = 0;
     public int howManyGoals;
     [SerializeField] private TimerScr timer;
-    [SerializeField] private EndScreen endScreen;
 
     [Header("Audio")]
     public AudioSource audioSourceSfx;
@@ -40,6 +42,12 @@ public class GoalHandlerNetwork : NetworkBehaviour
     public AudioClip puckSound;
     public AudioClip StartGameSound;
     [SerializeField] private AudioClip[] gameMusics;
+
+    [SyncVar(hook = nameof(OnPlayer1RematchChanged))]
+    private bool player1Ready = false;
+
+    [SyncVar(hook = nameof(OnPlayer2RematchChanged))]
+    private bool player2Ready = false;
 
     void Awake()
     {
@@ -196,18 +204,85 @@ public class GoalHandlerNetwork : NetworkBehaviour
         }
     }
 
-    public void RestartGame()
+    public void OnRematchButtonClicked()
     {
-        score1 = 0;
-        score2 = 0;
+        int playerNumber = isServer ? 1 : 2;
+        CmdRequestRematch(playerNumber);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdRequestRematch(int playerNumber)
+    {
+        if(playerNumber == 1) player1Ready = true;
+        if(playerNumber == 2) player2Ready = true;
+
+        if(player1Ready && player2Ready)
+        {
+            player1Ready = false;
+            player2Ready = false;
+            
+            score1 = 0;
+            score2 = 0;
+            
+            ServerResetPosition(); 
+
+            RpcRestartGame();
+        }
+    }
+
+    private void OnPlayer1RematchChanged(bool oldVal, bool newVal)
+    {
+        UpdateRematchUI();
+    }
+
+    private void OnPlayer2RematchChanged(bool oldVal, bool newVal)
+    {
+        UpdateRematchUI();
+    }
+
+    private void UpdateRematchUI()
+    {
+        bool iAmServer = isServer;
+        
+        if(iAmServer)
+        {
+            if(player1Ready && !player2Ready)
+            {
+                rematchButtonText.text = "Ожидание соперника...";
+                mainMenuBtn.interactable = false;
+                rematchButton.interactable = false;
+            } 
+            else if(!player1Ready && player2Ready) rematchButtonText.text = "Соперник хочет реванш!";
+            else rematchButtonText.text = "Реванш";
+        }
+        else
+        {
+            if(player2Ready && !player1Ready)
+            {
+                rematchButtonText.text = "Ожидание соперника...";
+                mainMenuBtn.interactable = false;
+                rematchButton.interactable = false;
+            }
+            else if(!player2Ready && player1Ready) rematchButtonText.text = "Соперник хочет реванш!";
+            else rematchButtonText.text = "Реванш";
+        }
+    }
+
+    [ClientRpc]
+    private void RpcRestartGame()
+    {
         scoreText1.text = "0";
         scoreText2.text = "0";
-        PlayerPrefs.SetInt("HowMoneyAdds", 0);
-        PlayerPrefs.SetInt("HowXpAdds", 0);
-        PlayerPrefs.Save();
-        ServerResetPosition();
-        audioSourceSfx.PlayOneShot(StartGameSound);
+        
+        if(audioSourceSfx && StartGameSound)
+            audioSourceSfx.PlayOneShot(StartGameSound);
+            
         timer.TimerStart();
+        
+        rematchButtonText.text = "Реванш"; 
+        mainMenuBtn.interactable = true;
+        rematchButton.interactable = true;
+        endSreenPanel.SetActive(false);
     }
 
     public void Win()

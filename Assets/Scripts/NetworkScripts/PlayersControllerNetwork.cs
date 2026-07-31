@@ -232,6 +232,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     public void ResetTargetPosition(Vector2 newStartPos)
     {
+        if(!isServer) return; 
         isMovementBlocked = true; 
         targetPos = newStartPos;
         if(rb != null)

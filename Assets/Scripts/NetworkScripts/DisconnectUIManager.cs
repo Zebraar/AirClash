@@ -7,7 +7,6 @@ using DG.Tweening;
 public class DisconnectUIManager : MonoBehaviour
 {
     public static DisconnectUIManager Instance;
-    public static bool ShowDisconnectWarningOnStart = false;
 
     [SerializeField] private GameObject timerCanvas;
     [SerializeField] private GameObject timerPanel;
@@ -30,7 +29,6 @@ public class DisconnectUIManager : MonoBehaviour
 
     private void OnClientDisconnectedFromServer()
     {
-        ShowDisconnectWarningOnStart = true;
         SceneManager.LoadScene("MainMenu");
     }
 

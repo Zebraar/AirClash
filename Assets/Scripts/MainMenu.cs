@@ -50,6 +50,7 @@ public class MainMenu : MonoBehaviour
     private RectTransform rectTransform;
     private string toScene;
     private string lastOpenMenu;
+    private bool isHostDisconnect = false;
 
     void Awake()
     {
@@ -65,6 +66,7 @@ public class MainMenu : MonoBehaviour
         audioSource.clip = menuMusic;
         audioSource.loop = true;
         audioSource.time = PlayerPrefs.GetFloat("MainMenuMusicTime", 0);
+        isHostDisconnect = PlayerPrefs.GetInt("IsHostDisconnect", 0) != 0;
         audioSource.Play();
         Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
         rectTransform = mainMenuText.GetComponent<RectTransform>();
@@ -85,10 +87,9 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("HowXpAdds", 0);
             PlayerPrefs.Save();
         }
-        if(NetworkClient.active == false && NetworkServer.active == false)
-        {
-            DisconnectUIManager.ShowDisconnectWarningOnStart = false;
-            
+        if(NetworkClient.active == false && NetworkServer.active == false && isHostDisconnect == true)
+        {   
+            PlayerPrefs.SetInt("IsHostDisconnect", 0);
             OpenPanel(hostDisconnectedPanel);
         }
     }

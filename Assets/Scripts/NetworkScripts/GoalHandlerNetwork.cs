@@ -61,6 +61,7 @@ public class GoalHandlerNetwork : NetworkBehaviour
 
     void Start()
     {        
+        PlayerPrefs.SetInt("IsHostDisconnect", 1);
         timer.TimerStart();
         audioSourceSfx.PlayOneShot(StartGameSound);
         bool isMusic = PlayerPrefs.GetInt("BgMusicInGame", 1) != 0;
@@ -305,6 +306,7 @@ public class GoalHandlerNetwork : NetworkBehaviour
     }
     public void LoadMainMenu()
     {
+        PlayerPrefs.SetInt("IsHostDisconnect", 0);
         PlayerPrefs.Save();
         SceneManager.LoadScene("MainMenu");
     }

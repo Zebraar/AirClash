@@ -31,12 +31,25 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private int netPlayerIndex = 0;
     [SyncVar]
     private bool isMovementBlocked = false;
+    [SyncVar(hook = nameof(OnSkinChanged))]
+    private string netSkinName = "";
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
         if(audioSource == null) audioSource = GameObject.Find("SoundManagerSfx").GetComponent<AudioSource>();
+    }
+    void Start()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
+
+        targetPos = rb.position;
+
+        if(timer == null) timer = FindAnyObjectByType<TimerScr>();
+        float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
+        AudioListener.volume = volume;
     }
 
     public override void OnStartServer()
@@ -82,6 +95,12 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         {
             GoalHandlerNetwork.Instance.RegisterPlayer(gameObject, gameObject.name);
         }
+
+        if(!string.IsNullOrEmpty(netSkinName))
+        {
+            SkinData currentSkin = Resources.Load<SkinData>(netSkinName);
+            ApplySkin(currentSkin);
+        }
     }
 
     private void SetPlayerPosition(float xPos)
@@ -98,28 +117,16 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     [Command]
     private void CmdRequestSkin(string skinName)
     {
-        RpcApplySkinForAll(skinName);
+        netSkinName = skinName;
     }
 
-    [ClientRpc]
-    private void RpcApplySkinForAll(string skinName)
+    private void OnSkinChanged(string oldSkin, string newSkin)
     {
-        SkinData currentSkin = Resources.Load<SkinData>(skinName);
-        ApplySkin(currentSkin);
-    }
+        if(string.IsNullOrEmpty(newSkin)) return;
 
-
-    void Start()
-    {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = PlayerPrefs.GetInt("FPS", 60);
-
-        targetPos = rb.position;
-
-        if(timer == null) timer = FindAnyObjectByType<TimerScr>();
-        float volume = PlayerPrefs.GetFloat("MusicVolume", 0.5f);
-        AudioListener.volume = volume;
-        SkinData currentSkin = Resources.Load<SkinData>(PlayerPrefs.GetString("CurrentSkin", "DefSkin"));
+        if(netPlayerIndex == 0) return;
+        
+        SkinData currentSkin = Resources.Load<SkinData>(newSkin);
         ApplySkin(currentSkin);
     }
 
@@ -189,58 +196,81 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     public void ApplySkin(SkinData skin)
     {
-        if(gameObject.name.Equals("Player1")) {
-            skin = Resources.Load<SkinData>(PlayerPrefs.GetString("CurrentSkin"));
-        } 
-        else if(gameObject.name.Equals("Player2")) {
-            skin = Resources.Load<SkinData>(PlayerPrefs.GetString("CurrentSkin") + "Pl2");
+        if(skin == null || netPlayerIndex == 0) return;
+
+        if(netPlayerIndex == 2) 
+        {
+            SkinData pl2Skin = Resources.Load<SkinData>(skin.name + "Pl2");
+            if(pl2Skin != null) skin = pl2Skin;
         }
         GetComponent<SpriteRenderer>().sprite = skin.sprite;
         puckSound = skin.sound;
-        if(skin.particles != null) { 
+        if(skin.particles != null) 
+        { 
             if(GetComponentInChildren<ParticleSystem>()) Destroy(GetComponentInChildren<ParticleSystem>().gameObject);
-            particles = skin.particles;
-            var ps = particles.GetComponent<ParticleSystem>();
-            var psMain = ps.main;
-            particles.gameObject.SetActive(true);
-            if(skin.name == "GoldSkin")
-            {
-                psMain.startColor = Color.white;
-            } else
-            {
-                if(gameObject.name.Equals("Player2") && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
-                {
-                    psMain.startColor = particleColor;
-                } else if(gameObject.name.Equals("Player1") && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
-                {
-                    psMain.startColor = particleColor;
-                }
-            }
-            var newParticles = Instantiate(particles, GetComponent<Transform>());
+
+            GameObject newParticles = Instantiate(skin.particles, GetComponent<Transform>());
             newParticles.gameObject.SetActive(true);
-            newParticles.GetComponent<ParticleSystem>().Play(); 
+
+            var ps = newParticles.GetComponent<ParticleSystem>();
+            var psMain = ps.main;
+            if(netPlayerIndex == 2 && ColorUtility.TryParseHtmlString("#ff6a6a", out particleColor))
+            {
+                psMain.startColor = particleColor;
+            } else if(netPlayerIndex == 1 && ColorUtility.TryParseHtmlString("#9abaf5", out particleColor))
+            {
+                psMain.startColor = particleColor;
+            }
+            ps.Play(); 
         }
         if(skin.trail != null)
         {
             if(PlayerPrefs.GetInt("Trail", 1) == 1)
             {
-                var trail = skin.trail.GetComponent<TrailRenderer>();
+                var trailPreset = skin.trail.GetComponent<TrailRenderer>();
                 var newTrail = gameObject.GetComponent<TrailRenderer>();
-                newTrail.sharedMaterial = trail.sharedMaterial;
-                newTrail.time = trail.time;
-                newTrail.startWidth = trail.startWidth;
-                newTrail.endWidth = trail.endWidth;
-                newTrail.colorGradient = trail.colorGradient;
-                newTrail.numCornerVertices = trail.numCornerVertices;
-                newTrail.numCapVertices = trail.numCapVertices;
-                newTrail.alignment = trail.alignment;
-                newTrail.textureMode = trail.textureMode;
-                gameObject.GetComponent<TrailRenderer>().enabled = true;
-            } else gameObject.GetComponent<TrailRenderer>().enabled = false;
-        } else
+                    
+                if(newTrail != null && trailPreset != null)
+                {
+                    newTrail.material = trailPreset.material;
+                    newTrail.time = trailPreset.time;
+                    newTrail.startWidth = trailPreset.startWidth;
+                    newTrail.endWidth = trailPreset.endWidth;
+                    newTrail.numCornerVertices = trailPreset.numCornerVertices;
+                    newTrail.numCapVertices = trailPreset.numCapVertices;
+                    newTrail.alignment = trailPreset.alignment;
+                    newTrail.textureMode = trailPreset.textureMode;
+                    Gradient newGradient = new Gradient();
+                    newGradient.SetKeys(trailPreset.colorGradient.colorKeys, trailPreset.colorGradient.alphaKeys);
+                    newTrail.colorGradient = newGradient;
+                    newTrail.enabled = true;
+                }
+            } 
+            else if(gameObject.GetComponent<TrailRenderer>()) 
+            {
+                gameObject.GetComponent<TrailRenderer>().enabled = false;
+            }
+        } 
+        else
         {
-            if(PlayerPrefs.GetInt("Trail", 1) == 1) GetComponent<TrailRenderer>().enabled = true;
-            else GetComponent<TrailRenderer>().enabled = false;
+            if(gameObject.GetComponent<TrailRenderer>()) 
+            {
+                if(netPlayerIndex == 2)
+                {
+                    var trailRenderer = GetComponent<TrailRenderer>();
+                    Color startColor;
+                    Color endColor;
+                    if(ColorUtility.TryParseHtmlString("#FE0000", out startColor))
+                    {
+                        trailRenderer.startColor = startColor;
+                    }
+                    if(ColorUtility.TryParseHtmlString("#DA0000", out endColor))
+                    {
+                        trailRenderer.endColor = endColor;
+                    }
+                } 
+                GetComponent<TrailRenderer>().enabled = PlayerPrefs.GetInt("Trail", 1) == 1;
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using Mirror;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject editProfilePanel;
     [SerializeField] private GameObject cloudPanel;
     [SerializeField] private GameObject modificatorsPanel;
+    [SerializeField] private GameObject hostDisconnectedPanel;
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip menuMusic;
@@ -83,6 +84,12 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("HowMoneyAdds", 0);
             PlayerPrefs.SetInt("HowXpAdds", 0);
             PlayerPrefs.Save();
+        }
+        if(NetworkClient.active == false && NetworkServer.active == false)
+        {
+            DisconnectUIManager.ShowDisconnectWarningOnStart = false;
+            
+            OpenPanel(hostDisconnectedPanel);
         }
     }
 

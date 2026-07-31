@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using Mirror;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -288,5 +289,45 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     {
         yield return new WaitForSecondsRealtime(1f);
         isMovementBlocked = false;
+    }
+
+    public override void OnStopServer()
+    {
+        PlayersControllerNetwork[] allPlayers = FindObjectsByType<PlayersControllerNetwork>();
+
+        foreach(PlayersControllerNetwork player in allPlayers)
+        {
+            if(player != this)
+            {
+                player.TargetNotifyOpponentDisconnected(player.connectionToClient);
+            }
+        }
+
+        base.OnStopServer();
+    }
+
+    [TargetRpc]
+    public void TargetNotifyOpponentDisconnected(NetworkConnectionToClient target)
+    {
+        Debug.Log("Другой игрок отключился!");
+
+        if(DisconnectUIManager.Instance != null)
+        {
+            DisconnectUIManager.Instance.ShowDisconnectUI();
+        }
+        
+        StartCoroutine(LeaveToMainMenuRoutine(3f));
+    }
+
+    private IEnumerator LeaveToMainMenuRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if(NetworkClient.isConnected)
+        {
+            NetworkManager.singleton.StopClient();
+        }
+        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
 }

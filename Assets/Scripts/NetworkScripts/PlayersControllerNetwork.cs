@@ -36,6 +36,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
+        if(audioSource == null) audioSource = GameObject.Find("SoundManagerSfx").GetComponent<AudioSource>();
     }
 
     public override void OnStartServer()
@@ -167,8 +168,20 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         isDragging = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        if(!isServer) return;
+
         if(other.gameObject.name.Equals("Puck") && audioSource != null)
+        {
+            RpcPlayPuckSound();
+        }
+    }
+
+    [ClientRpc]
+    private void RpcPlayPuckSound()
+    {
+        if (audioSource != null && puckSound != null)
         {
             audioSource.PlayOneShot(puckSound);
         }

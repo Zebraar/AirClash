@@ -32,7 +32,7 @@ public class PuckScrNetwork : NetworkBehaviour
         if(!isServer) return; 
         GoalHandlerNetwork.Instance.ServerProcessGoal(collision); 
     }
-    private void OnCollisionEnter2D(Collision2D other) {
+    void OnCollisionEnter2D(Collision2D other) {
         GoalHandlerNetwork.Instance.OnPuckCollisionEnter2D(other); 
     }
 }

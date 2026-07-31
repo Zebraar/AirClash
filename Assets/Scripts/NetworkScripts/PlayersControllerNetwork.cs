@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using Mirror;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -33,6 +34,8 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private bool isMovementBlocked = false;
     [SyncVar(hook = nameof(OnSkinChanged))]
     private string netSkinName = "";
+    [SyncVar(hook = nameof(OnNickChanged))]
+    private string netNickName = "";
 
     void Awake()
     {
@@ -72,6 +75,8 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
         string skinKey = PlayerPrefs.GetString("CurrentSkin", "DefSkin");
         CmdRequestSkin(skinKey);
+        string nickKey = PlayerPrefs.GetString("Nick", "Ник");
+        CmdRequestNick(nickKey);
     }
 
     private void OnPlayerIndexChanged(int oldIndex, int newIndex)
@@ -128,6 +133,26 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         
         SkinData currentSkin = Resources.Load<SkinData>(newSkin);
         ApplySkin(currentSkin);
+    }
+
+    [Command]
+    private void CmdRequestNick(string nickName)
+    {
+        netNickName = nickName;
+    }
+
+    private void OnNickChanged(string oldSkin, string nickName)
+    {
+        if(string.IsNullOrEmpty(nickName)) return;
+
+        if(netPlayerIndex == 0) return;
+        if(netPlayerIndex == 1)
+        {
+            GameObject.Find("Player1NickTextTMP").GetComponent<TextMeshProUGUI>().text = nickName;
+        } else if(netPlayerIndex == 2)
+        {
+            GameObject.Find("Player2NickTextTMP").GetComponent<TextMeshProUGUI>().text = nickName;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)

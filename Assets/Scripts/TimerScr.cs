@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TimerScr : MonoBehaviour
 {
     
-    public Text TimerText;
+    public TextMeshProUGUI TimerText;
     public GameObject TimerCanvas;
     public int TimeLeft = 4;
     public bool TimerOn = false;

@@ -11,8 +11,8 @@ public class GoalHandlerNetwork : NetworkBehaviour
     public static GoalHandlerNetwork Instance;
 
     [Header("UI Elements")]
-    public Text scoreText1;
-    public Text scoreText2;
+    public TextMeshProUGUI scoreText1;
+    public TextMeshProUGUI scoreText2;
     [SerializeField] private TextMeshProUGUI winOrLoseText;
     [SerializeField] private TextMeshProUGUI rematchButtonText;
     [SerializeField] private Button mainMenuBtn;

@@ -338,6 +338,10 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
         SceneManager.LoadScene(toScene);
     }
+    public void LoadMultiplayer()
+    {
+        SceneManager.LoadScene("MultiPlayerScene");
+    }
     private void UpdateQuests(int amount)
     {
         questsHandler.UpdateQuestProgress("money10", amount);

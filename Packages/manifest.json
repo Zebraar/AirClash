@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.playeveryware.eos": "file:F:/Загрузки/com.playeveryware.eos-6.1.1/package",
     "com.unity.2d.animation": "14.0.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",

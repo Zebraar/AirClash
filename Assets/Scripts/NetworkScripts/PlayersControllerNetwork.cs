@@ -257,7 +257,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
                     
                 if(newTrail != null && trailPreset != null)
                 {
-                    newTrail.material = trailPreset.material;
+                    newTrail.sharedMaterial = trailPreset.sharedMaterial;
                     newTrail.time = trailPreset.time;
                     newTrail.startWidth = trailPreset.startWidth;
                     newTrail.endWidth = trailPreset.endWidth;

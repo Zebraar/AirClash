@@ -41859,6 +41859,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPSCounter
   fpsText: {fileID: 1112793990}
+  textRectTransform: {fileID: 1112793989}
+  updateInterval: 0.5
 --- !u!1 &1112795251
 GameObject:
   m_ObjectHideFlags: 0

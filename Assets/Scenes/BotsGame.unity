@@ -978,7 +978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c911536f9c853bd409faea5b521aefeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerScr
-  TimerText: {fileID: 929458182}
+  TimerText: {fileID: 0}
   TimerCanvas: {fileID: 236193929}
   TimeLeft: 5
   TimerOn: 0
@@ -1526,6 +1526,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPSCounter
   fpsText: {fileID: 267363730}
+  textRectTransform: {fileID: 267363728}
+  updateInterval: 0.5
 --- !u!114 &267363730
 MonoBehaviour:
   m_ObjectHideFlags: 0

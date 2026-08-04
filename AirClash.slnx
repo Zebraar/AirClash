@@ -1,13 +1,10 @@
 ﻿<Solution>
-  <Project Path="com.Epic.OnlineServices.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Mirror.Transports.csproj" />
   <Project Path="Unity.Mirror.CodeGen.csproj" />
   <Project Path="Edgegap.csproj" />
   <Project Path="Mirror.Components.csproj" />
-  <Project Path="com.playeveryware.eos.core.csproj" />
   <Project Path="Mirror.Editor.csproj" />
-  <Project Path="com.playeveryware.eos-Editor.csproj" />
   <Project Path="Firebase.App.Internal.csproj" />
   <Project Path="Mirror.Examples.csproj" />
   <Project Path="IngameDebugConsole.Runtime.csproj" />
@@ -24,6 +21,4 @@
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="NativeGallery.Editor.csproj" />
   <Project Path="IngameDebugConsole.Editor.csproj" />
-  <Project Path="com.playeveryware.eos.csproj" />
-  <Project Path="com.playeveryware.eos-Editor.steam.utility.csproj" />
 </Solution>

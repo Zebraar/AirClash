@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.playeveryware.eos": "https://github.com/EOS-Contrib/eos_plugin_for_unity_upm.git",
     "com.unity.2d.animation": "14.0.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",

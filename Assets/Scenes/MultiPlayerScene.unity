@@ -4934,7 +4934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Mirror.Transports::EpicTransport.EOSSDKComponent
   apiKeys: {fileID: 11400000, guid: dc4fd2b51d1ff5e449c8fbeac3b92697, type: 2}
   authInterfaceLogin: 0
-  authInterfaceCredentialType: 4
+  authInterfaceCredentialType: 1
   devAuthToolPort: 7878
   devAuthToolCredentialName: User1
   connectInterfaceCredentialType: 10

@@ -226,10 +226,13 @@ namespace EpicTransport {
                 AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
                 AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
-                // My custom "LibraryLoader.java" file in /Plugins/Android/lib to load the EOSSDK.so
-                // which v1.17.0 removed for some reason...
-                AndroidJavaClass libraryLoader = new AndroidJavaClass("com.epicgames.mobile.eossdk.LibraryLoader");
-                libraryLoader.CallStatic("load");
+                try {
+                    using (AndroidJavaClass systemClass = new AndroidJavaClass("java.lang.System")) {
+                        systemClass.CallStatic("loadLibrary", "EOSSDK");
+                    }
+                } catch (System.Exception e) {
+                    Debug.LogWarning("[EOSSDK] System.loadLibrary(EOSSDK) notice: " + e.Message);
+                }
 
                 AndroidJavaClass EOS_SDK_JAVA = new AndroidJavaClass("com.epicgames.mobile.eossdk.EOSSDK");
                 EOS_SDK_JAVA.CallStatic("init", activity);

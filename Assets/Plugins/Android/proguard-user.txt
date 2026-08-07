@@ -1,2 +1,3 @@
 -keep class com.epicgames.mobile.eossdk.** { *; }
 -dontwarn com.epicgames.mobile.eossdk.**
+-keep class androidx.browser.customtabs.** { *; }

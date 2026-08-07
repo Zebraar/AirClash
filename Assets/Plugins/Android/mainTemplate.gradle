@@ -16,7 +16,7 @@ dependencies {
     implementation 'com.google.flatbuffers:flatbuffers-java:1.12.0' // Assets/Firebase/Editor/MessagingDependencies.xml:22
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
     implementation 'androidx.browser:browser:1.5.0'
-    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 // Android Resolver Dependencies End
 **DEPS**}
 
@@ -24,6 +24,7 @@ dependencies {
 android {
   packaging {
       exclude ('/lib/armeabi/*' + '*')
+      exclude ('/lib/armeabi-v7a/*' + '*')
       exclude ('/lib/mips/*' + '*')
       exclude ('/lib/mips64/*' + '*')
       exclude ('/lib/x86/*' + '*')

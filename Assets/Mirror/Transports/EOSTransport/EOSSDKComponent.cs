@@ -4,7 +4,6 @@ using Epic.OnlineServices.Platform;
 
 using System;
 using System.Runtime.InteropServices;
-using System.Collections;
 
 using UnityEngine;
 
@@ -104,7 +103,7 @@ namespace EpicTransport {
             }
         }
 
-        protected ProductUserId localUserProductId;
+        public ProductUserId localUserProductId;
         public static ProductUserId LocalUserProductId {
             get {
                 return Instance.localUserProductId;
@@ -119,11 +118,7 @@ namespace EpicTransport {
         }
 
         protected bool initialized;
-        public static bool Initialized {
-            get {
-                return Instance.initialized;
-            }
-        }
+        public static bool Initialized { get; internal set; }
 
         protected bool isConnecting;
         public static bool IsConnecting {
@@ -226,18 +221,44 @@ namespace EpicTransport {
 
         private void Awake() {
             #if UNITY_ANDROID && !UNITY_EDITOR
+                try {
+                    using (AndroidJavaClass initClass = new AndroidJavaClass("com.epictransport.helper.EOSInitializer")) {
+                        initClass.CallStatic("init");
+                    }
+                } catch (System.Exception ex) {
+                    Debug.LogWarning("[EOS] Preload warning: " + ex.Message);
+                }
                 deviceModel = string.IsNullOrEmpty(SystemInfo.deviceModel) ? "AndroidDevice" : SystemInfo.deviceModel;
 
                 try {
+                    try {
+                        using (AndroidJavaClass systemClass = new AndroidJavaClass("java.lang.System")) {
+                            systemClass.CallStatic("loadLibrary", "EOSSDK");
+                            }
+                        } catch { 
+
+                        }
                     using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-                    using (AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                    using (AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                    using (AndroidJavaObject context = activity.Call<AndroidJavaObject>("getApplicationContext"))
                     using (AndroidJavaClass eosSDK = new AndroidJavaClass("com.epicgames.mobile.eossdk.EOSSDK")) {
-                        eosSDK.CallStatic("init", currentActivity);
+                        
+                        string cachePath = Application.temporaryCachePath;
+                        string internalPath = Application.persistentDataPath;
+
+                        try {
+                            eosSDK.CallStatic("init", activity, context, cachePath, internalPath);
+                        } catch (System.Exception exInit) {
+                            try {
+                                eosSDK.CallStatic("init", activity);
+                            } catch { }
+                        }
                     }
                 } catch (System.Exception ex) {
-                    Debug.LogError("[EOS] Java Init Error: " + ex.Message);
+                    Debug.LogError("[EOS] Java Init Exception in Awake: " + ex.Message);
                 }
             #endif
+
 
             if (instance != null) {
                 Destroy(gameObject);
@@ -297,6 +318,7 @@ namespace EpicTransport {
 
                 if (msgText.Contains("No Custom Tab") || 
                     msgText.Contains("Prewarming URL") || 
+                    msgText.Contains("Keychain_ReadValue") ||
                     msgText.Contains("Resetting EOS SDK keychain") ||
                     msgText.Contains("DeviceId access credentials already exist")) { 
                     return; 
@@ -360,7 +382,7 @@ namespace EpicTransport {
                 if (connectInterfaceCredentialType == Epic.OnlineServices.ExternalCredentialType.DeviceidAccessToken) {
                     Epic.OnlineServices.Connect.CreateDeviceIdOptions createDeviceIdOptions = new Epic.OnlineServices.Connect.CreateDeviceIdOptions();
                     createDeviceIdOptions.DeviceModel = deviceModel;
-                    StartCoroutine(CreateDeviceIdWithDelay());
+                    StartConnectLogin();
                 } else {
                     ConnectInterfaceLogin();
                 }
@@ -394,14 +416,14 @@ namespace EpicTransport {
             }
         }
 
-        private void OnCreateDeviceId(ref Epic.OnlineServices.Connect.CreateDeviceIdCallbackInfo createDeviceIdCallbackInfo) {
-            Debug.Log($"[EOS] OnCreateDeviceId Result: {createDeviceIdCallbackInfo.ResultCode}");
-
-            if (createDeviceIdCallbackInfo.ResultCode == Result.Success || 
-                createDeviceIdCallbackInfo.ResultCode == Result.DuplicateNotAllowed) {
-                ConnectInterfaceLogin();
+        private void OnCreateDeviceId(ref Epic.OnlineServices.Connect.CreateDeviceIdCallbackInfo data) {
+            if (data.ResultCode == Epic.OnlineServices.Result.Success || 
+                data.ResultCode == Epic.OnlineServices.Result.DuplicateNotAllowed) {
+                
+                Debug.Log("[EOS] Device ID created or already exists. Re-attempting Connect Login...");
+                StartConnectLogin();
             } else {
-                Debug.LogError($"[EOS] Failed to create Device ID: {createDeviceIdCallbackInfo.ResultCode}. Cannot proceed to Login.");
+                Debug.LogError($"[EOS] Failed to create Device ID: {data.ResultCode}.");
             }
         }
         private void ConnectInterfaceLogin() {
@@ -500,17 +522,78 @@ namespace EpicTransport {
             }
 #endif
         }
-        private IEnumerator CreateDeviceIdWithDelay() {
+
+        private bool isCreatingDeviceId = false;
+
+        public void StartConnectLogin() {
+            isCreatingDeviceId = false;
+
+            string displayName = string.IsNullOrEmpty(SystemInfo.deviceName) ? "UnityPlayer" : SystemInfo.deviceName;
+            
+            var userLoginInfo = new Epic.OnlineServices.Connect.UserLoginInfo {
+                DisplayName = displayName
+            };
+
+            var loginOptions = new Epic.OnlineServices.Connect.LoginOptions {
+                UserLoginInfo = userLoginInfo,
+                Credentials = new Epic.OnlineServices.Connect.Credentials {
+                    Type = Epic.OnlineServices.ExternalCredentialType.DeviceidAccessToken,
+                    Token = null
+                }
+            };
+
         #if UNITY_ANDROID && !UNITY_EDITOR
-            yield return new UnityEngine.WaitForSeconds(0.5f);
+            Debug.Log("[EOS] [Android] Attempting Connect Login with Device ID...");
+            EOS.GetConnectInterface().Login(ref loginOptions, null, OnInitialConnectLogin);
+        #else
+            Debug.Log("[EOS] [PC/Editor] Attempting Connect Login with Device ID...");
+            EOS.GetConnectInterface().Login(ref loginOptions, null, OnInitialConnectLogin);
+        #endif
+        }
+
+        private void OnInitialConnectLogin(ref Epic.OnlineServices.Connect.LoginCallbackInfo data) {
+            if (data.ResultCode == Epic.OnlineServices.Result.Success) {
+                Debug.Log($"[EOS] Successfully logged in! LocalUserId: {data.LocalUserId}");
+                
+                localUserProductId = data.LocalUserId;
+                isCreatingDeviceId = false;
+
+                Initialized = true; 
+            } 
+            else if (data.ResultCode == Epic.OnlineServices.Result.InvalidUser || 
+                    data.ResultCode == Epic.OnlineServices.Result.NotFound) {
+                if (!isCreatingDeviceId) {
+                    isCreatingDeviceId = true;
+                    Debug.LogWarning($"[EOS] Device ID not found ({data.ResultCode}). Creating new Device ID...");
+                    StartCoroutine(CreateDeviceIdCoroutine());
+                } else {
+                    Debug.LogError($"[EOS] Device ID creation finished, but Connect Login still failed: {data.ResultCode}.");
+                }
+            } 
+            else {
+                Debug.LogError($"[EOS] Initial Connect Login failed with ResultCode: {data.ResultCode}");
+            }
+        }
+
+        private System.Collections.IEnumerator CreateDeviceIdCoroutine() {
+        #if UNITY_ANDROID && !UNITY_EDITOR
+            yield return new UnityEngine.WaitForSeconds(1.0f);
         #else
             yield return null;
         #endif
 
-            Epic.OnlineServices.Connect.CreateDeviceIdOptions createDeviceIdOptions = new Epic.OnlineServices.Connect.CreateDeviceIdOptions {
-                DeviceModel = deviceModel
+            string safeDeviceModel = SystemInfo.deviceModel;
+            if (string.IsNullOrEmpty(safeDeviceModel) || safeDeviceModel.Length > 64) {
+                safeDeviceModel = "AndroidDevice";
+            } else {
+                safeDeviceModel = System.Text.RegularExpressions.Regex.Replace(safeDeviceModel, @"[^\w\.-]", "_");
+            }
+
+            var createDeviceIdOptions = new Epic.OnlineServices.Connect.CreateDeviceIdOptions {
+                DeviceModel = safeDeviceModel
             };
 
+            Debug.Log($"[EOS] Creating Device ID with Model: {safeDeviceModel}");
             EOS.GetConnectInterface().CreateDeviceId(ref createDeviceIdOptions, null, OnCreateDeviceId);
         }
     }

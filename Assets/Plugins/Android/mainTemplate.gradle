@@ -18,6 +18,7 @@ dependencies {
     implementation 'androidx.browser:browser:1.5.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 // Android Resolver Dependencies End
+implementation 'androidx.security:security-crypto:1.1.0-alpha06'
 **DEPS**}
 
 // Android Resolver Exclusions Start

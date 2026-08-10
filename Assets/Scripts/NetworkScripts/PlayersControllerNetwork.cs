@@ -36,6 +36,8 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private string netSkinName = "";
     [SyncVar(hook = nameof(OnNickChanged))]
     private string netNickName = "";
+    [SyncVar]
+    private Vector2 netLinearVelocity;
 
     void Awake()
     {
@@ -176,22 +178,36 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         calculatedPos.x = Mathf.Clamp(calculatedPos.x, minX, maxX);
         calculatedPos.y = Mathf.Clamp(calculatedPos.y, minY, maxY);
 
-        CmdUpdatePosition(calculatedPos);
+        targetPos = calculatedPos;
+
+        Vector2 currentVel = (calculatedPos - rb.position) / Time.fixedDeltaTime;
+
+        CmdUpdatePosition(calculatedPos, currentVel);
     }
 
     private void FixedUpdate()
     {
-        if(isServer || isLocalPlayer || targetPos != Vector2.zero)
+        if(isLocalPlayer)
         {
             rb.MovePosition(targetPos);
+        }
+        else if(isServer)
+        {
+            rb.MovePosition(targetPos);
+            rb.linearVelocity = netLinearVelocity;
+        }
+        else
+        {
+            rb.MovePosition(Vector2.Lerp(rb.position, targetPos, Time.fixedDeltaTime * 30f));
         }
     }
 
     [Command]
-    private void CmdUpdatePosition(Vector2 newPos)
+    private void CmdUpdatePosition(Vector2 newPos, Vector2 newVelocity)
     {
         if(isMovementBlocked) return; 
         targetPos = newPos;
+        netLinearVelocity = newVelocity;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -200,13 +216,24 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         isDragging = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D other) 
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(!isServer) return;
-
-        if(other.gameObject.name.Equals("Puck") && audioSource != null)
+        if(isServer && collision.gameObject.name.Equals("Puck") && audioSource != null)
         {
             RpcPlayPuckSound();
+        }
+
+        if(isLocalPlayer && !isServer && collision.gameObject.CompareTag("Puck"))
+        {
+            if(collision.gameObject.TryGetComponent<PuckScrNetwork>(out var predictor))
+            {
+                Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
+                
+                float hitSpeed = netLinearVelocity.magnitude;
+                if (hitSpeed < 3f) hitSpeed = 3f;
+
+                predictor.ApplyLocalHitPrediction(hitDirection, hitSpeed);
+            }
         }
     }
 

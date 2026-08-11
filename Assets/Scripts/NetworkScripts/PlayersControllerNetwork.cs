@@ -203,10 +203,9 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     private void MoveRigidbodyPhysically(Vector2 target)
     {
-        Vector2 velocity = (target - rb.position) / Time.fixedDeltaTime;
-        
-        float maxVelocity = 50f; 
-        rb.linearVelocity = Vector2.ClampMagnitude(velocity, maxVelocity);
+        Vector2 desiredVelocity = (target - rb.position) / Time.fixedDeltaTime;
+
+        rb.linearVelocity = Vector2.ClampMagnitude(desiredVelocity, 200f);
     }
 
     [Command]

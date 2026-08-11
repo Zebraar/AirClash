@@ -180,34 +180,40 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
         targetPos = calculatedPos;
 
-        Vector2 currentVel = (calculatedPos - rb.position) / Time.fixedDeltaTime;
-
-        CmdUpdatePosition(calculatedPos, currentVel);
+        CmdUpdatePosition(calculatedPos);
     }
 
     private void FixedUpdate()
     {
-        if(isLocalPlayer)
+        if (isLocalPlayer)
         {
-            rb.MovePosition(targetPos);
+            MoveRigidbodyPhysically(targetPos);
         }
-        else if(isServer)
+        else if (isServer)
         {
-            rb.MovePosition(targetPos);
-            rb.linearVelocity = netLinearVelocity;
+            MoveRigidbodyPhysically(targetPos);
         }
         else
         {
-            rb.MovePosition(Vector2.Lerp(rb.position, targetPos, Time.fixedDeltaTime * 30f));
+            // Для прочих клиентов - интерполяция
+            Vector2 nextPos = Vector2.Lerp(rb.position, targetPos, Time.fixedDeltaTime * 30f);
+            MoveRigidbodyPhysically(nextPos);
         }
     }
 
+    private void MoveRigidbodyPhysically(Vector2 target)
+    {
+        Vector2 velocity = (target - rb.position) / Time.fixedDeltaTime;
+        
+        float maxVelocity = 50f; 
+        rb.linearVelocity = Vector2.ClampMagnitude(velocity, maxVelocity);
+    }
+
     [Command]
-    private void CmdUpdatePosition(Vector2 newPos, Vector2 newVelocity)
+    private void CmdUpdatePosition(Vector2 newPos)
     {
         if(isMovementBlocked) return; 
         targetPos = newPos;
-        netLinearVelocity = newVelocity;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -221,19 +227,6 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         if(isServer && collision.gameObject.name.Equals("Puck") && audioSource != null)
         {
             RpcPlayPuckSound();
-        }
-
-        if(isLocalPlayer && !isServer && collision.gameObject.CompareTag("Puck"))
-        {
-            if(collision.gameObject.TryGetComponent<PuckScrNetwork>(out var predictor))
-            {
-                Vector2 hitDirection = (collision.transform.position - transform.position).normalized;
-                
-                float hitSpeed = netLinearVelocity.magnitude;
-                if (hitSpeed < 3f) hitSpeed = 3f;
-
-                predictor.ApplyLocalHitPrediction(hitDirection, hitSpeed);
-            }
         }
     }
 

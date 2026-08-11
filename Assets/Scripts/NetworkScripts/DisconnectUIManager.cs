@@ -1,34 +1,26 @@
 using UnityEngine;
-using Mirror;
 using UnityEngine.SceneManagement;
-using System.Collections;
 using DG.Tweening;
 
 public class DisconnectUIManager : MonoBehaviour
 {
-    public static DisconnectUIManager Instance;
-
     [SerializeField] private GameObject timerCanvas;
     [SerializeField] private GameObject timerPanel;
     [SerializeField] private GameObject disconnectText;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     private void OnEnable()
     {
-        NetworkClient.OnDisconnectedEvent += OnClientDisconnectedFromServer;
+        MyNetworkManager.OnClientDisconnected += HandleDisconnect;
     }
 
     private void OnDisable()
     {
-        NetworkClient.OnDisconnectedEvent -= OnClientDisconnectedFromServer;
+        MyNetworkManager.OnClientDisconnected -= HandleDisconnect;
     }
 
-    private void OnClientDisconnectedFromServer()
+    private void HandleDisconnect()
     {
+        ShowDisconnectUI();
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -36,7 +28,7 @@ public class DisconnectUIManager : MonoBehaviour
     {
         if(timerCanvas != null) timerCanvas.SetActive(true);
         if(timerPanel != null) timerPanel.SetActive(false);
-        
+
         if(disconnectText != null)
         {
             RectTransform rect = disconnectText.GetComponent<RectTransform>();

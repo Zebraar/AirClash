@@ -1,33 +1,58 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using Mirror;
 
 public class PingDisplay : MonoBehaviour
 {
-    [Header("Text")]
+    [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI pingText;
-    [Header("Floats")]
+
+    [Header("Settings")]
     [SerializeField] private float updateInterval = 0.5f;
 
-    private float timer;
+    private Coroutine pingCoroutine;
+    private bool isOfflineDisplayed;
+    private const string OfflineText = "Ping: Offline";
 
-    void Update()
+    private void OnEnable()
     {
-        if(!NetworkClient.active)
+        pingCoroutine = StartCoroutine(UpdatePingRoutine());
+    }
+
+    private void OnDisable()
+    {
+        if(pingCoroutine != null)
         {
-            pingText.text = "Ping: Offline";
-            return;
+            StopCoroutine(pingCoroutine);
+            pingCoroutine = null;
         }
+    }
 
-        timer += Time.deltaTime;
+    private IEnumerator UpdatePingRoutine()
+    {
+        var delay = new WaitForSeconds(updateInterval);
 
-        if(timer >= updateInterval)
+        while(true)
         {
-            double ping = NetworkTime.rtt * 1000;
+            if(!NetworkClient.active)
+            {
+                if (!isOfflineDisplayed)
+                {
+                    pingText.text = OfflineText;
+                    isOfflineDisplayed = true;
+                }
+            }
+            else
+            {
+                isOfflineDisplayed = false;
 
-            pingText.text = $"Ping: {System.Math.Round(ping)} ms";
+                int pingMs = Mathf.RoundToInt((float)(NetworkTime.rtt * 1000));
 
-            timer = 0f;
+                pingText.SetText("Ping: {0}", pingMs);
+            }
+
+            yield return delay;
         }
     }
 }

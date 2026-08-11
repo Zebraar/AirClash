@@ -2,6 +2,11 @@ using UnityEngine;
 using Mirror;
 using System;
 
+public struct OpponentLeftMessage : NetworkMessage
+{
+    
+}
+
 public class MyNetworkManager : NetworkManager
 {
     [Header("Dependencies")]
@@ -9,7 +14,8 @@ public class MyNetworkManager : NetworkManager
 
     private string currentRoomCode = string.Empty;
 
-    public static event Action OnClientDisconnected;
+    public static event Action OnOpponentDisconnected;
+    public static event Action OnLocalClientDisconnected;
 
     public void SetCurrentRoomCode(string code)
     {
@@ -18,10 +24,28 @@ public class MyNetworkManager : NetworkManager
 
     #region Client Callbacks
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        NetworkClient.RegisterHandler<OpponentLeftMessage>(OnOpponentLeftMessageReceived);
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        NetworkClient.UnregisterHandler<OpponentLeftMessage>();
+    }
+
     public override void OnClientDisconnect()
     {
         base.OnClientDisconnect();
-        OnClientDisconnected?.Invoke();
+        OnLocalClientDisconnected?.Invoke();
+    }
+
+    private void OnOpponentLeftMessageReceived(OpponentLeftMessage msg)
+    {
+        Debug.Log("[NetworkManager] Получено сообщение: оппонент вышел.");
+        OnOpponentDisconnected?.Invoke();
     }
 
     #endregion
@@ -30,11 +54,18 @@ public class MyNetworkManager : NetworkManager
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
+        foreach(var readyConn in NetworkServer.connections.Values)
+        {
+            if(readyConn != null && readyConn != conn)
+            {
+                readyConn.Send(new OpponentLeftMessage());
+            }
+        }
+
         base.OnServerDisconnect(conn);
 
-        if(NetworkServer.connections.Count == 0)
+        if(NetworkServer.connections.Count <= 1)
         {
-            Debug.Log("[NetworkManager] Все клиенты отключились. Удаляем комнату из базы...");
             DeleteRoomFromBackend();
         }
     }
@@ -50,11 +81,18 @@ public class MyNetworkManager : NetworkManager
         if(!string.IsNullOrEmpty(currentRoomCode) && roomManager != null)
         {
             string codeToDelete = currentRoomCode;
-            currentRoomCode = string.Empty;
 
             roomManager.DeleteRoom(codeToDelete,
-                () => Debug.Log($"[NetworkManager] Комната {codeToDelete} удалена."),
-                (err) => Debug.LogError($"[NetworkManager] Ошибка удаления {codeToDelete}: {err}")
+                () => 
+                {
+                    Debug.Log($"[NetworkManager] Комната {codeToDelete} удалена.");
+                    currentRoomCode = string.Empty;
+                },
+                (err) => 
+                {
+                    Debug.LogError($"[NetworkManager] Ошибка удаления {codeToDelete}: {err}");
+                    currentRoomCode = string.Empty;
+                }
             );
         }
     }

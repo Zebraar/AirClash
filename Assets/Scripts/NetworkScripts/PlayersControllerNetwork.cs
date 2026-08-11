@@ -195,7 +195,6 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         }
         else
         {
-            // Для прочих клиентов - интерполяция
             Vector2 nextPos = Vector2.Lerp(rb.position, targetPos, Time.fixedDeltaTime * 30f);
             MoveRigidbodyPhysically(nextPos);
         }
@@ -205,7 +204,9 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     {
         Vector2 desiredVelocity = (target - rb.position) / Time.fixedDeltaTime;
 
-        rb.linearVelocity = Vector2.ClampMagnitude(desiredVelocity, 200f);
+        rb.linearVelocity = desiredVelocity;
+
+        rb.MovePosition(target);
     }
 
     [Command]

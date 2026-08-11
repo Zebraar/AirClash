@@ -10,7 +10,6 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Menu Panels")]
     [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private GameObject onlinePanel;
     [SerializeField] private GameObject botPanel;
     [SerializeField] private GameObject mentionsPanel;
     [SerializeField] private GameObject achievementsPanel;
@@ -158,7 +157,6 @@ public class MainMenu : MonoBehaviour
     public void CloseAllPanels()
     {
         settingsPanel.SetActive(false);
-        onlinePanel.SetActive(false);
         botPanel.SetActive(false);
         mentionsPanel.SetActive(false);
         achievementsPanel.SetActive(false);

@@ -3,6 +3,7 @@ using UnityEngine;
 using Mirror;
 using TMPro;
 using EpicTransport;
+using DG.Tweening;
 
 public class EOSMenuUI : MonoBehaviour
 {
@@ -10,11 +11,13 @@ public class EOSMenuUI : MonoBehaviour
     public TMP_InputField idInputField;
     public TextMeshProUGUI myIdText;
     public RoomManager roomManager;
+    public GameObject uiPanel;
 
     private string currentEosId = string.Empty;
 
     private void Start()
     {
+        uiPanel.SetActive(true);
         myIdText.text = "Авторизация в Epic Games...";
         StartCoroutine(WaitForEOSLoginRoutine());
     }
@@ -62,6 +65,8 @@ public class EOSMenuUI : MonoBehaviour
                 customManager.SetCurrentRoomCode(roomId);
             }
             Debug.Log($"Комната успешно создана на сервере! Код: {roomId}");
+            var group = uiPanel.GetComponent<CanvasGroup>();
+            group.DOFade(0, 1f).OnComplete(() => uiPanel.SetActive(false));
             
             networkManager.StartHost();
         },
@@ -89,6 +94,8 @@ public class EOSMenuUI : MonoBehaviour
         {
             myIdText.text = "Подключение к " + inputCode + "...";
             Debug.Log($"Успешно получен EOS ID хоста: {roomEosId}");
+            var group = uiPanel.GetComponent<CanvasGroup>();
+            group.DOFade(0, 0.5f);
             
             networkManager.networkAddress = roomEosId.Trim();
             networkManager.StartClient();

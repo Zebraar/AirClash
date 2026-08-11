@@ -14,6 +14,9 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     public float maxY;
     [SerializeField] private TimerScr timer;
 
+    [Header("Network Smoothing")]
+    [SerializeField] private float smoothTime = 0.05f;
+
     [Header("Audio")]
     public AudioSource audioSource;
     [SerializeField] private AudioClip puckSound;
@@ -27,6 +30,7 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
     private bool isDragging = false;
     private Color particleColor;
     private GameObject particles;
+    private Vector2 networkVelocity;
 
     [SyncVar(hook = nameof(OnPlayerIndexChanged))]
     private int netPlayerIndex = 0;
@@ -185,18 +189,13 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
 
     private void FixedUpdate()
     {
-        if (isLocalPlayer)
-        {
-            MoveRigidbodyPhysically(targetPos);
-        }
-        else if (isServer)
+        if(isLocalPlayer)
         {
             MoveRigidbodyPhysically(targetPos);
         }
         else
         {
-            Vector2 nextPos = Vector2.Lerp(rb.position, targetPos, Time.fixedDeltaTime * 30f);
-            MoveRigidbodyPhysically(nextPos);
+            SmoothNetworkMovement();
         }
     }
 
@@ -209,11 +208,27 @@ public class PlayersControllerNetwork : NetworkBehaviour, IBeginDragHandler, IDr
         rb.MovePosition(target);
     }
 
-    [Command]
+    [Command(channel = Channels.Unreliable)]
     private void CmdUpdatePosition(Vector2 newPos)
     {
         if(isMovementBlocked) return; 
         targetPos = newPos;
+    }
+
+    private void SmoothNetworkMovement()
+    {
+        if(Vector2.Distance(rb.position, targetPos) > 3.0f)
+        {
+            rb.position = targetPos;
+            rb.linearVelocity = Vector2.zero;
+            networkVelocity = Vector2.zero;
+            return;
+        }
+
+        Vector2 smoothedPos = Vector2.SmoothDamp(rb.position, targetPos, ref networkVelocity, smoothTime, Mathf.Infinity, Time.fixedDeltaTime);
+        
+        rb.linearVelocity = networkVelocity;
+        rb.MovePosition(smoothedPos);
     }
 
     public void OnEndDrag(PointerEventData eventData)

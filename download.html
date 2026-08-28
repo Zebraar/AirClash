@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Скачать — AirClash</title>
+    <meta name="description" content="Скачай AirClash для Android (APK) или попробуй браузерную мини-игру на этом сайте. Системные требования и ссылки на релизы.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Russo+One&display=swap" rel="stylesheet">
@@ -16,6 +17,7 @@
             <ul>
                 <li><a href="index.html" class="nav-link ">Главная</a></li>
                 <li><a href="about.html" class="nav-link ">Об игре</a></li>
+                <li><a href="play.html" class="nav-link ">Играть</a></li>
                 <li><a href="download.html" class="nav-link active">Скачать</a></li>
                 <li><a href="team.html" class="nav-link ">О нас</a></li>
             </ul>
@@ -24,23 +26,33 @@
 
     <main class="content-container">
         <h2 class="section-title neon-text-pink">ВЫБЕРИ СВОЮ ПЛАТФОРМУ</h2>
-        
+        <p class="section-sub">AirClash в активной разработке (WIP), поэтому список платформ постоянно растёт. Актуальные сборки всегда доступны в релизах на GitHub.</p>
+
         <div class="download-grid">
-            <!-- Android -->
             <div class="neon-card download-card">
                 <div class="card-glow-blue"></div>
                 <div class="platform-icon">🤖</div>
                 <h3>Android APK</h3>
-                <p>Оптимизировано для любых смартфонов. Плавные 120 FPS, точное сенсорное управление и мгновенный отклик.</p>
+                <p>Оптимизировано для смартфонов: точное сенсорное управление и мгновенный отклик.</p>
+                <span class="status-pill is-live">Доступно</span>
                 <button class="btn btn-neon-blue" onclick="triggerDownload('Android APK')">Скачать .APK</button>
             </div>
-            
-            <!-- PC -->
+
+            <div class="neon-card download-card">
+                <div class="card-glow-green"></div>
+                <div class="platform-icon">📦</div>
+                <h3>itch.io (зеркало APK)</h3>
+                <p>Тот же APK-файл для Android, но с itch.io — удобно, если GitHub недоступен. Это страница загрузки, а не браузерная версия.</p>
+                <span class="status-pill is-live">Доступно</span>
+                <a href="https://zebraaar.itch.io/airclash" target="_blank" rel="noopener" class="btn btn-neon-blue" style="width: 100%;">Открыть на itch.io</a>
+            </div>
+
             <div class="neon-card download-card">
                 <div class="card-glow-pink"></div>
                 <div class="platform-icon">💻</div>
-                <h3>Windows PC</h3>
-                <p>Максимальное качество графики, поддержка клавиатуры и мыши. Играй прямо в браузере или скачай клиент.</p>
+                <h3>Windows PC клиент</h3>
+                <p>Отдельный установочный клиент с поддержкой клавиатуры и мыши.</p>
+                <span class="status-pill is-wip">В разработке</span>
                 <button class="btn btn-neon-pink" onclick="triggerDownload('PC Client')">Скачать для Win</button>
             </div>
         </div>
@@ -50,14 +62,16 @@
             <div class="specs-grid">
                 <div>
                     <strong>Минимальные:</strong>
-                    <p>ОС: Android 7.0 / Windows 10<br>ОЗУ: 1 ГБ<br>Место на диске: 300 МБ</p>
+                    <p>ОС: Android 7.0<br>ОЗУ: 1 ГБ<br>Место на диске: 300 МБ</p>
                 </div>
                 <div>
                     <strong>Рекомендуемые:</strong>
-                    <p>ОС: Android 11+ / Windows 11<br>ОЗУ: 2 ГБ<br>Экран: 90/120+ Гц</p>
+                    <p>ОС: Android 11+<br>ОЗУ: 2 ГБ<br>Экран: 90/120+ Гц</p>
                 </div>
             </div>
         </div>
+
+        <p class="download-note">Не хочешь ничего скачивать прямо сейчас? Попробуй <a href="play.html" class="neon-text-gold">мини-версию в браузере</a> — та же физика и боты, без установки.</p>
     </main>
 
     <footer>

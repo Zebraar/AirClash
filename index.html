@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главная — AirClash</title>
+    <meta name="description" content="AirClash — динамичная 2D-игра в стиле аэрохоккея на Unity. Быстрый геймплей, умный ИИ, квесты и достижения.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Russo+One&display=swap" rel="stylesheet">
@@ -16,6 +17,7 @@
             <ul>
                 <li><a href="index.html" class="nav-link active">Главная</a></li>
                 <li><a href="about.html" class="nav-link ">Об игре</a></li>
+                <li><a href="play.html" class="nav-link ">Играть</a></li>
                 <li><a href="download.html" class="nav-link ">Скачать</a></li>
                 <li><a href="team.html" class="nav-link ">О нас</a></li>
             </ul>
@@ -26,12 +28,20 @@
         <div class="hero-content">
             <h1 class="neon-text-blue">АРКАДНЫЙ АЭРОХОККЕЙ <br><span class="neon-text-pink">НОВОГО ПОКОЛЕНИЯ</span></h1>
             <p class="hero-description">Врывайся в ультрадинамичные неоновые баталии на невероятных скоростях! Реалистичная физика, стильный дизайн и чистый драйв ждут тебя на поле боя.</p>
+            <div class="hero-tags">
+                <span class="hero-tag">🎮 Unity 2D</span>
+                <span class="hero-tag">🤖 4 уровня ИИ</span>
+                <span class="hero-tag">🌐 Онлайн</span>
+                <span class="hero-tag">📒 Квесты и XP</span>
+                <span class="hero-tag">📱 Android</span>
+            </div>
             <div class="hero-buttons">
+                <a href="play.html" class="btn btn-neon-gold">Играть в браузере</a>
                 <a href="download.html" class="btn btn-neon-blue">Скачать игру</a>
                 <a href="about.html" class="btn btn-neon-pink">Об игре</a>
             </div>
         </div>
-        
+
         <div class="hero-visual">
             <div class="neon-arena-preview">
                 <div class="gate-left"></div>
@@ -40,11 +50,59 @@
                 <div class="mallet mallet-red"></div>
                 <div class="gate-right"></div>
             </div>
+            <span class="hero-visual-hint">👆 Двигай мышью, чтобы толкнуть шайбу</span>
         </div>
     </main>
 
+    <section class="content-container" style="padding-top: 0;">
+        <h2 class="section-title neon-text-gold">ПОЛНАЯ ВЕРСИЯ ЖДЁТ В БРАУЗЕРЕ</h2>
+        <p class="section-sub">Это не просто анимация — на странице «Играть» доступен настоящий мини-матч против бота с настоящей физикой отскоков и четырьмя уровнями сложности прямо из AirClash.</p>
+
+        <div class="gameplay-showcase neon-border-gold" style="text-align: left; display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 260px;">
+                <h3 class="neon-text-gold">🕹️ Матч до 7 очков</h3>
+                <p style="text-align: left;">Управляй своей битой мышью или пальцем, отбивай шайбу и забивай в ворота бота. Выбери сложность — от «Лёгкого» до «Экстрима» — и проверь, справишься ли ты с настоящим ИИ игры.</p>
+            </div>
+            <a href="play.html" class="btn btn-neon-gold" style="flex-shrink: 0;">Начать матч →</a>
+        </div>
+
+        <h2 class="section-title neon-text-blue" style="margin-top: 5rem;">ЧЕМ ЖИВЁТ ИГРА</h2>
+        <p class="section-sub">Коротко о том, что уже работает и что появится совсем скоро. Подробности — на странице «Об игре».</p>
+
+        <div class="features-grid">
+            <div class="neon-card">
+                <div class="card-glow-blue"></div>
+                <div class="card-icon">🤖</div>
+                <h3>4 уровня бота</h3>
+                <p>От «Лёгкого» до «Экстрима» — умный ИИ подстраивается под твой скилл и ведёт себя как живой соперник.</p>
+                <span class="status-pill is-live">Уже в игре</span>
+            </div>
+            <div class="neon-card">
+                <div class="card-glow-pink"></div>
+                <div class="card-icon">📒</div>
+                <h3>Квесты и достижения</h3>
+                <p>Ежедневные задания, XP за голы и победы, а достижения дают дополнительный опыт и повод похвастаться.</p>
+                <span class="status-pill is-live">Уже в игре</span>
+            </div>
+            <div class="neon-card">
+                <div class="card-glow-gold"></div>
+                <div class="card-icon">🌐</div>
+                <h3>Онлайн и Эло</h3>
+                <p>Матчмейкинг, дружеские матчи по коду комнаты и продвинутая Эло-система уже работают. Таблицы рейтинга — в следующем обновлении.</p>
+                <span class="status-pill is-live">Готово</span>
+            </div>
+            <div class="neon-card">
+                <div class="card-glow-green"></div>
+                <div class="card-icon">👥</div>
+                <h3>2v2, 3v3 и друзья</h3>
+                <p>Помимо классики 1 на 1 и уже доступных дружеских матчей, готовятся командные режимы и список друзей.</p>
+                <span class="status-pill is-wip">В разработке</span>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2026 Zebrar's Games. Все права защищены. Создано с неоновым драйвом.</p>
+        <p>&copy; 2026 Zebrar's Games. Все права защищены. Создано с неоновым драйвом. · <a href="https://github.com/ZebrarsGames/AirClash" target="_blank" rel="noopener">GitHub проекта</a></p>
     </footer>
     <script src="js/main.js"></script>
 </body>

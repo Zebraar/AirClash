@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>О нас — AirClash</title>
+    <meta name="description" content="Кто делает AirClash, зачем, и как связаться с командой Zebrar's Games.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Russo+One&display=swap" rel="stylesheet">
@@ -16,6 +17,7 @@
             <ul>
                 <li><a href="index.html" class="nav-link ">Главная</a></li>
                 <li><a href="about.html" class="nav-link ">Об игре</a></li>
+                <li><a href="play.html" class="nav-link ">Играть</a></li>
                 <li><a href="download.html" class="nav-link ">Скачать</a></li>
                 <li><a href="team.html" class="nav-link active">О нас</a></li>
             </ul>
@@ -24,7 +26,7 @@
 
     <main class="content-container">
         <h2 class="section-title neon-text-blue">О РАЗРАБОТЧИКАХ AIRCLASH</h2>
-        
+
         <div class="about-us-box neon-border-pink">
             <p><strong>AirClash</strong> — это независимый проект, рожденный из любви к старым аркадным автоматам и современным состязательным играм. Наша цель — создать самый отзывчивый, стильный и честный аэрохоккей без навязчивой рекламы и механик Pay-to-Win.</p>
             <p>Мы верим в силу комьюнити и постоянно развиваем игру на основе ваших отзывов и предложений.</p>
@@ -45,8 +47,9 @@
             </div>
         </div>
 
-        <div class="contact-section">
-            <h3 class="neon-text-blue" style="text-align: center; margin-bottom: 1.5rem;">Свяжись с нами</h3>
+        <div class="contact-section" id="contact">
+            <h3 class="neon-text-blue" style="text-align: center; margin-bottom: 0.8rem;">Свяжись с нами</h3>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 1.5rem;">Можно через форму ниже или напрямую на <a href="mailto:zebrarsgames@gmail.com" class="neon-text-pink">zebrarsgames@gmail.com</a>.</p>
             <form class="contact-form neon-border-blue" onsubmit="handleContactSubmit(event)">
                 <input type="text" name="username" placeholder="Твой ник" required>
                 <input type="email" name="email" placeholder="Твой Email" required>
@@ -58,19 +61,16 @@
         <div class="parent-container ">
         <div class="community-grid">
             <div class="stat-card">
-                <a class="stat-number neon-text-blue", href="https://github.com/ZebrarsGames/AirClash">GitHub</a>
+                <a class="stat-number neon-text-blue" href="https://github.com/ZebrarsGames/AirClash" target="_blank" rel="noopener">GitHub</a>
             </div>
             <div class="stat-card">
-                <a class="stat-number neon-text-pink", href="https://zebraaar.itch.io/airclash">itch.io</a>
+                <a class="stat-number neon-text-pink" href="https://zebraaar.itch.io/airclash" target="_blank" rel="noopener">itch.io</a>
             </div>
             <div class="stat-card">
-                <a class="stat-number neon-text-violet", href="https://www.tiktok.com/@airclash_dev">TikTok</a>
+                <a class="stat-number neon-text-violet" href="https://www.tiktok.com/@airclash_dev" target="_blank" rel="noopener">TikTok</a>
             </div>
             <div class="stat-card">
-                <a class="stat-number neon-text-green", href="https://www.youtube.com/@AirClash-Official">YouTube</a>
-            </div>
-            <div class="stat-card">
-                <a class="stat-number neon-text-gold", href="https://t.me/airclash_dev">Telegram</a>
+                <a class="stat-number neon-text-gold" href="https://t.me/airclash_dev" target="_blank" rel="noopener">Telegram</a>
             </div>
         </div>
         </div>
